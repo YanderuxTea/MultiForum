@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import React from 'react'
 import {ThemeProvider} from 'next-themes'
+import {montserrat} from '@/styles/font'
 
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`antialiased`}
+        className={`antialiased ${montserrat.className} bg-[#EDF0F4]`}
       >
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
         {children}
