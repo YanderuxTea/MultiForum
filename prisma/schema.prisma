@@ -12,5 +12,6 @@ model users {
   id        String   @id @default(uuid())
   login     String   @unique
   password  String
+  role      String
   createdAt DateTime @default(now())
 }

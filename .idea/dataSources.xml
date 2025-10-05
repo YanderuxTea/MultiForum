@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://ep-billowing-bird-ad7nvs10-pooler.c-2.us-east-1.aws.neon.tech:5432/neondb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="LocalDB" uuid="fdfc787c-6230-429f-8dbc-9ab2e2961020">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5438/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

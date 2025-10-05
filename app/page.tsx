@@ -1,5 +1,5 @@
-import MainPage from '@/components/pages/MainPage'
+export default function Page() {
+  return <main className='min-h-screen'>
 
-export default function page() {
-  return <MainPage/>
+  </main>
 }

@@ -3,6 +3,11 @@ import "./globals.css";
 import React from 'react'
 import {ThemeProvider} from 'next-themes'
 import {montserrat} from '@/styles/font'
+import Preloader from '@/components/ui/Preloader'
+import HeaderProviders from '@/components/providers/HeaderProviders'
+import HeaderWrapper from '@/components/ui/HeaderWrapper'
+import StubHeader from '@/components/shared/StubHeader'
+import Footer from '@/components/ui/Footer'
 
 
 export const metadata: Metadata = {
@@ -18,10 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`antialiased ${montserrat.className} bg-[#EDF0F4]`}
+        className={`antialiased ${montserrat.className} bg-[#EDF0F4] dark:bg-[#121212] flex flex-col min-h-screen`}
       >
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-        {children}
+        <Preloader/>
+        <HeaderProviders>
+          <HeaderWrapper/>
+        </HeaderProviders>
+        <StubHeader/>
+          {children}
+        <Footer/>
       </ThemeProvider>
       </body>
     </html>
