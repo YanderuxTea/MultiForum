@@ -15,7 +15,7 @@ export default function Form() {
       {inputsArray.map((input, i) => {
         return <InputCustom key={i} type={input.type} placeholder={input.placeholder} id={input.id} autoComplete={input.autoComplete} pattern={input.pattern} min={input.min} max={input.max} reason={input.reason} />
       })}
-      <button disabled={params.type==='login'?isValid.length !== 2:isValid.length !== 3} type='submit' className='py-1.25 bg-orange-400 w-full rounded-lg text-white font-medium disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-colors duration-300 ease-in-out'>{params.type === 'login'? 'Войти': 'Зарегистрироваться'}</button>
+      <button disabled={params.type==='login'?isValid.length !== 2:isValid.length !== 3} type='submit' className='cursor-pointer disabled:cursor-default hover:bg-orange-500 py-1.25 bg-orange-400 w-full rounded-lg text-white font-medium disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-colors duration-300 ease-in-out'>{params.type === 'login'? 'Войти': 'Зарегистрироваться'}</button>
     </motion.form>
   </AnimatePresence>
 }
