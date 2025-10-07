@@ -11,7 +11,7 @@ export default function FormProvider({children}: {children: React.ReactNode}) {
     const text = e.target.value.trim()
     const length = text.length
     const login = !!(pattern&&max&&min);
-    const pass = !!(!pattern && min && max);
+    const pass = !!(!pattern && min && !max);
     const email= !!(pattern && !min && !max);
     const delValid = ()=>{setIsValid(prevState => prevState.includes(id)?prevState.filter(v => v !== id):prevState)}
     const addValid = ()=>{setIsValid(prevState => prevState.includes(id)?prevState:[...prevState,id])}
@@ -37,7 +37,7 @@ export default function FormProvider({children}: {children: React.ReactNode}) {
             addInvalid()
           }
         }else if(pass){
-          if(length>=min && length<=max){
+          if(length>=min){
             delInvalid()
             addValid()
           }else {

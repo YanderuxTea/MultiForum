@@ -38,9 +38,8 @@ export const registerInputs: IFormInput[] = [
     placeholder: 'Пароль',
     id: 'password',
     autoComplete:'new-password',
-    min:6,
-    max:25,
-    reason:'Пароль не может быть меньше 6 символов и больше 25 символов'
+    min:8,
+    reason:'Пароль не может быть меньше 8 символов'
   },
   {
     type: 'text',

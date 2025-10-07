@@ -11,8 +11,8 @@ export default function Header() {
   return <header className='w-full flex items-center px-2.5 bg-white dark:bg-[#212121] fixed z-20 justify-center'>
     <div className='max-w-300 w-full py-2.5 bg-white dark:bg-[#212121] flex flex-row justify-between items-center'>
         <Logo/>
-      {width<1024&&<button onClick={()=>setIsOpenMenu(prevState => !prevState)}><Menu/></button>}
-      {width>=1024&&<ButtonLogin/>}
+      {width<=768&&<button onClick={()=>setIsOpenMenu(prevState => !prevState)}><Menu/></button>}
+      {width>768&&<ButtonLogin/>}
     </div>
   </header>
 }

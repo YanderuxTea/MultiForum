@@ -8,10 +8,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum VerificationStatus {
+  Yes
+  No
+}
+
 model users {
-  id        String   @id @default(uuid())
-  login     String   @unique
-  password  String
-  role      String
-  createdAt DateTime @default(now())
+  id              String             @id @default(uuid())
+  login           String             @unique
+  password        String
+  email           String             @unique
+  role            String             @default("User")
+  verification    String
+  verificationAdm VerificationStatus @default(No)
+  createdAt       DateTime           @default(now())
 }
