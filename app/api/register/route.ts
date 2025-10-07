@@ -1,6 +1,6 @@
 import {z} from 'zod'
 import {NextResponse} from 'next/server'
-import {PrismaClient} from '@/app/generated/prisma'
+import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt'
 import {randomBytes} from 'node:crypto'
 
