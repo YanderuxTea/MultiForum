@@ -18,9 +18,9 @@ export async function POST(req:Request){
     return NextResponse.json({ok:false, error:z.flattenError(validateData.error)}, {status:400})
   }
   const {login, password, email} = validateData.data;
-  const existingUser = await prisma.users.findFirst({where:{OR:[{login:login},{email:email}]}});
+  const existingUser = await prisma.users.findFirst({where:{OR:[{login:{equals:login, mode:'insensitive'}},{email:email}]}});
   if(existingUser){
-    const field = existingUser.login === login ? 'Логин': 'Почта'
+    const field = existingUser.login.toLowerCase() === login.toLowerCase() ? 'Логин': 'Почта'
     return NextResponse.json({ok:false, error:`${field} уже используется`})
   }
   const hashedPassword = await bcrypt.hash(password, 12);
