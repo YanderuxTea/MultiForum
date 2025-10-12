@@ -13,12 +13,14 @@ enum VerificationStatus {
 }
 
 model users {
-  id              String             @id @default(uuid())
-  login           String             @unique
-  password        String
-  email           String             @unique
-  role            String             @default("User")
-  verification    String
-  verificationAdm VerificationStatus @default(No)
-  createdAt       DateTime           @default(now())
+  id               String             @id @default(uuid())
+  login            String             @unique
+  password         String
+  email            String             @unique
+  role             String             @default("User")
+  verification     String
+  verificationAdm  VerificationStatus @default(No)
+  createdAt        DateTime           @default(now())
+  recoveryCode     String?
+  dateRecoveryCode DateTime?
 }

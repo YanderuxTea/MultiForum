@@ -10,6 +10,9 @@ import StubHeader from '@/components/shared/StubHeader'
 import Footer from '@/components/ui/Footer'
 import Notify from '@/components/shared/Notify'
 import NotifyProvider from '@/components/providers/NotifyProvider'
+import DataUserProvider from '@/components/providers/DataUserProvider'
+import LoaderProvider from '@/components/providers/LoaderProvider'
+import NotifyVerifyEmail from '@/components/shared/NotifyVerifyEmail'
 
 
 export const metadata: Metadata = {
@@ -28,16 +31,21 @@ export default function RootLayout({
         className={`antialiased ${montserrat.className} bg-[#EDF0F4] dark:bg-[#121212] flex flex-col min-h-screen items-center`}
       >
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-        <NotifyProvider>
-          <Preloader/>
-          <Notify/>
-          <HeaderProviders>
-            <HeaderWrapper/>
-          </HeaderProviders>
-          <StubHeader/>
-            {children}
-          <Footer/>
-        </NotifyProvider>
+        <LoaderProvider>
+          <DataUserProvider>
+            <NotifyProvider>
+              <Preloader/>
+              <Notify/>
+              <NotifyVerifyEmail/>
+              <HeaderProviders>
+                <HeaderWrapper/>
+              </HeaderProviders>
+              <StubHeader/>
+                {children}
+              <Footer/>
+            </NotifyProvider>
+          </DataUserProvider>
+        </LoaderProvider>
       </ThemeProvider>
       </body>
     </html>

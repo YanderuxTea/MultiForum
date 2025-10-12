@@ -6,6 +6,7 @@ import InputCustom from '@/components/shared/InputCustom'
 import useFormContext from '@/hooks/useFormContext'
 import {AnimatePresence, motion} from 'framer-motion'
 import useNotify from '@/hooks/useNotify'
+import Link from 'next/link'
 
 export default function Form() {
   const [isPending, startTransition] = useTransition()
@@ -14,41 +15,45 @@ export default function Form() {
   const {isValid} = useFormContext()
   const router = useRouter();
   const {setIsNotify, setMessage} = useNotify()
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault()
     const form = new FormData(e.currentTarget)
     const data = Object.fromEntries(form)
-    try {
-      startTransition(async () => {
-        const req = await fetch(`/api/${params.type}`, {
+    startTransition(async ()=>{
+      try{
+        const res = await fetch(`/api/${params.type}`,{
           method: 'POST',
           body: JSON.stringify(data),
-          headers: {'Content-Type': 'application/json'}
+          headers: {"Content-Type": "application/json"}
         })
-        const res = await req.json()
-        if(res.ok){
-          setIsNotify(true)
-          setMessage(res.message)
+        const json = await res.json()
+        if(json.ok){
           if(params.type === 'login'){
             router.push('/')
+            window.location.reload()
           }else if(params.type === 'register'){
+            setIsNotify(true)
+            setMessage(json.message)
             router.push('/auth/login')
           }
         }else {
           setIsNotify(true)
-          let message = res.error
-          for(const fieldName in res.error.fieldErrors){
-            if(res.error.fieldErrors[fieldName].length > 0){
-              message = res.error.fieldErrors[fieldName][0]
-              break
+          let errorMessage = json.error;
+          for(const field in json.error.fieldErrors){
+            if(json.error.fieldErrors[field].length > 0){
+              errorMessage = json.error.fieldErrors[field][0]
+              break;
             }
           }
-          setMessage(`Ошибка: ${message}`)
+          setMessage(`Ошибка: ${errorMessage}`)
         }
-      })
-    }catch(err){
-      console.log(err)
-    }
+      }catch(err){
+        setIsNotify(true)
+        setMessage(`Ошибка: ${err}`)
+        console.error(err)
+      }
+    })
   }
   return<AnimatePresence>
     <motion.form onSubmit={onSubmit} initial={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}}
@@ -62,6 +67,7 @@ export default function Form() {
       <button disabled={isPending ? isPending : params.type === 'login' ? isValid.length !== 2 : isValid.length !== 3}
               type='submit'
               className='cursor-pointer disabled:cursor-default hover:bg-orange-500 py-1.25 bg-orange-400 w-full rounded-lg text-white font-medium disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-all duration-300 ease-in-out'>{params.type === 'login' ? isPending ? 'Входим' : 'Войти' : isPending ? 'Регистрируем' : 'Зарегистрироваться'}</button>
+      <Link href={'/recovery'} className='text-sm font-medium'>Забыли пароль?</Link>
     </motion.form>
   </AnimatePresence>
 }
