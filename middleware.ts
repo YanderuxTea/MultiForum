@@ -18,7 +18,7 @@ const rateLimitRecovery = new Ratelimit({
 })
 export async function middleware(req:NextRequest) {
   const url = req.nextUrl.pathname;
-  if(url === '/api/login'||url === '/api/register' || url === '/api/verifyEmail' || url === '/api/sendRecoveryCode'|| url === '/api/confirmRecoveryCode') {
+  if(url === '/api/login'||url === '/api/register' || url === '/api/verifyEmail' || url === '/api/sendRecoveryCode'|| url === '/api/confirmRecoveryCode' || url === '/api/changeAvatar') {
     const response = await rateLimiterMiddleware(req)
     if(response){
       return response

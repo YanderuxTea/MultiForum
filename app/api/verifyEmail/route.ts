@@ -1,10 +1,10 @@
 import {z} from 'zod'
-import {PrismaClient} from '@prisma/client'
+
 import {NextResponse} from 'next/server'
 import {cookies} from 'next/headers'
 import {generateJWT, validateJWT} from '@/lib/jwt'
+import {prisma} from '@/lib/prisma'
 
-const prisma = new PrismaClient()
 const codeSchema = z.object({code:z.string().trim().length(8).regex(/^[A-Fa-f0-9]+$/)})
 export async function POST(req:Request){
   const body = await req.json()

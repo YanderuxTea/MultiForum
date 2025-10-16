@@ -34,15 +34,15 @@ export default function RootLayout({
         <LoaderProvider>
           <DataUserProvider>
             <NotifyProvider>
-              <Preloader/>
-              <Notify/>
-              <NotifyVerifyEmail/>
-              <HeaderProviders>
-                <HeaderWrapper/>
-              </HeaderProviders>
-              <StubHeader/>
-                {children}
-              <Footer/>
+                <Preloader/>
+                <Notify/>
+                <NotifyVerifyEmail/>
+                <HeaderProviders>
+                  <HeaderWrapper/>
+                </HeaderProviders>
+                <StubHeader/>
+                  {children}
+                <Footer/>
             </NotifyProvider>
           </DataUserProvider>
         </LoaderProvider>

@@ -1,8 +1,7 @@
-import {PrismaClient} from '@prisma/client'
 import {z} from 'zod'
 import {NextResponse} from 'next/server'
+import {prisma} from '@/lib/prisma'
 
-const prisma = new PrismaClient()
 const confirmRecoveryCodeSchema = z.object({
   email: z.string().trim().regex(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/),
   code: z.string().trim().regex(/^[A-Fa-f0-9]+$/).length(16)
@@ -36,7 +35,5 @@ export async function POST(req:Request){
   }catch(err){
     console.log(err)
     return NextResponse.json({ok:false, error:'Неизвестная ошибка'})
-  }finally {
-    prisma.$disconnect()
   }
 }

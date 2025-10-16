@@ -12,15 +12,45 @@ enum VerificationStatus {
   No
 }
 
-model users {
+model Users {
   id               String             @id @default(uuid())
   login            String             @unique
   password         String
   email            String             @unique
   role             String             @default("User")
+  avatar           String?
   verification     String
   verificationAdm  VerificationStatus @default(No)
   createdAt        DateTime           @default(now())
   recoveryCode     String?
   dateRecoveryCode DateTime?
+  topic            Topic[]
+  posts            Posts[]
+}
+
+model Category {
+  id    String  @id @default(uuid())
+  title String
+  topic Topic[]
+}
+
+model Topic {
+  id         String   @id @default(uuid())
+  title      String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  authorId   String
+  author     Users    @relation(fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+  posts      Posts[]
+}
+
+model Posts {
+  id        String   @id @default(uuid())
+  content   String
+  topicId   String
+  topic     Topic    @relation(fields: [topicId], references: [id])
+  authorId  String
+  author    Users    @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
 }

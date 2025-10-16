@@ -1,11 +1,10 @@
 import {z} from 'zod'
-import {PrismaClient} from '@prisma/client'
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt'
 import {cookies} from 'next/headers'
 import {generateJWT} from '@/lib/jwt'
+import {prisma} from '@/lib/prisma'
 
-const prisma = new PrismaClient()
 const loginSchema = z.object({
   login: z.string().min(6).max(25).trim().regex(/^[a-zA-Z0-9]+$/),
   password: z.string().min(8)
@@ -23,7 +22,7 @@ export async function POST(req:Request){
     if(!user){
       return NextResponse.json({ok:false, error:'Неверный логин или пароль'})
     }
-    const validatePassword = bcrypt.compare(password, user.password)
+    const validatePassword = await bcrypt.compare(password, user.password)
     if(!validatePassword){
       return NextResponse.json({ok:false, error:'Неверный логин или пароль'})
     }
@@ -33,7 +32,5 @@ export async function POST(req:Request){
   }catch(err){
     console.log(err)
     return NextResponse.json({ok:false, error:'Внутренняя ошибка сервера'})
-  }finally {
-    prisma.$disconnect()
   }
 }

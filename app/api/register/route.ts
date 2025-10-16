@@ -1,11 +1,10 @@
 import {z} from 'zod'
-import {PrismaClient} from '@prisma/client'
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
 import {randomBytes} from 'node:crypto'
+import {prisma} from '@/lib/prisma'
 
-const prisma = new PrismaClient()
 const registerSchema = z.object({
   login: z.string().trim().min(6, 'Логин не может быть меньше 6 символов').max(25, 'Логин не может быть больше 25 символов').regex(/^[a-zA-Z0-9]+$/, 'Логин может содержать только латинские буквы и цифры'),
   password: z.string().trim().min(8,'Пароль не может быть меньше 8 символов'),
@@ -56,8 +55,6 @@ export async function POST(req:Request){
   }catch(err){
     console.log(err)
     return NextResponse.json({ok:false, error:'Внутренняя ошибка сервера'})
-  }finally {
-    prisma.$disconnect()
   }
   return NextResponse.json({ok:true, message:'Успешно! Проверьте почту'})
 }
