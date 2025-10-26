@@ -10,6 +10,9 @@ export default function ButtonLogout() {
         method: 'GET',
       })
       const data = await res.json()
+      if(data.status === 404) {
+        router.push('/invalid')
+      }
       if(data.ok){
         router.push('/')
         window.location.reload()

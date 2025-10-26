@@ -14,12 +14,12 @@ export default function AuthLayout({children}: {children: ReactNode}) {
             <Link href='/auth/login' key={'loginLink'} className={`rounded-[3px] font-medium w-1/2 py-1.25 relative transition-colors duration-300 ease-out ${params.type === 'login'?'text-white':'text-neutral-700 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>
               <p className='relative z-1'>Вход</p>
               {params.type === 'login'&&
-                <motion.span className='absolute inset-0 bg-orange-600 dark:bg-orange-700 z-0 rounded-[3px]' layoutId='backgroundLink'></motion.span>}
+                <motion.span className='absolute inset-0 bg-orange-500 dark:bg-orange-600 z-0 rounded-[3px]' layoutId='backgroundLink'></motion.span>}
             </Link>
             <Link href='/auth/register' key={'registerLink'} className={`rounded-[3px] font-medium w-1/2 py-1.25 relative transition-colors duration-300 ease-out ${params.type === 'register'?'text-white':'text-neutral-700 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'}`}>
               <p className='relative z-1'>Регистрация</p>
               {params.type === 'register'&&
-                <motion.span className='absolute inset-0 bg-orange-600 dark:bg-orange-700 z-0 rounded-[3px]' layoutId='backgroundLink'></motion.span>}
+                <motion.span className='absolute inset-0 bg-orange-500 dark:bg-orange-600 z-0 rounded-[3px]' layoutId='backgroundLink'></motion.span>}
             </Link>
           </AnimatePresence>
         </motion.div>

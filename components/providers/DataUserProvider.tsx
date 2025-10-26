@@ -7,7 +7,6 @@ export default function DataUserProvider({ children }: { children: React.ReactNo
   const {setLoading} = useLoader()
   const [data, setData] = useState<DataUserContext|null>(null)
   useEffect(() => {
-
     async function fetchDataUser() {
       setLoading(async ()=>{
         const response = await fetch('/api/getDataUser')

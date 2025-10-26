@@ -6,13 +6,13 @@ import {montserrat} from '@/styles/font'
 import Preloader from '@/components/ui/Preloader'
 import HeaderProviders from '@/components/providers/HeaderProviders'
 import HeaderWrapper from '@/components/ui/HeaderWrapper'
-import StubHeader from '@/components/shared/StubHeader'
 import Footer from '@/components/ui/Footer'
 import Notify from '@/components/shared/Notify'
 import NotifyProvider from '@/components/providers/NotifyProvider'
 import DataUserProvider from '@/components/providers/DataUserProvider'
 import LoaderProvider from '@/components/providers/LoaderProvider'
 import NotifyVerifyEmail from '@/components/shared/NotifyVerifyEmail'
+import UnderHeader from '@/components/ui/UnderHeader'
 
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body
         className={`antialiased ${montserrat.className} bg-[#EDF0F4] dark:bg-[#121212] flex flex-col min-h-screen items-center`}
       >
@@ -40,7 +40,7 @@ export default function RootLayout({
                 <HeaderProviders>
                   <HeaderWrapper/>
                 </HeaderProviders>
-                <StubHeader/>
+                <UnderHeader/>
                   {children}
                 <Footer/>
             </NotifyProvider>

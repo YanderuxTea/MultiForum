@@ -8,6 +8,7 @@ import Image from 'next/image'
 import useDataUser from '@/hooks/useDataUser'
 import nullAvatar from '@/public/svg/user.svg'
 import useNotify from '@/hooks/useNotify'
+import {useRouter} from 'next/navigation'
 
 interface IPhotoProps{
   avatar:string
@@ -22,6 +23,7 @@ export default function ChoosePhotoForm({avatar, setAvatar}:IPhotoProps) {
   const [isHelp, setIsHelp] = useState<boolean>(false)
   const {setIsNotify, setMessage} = useNotify()
   const [isLoading, setIsLoading] = useTransition()
+  const router = useRouter()
   async function changeAvatar(){
     setIsLoading(async ()=>{
       const req = await fetch('/api/changeAvatar', {
@@ -30,6 +32,9 @@ export default function ChoosePhotoForm({avatar, setAvatar}:IPhotoProps) {
         body: JSON.stringify({url:url})
       })
       const res = await req.json()
+      if(res.status === 404){
+        router.push('/invalid')
+      }
       if(res.ok){
         setMessage(res.message)
         setIsNotify(true)

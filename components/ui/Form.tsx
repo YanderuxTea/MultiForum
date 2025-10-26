@@ -30,7 +30,6 @@ export default function Form() {
         const json = await res.json()
         if(json.ok){
           if(params.type === 'login'){
-            router.push('/')
             window.location.reload()
           }else if(params.type === 'register'){
             setIsNotify(true)
@@ -66,7 +65,7 @@ export default function Form() {
       })}
       <button disabled={isPending ? isPending : params.type === 'login' ? isValid.length !== 2 : isValid.length !== 3}
               type='submit'
-              className='select-none cursor-pointer disabled:cursor-default hover:bg-orange-500 dark:hover:bg-orange-600 py-1.25 dark:bg-orange-700 bg-orange-600 active:bg-orange-700 dark:active:bg-orange-800 w-full rounded-lg text-white font-medium disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-co duration-300 ease-in-out'>
+              className='select-none cursor-pointer disabled:cursor-default hover:bg-orange-400 dark:hover:bg-orange-500 py-1.25 dark:bg-orange-600 bg-orange-500 active:bg-orange-600 dark:active:bg-orange-700 w-full rounded-lg text-white font-medium disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-co duration-300 ease-in-out'>
         {params.type === 'login' ? isPending ? 'Входим' : 'Войти' : isPending ? 'Регистрируем' : 'Зарегистрироваться'}
       </button>
       <Link href={'/recovery'} className='text-sm text-neutral-500 dark:text-neutral-400 font-medium hover:text-blue-500 dark:hover:text-blue-600 transition-colors duration-300 ease-out'>Забыли пароль?</Link>

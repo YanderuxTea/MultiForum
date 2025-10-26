@@ -15,7 +15,7 @@ export async function POST(req:Request){
       return NextResponse.json({ok:false, error:z.flattenError(validateData.error)});
     }
     try{
-      const user = await prisma.users.findUnique({where:{email:validateData.data.email}})
+      const user = await prisma.users.findUnique({where:{email:validateData.data.email}, select:{recoveryCode:true, dateRecoveryCode:true}})
       if(!user){
         return NextResponse.json({ok:false, error:'Неизвестная ошибка'})
       }

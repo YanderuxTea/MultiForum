@@ -26,6 +26,7 @@ model Users {
   dateRecoveryCode DateTime?
   topic            Topic[]
   posts            Posts[]
+  devices          Devices[]
 }
 
 model Category {
@@ -53,4 +54,13 @@ model Posts {
   authorId  String
   author    Users    @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model Devices {
+  id         String @id @default(uuid())
+  userId     String
+  user       Users  @relation(fields: [userId], references: [id])
+  token      String @unique
+  deviceType String
+  deviceId   String @unique
 }

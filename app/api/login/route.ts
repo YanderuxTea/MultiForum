@@ -1,9 +1,11 @@
 import {z} from 'zod'
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt'
-import {cookies} from 'next/headers'
+import {cookies, headers} from 'next/headers'
 import {generateJWT} from '@/lib/jwt'
 import {prisma} from '@/lib/prisma'
+import {UAParser} from 'ua-parser-js'
+import {randomBytes} from 'node:crypto'
 
 const loginSchema = z.object({
   login: z.string().min(6).max(25).trim().regex(/^[a-zA-Z0-9]+$/),
@@ -26,8 +28,20 @@ export async function POST(req:Request){
     if(!validatePassword){
       return NextResponse.json({ok:false, error:'Неверный логин или пароль'})
     }
-    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm});
+    const headersList = await headers()
+    const agent = headersList.get('user-agent')??'';
+    const parser = new UAParser(agent)
+    const result = parser.getResult()
+    const typeDevice = result.device.type ?? 'desktop'
+    const deviceIDStorage = cookieStore.get('dId')?.value
+    const deviceID = deviceIDStorage??randomBytes(32).toString('hex')
+    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm, deviceId:deviceID});
     cookieStore.set({name: 'token', value: token, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', httpOnly:true, maxAge: 60 * 60 * 24 * 7, path: '/',})
+    const existingDevice = await prisma.devices.findUnique({where:{deviceId:deviceID}});
+    if(!existingDevice){
+      await prisma.devices.create({data:{userId:user.id, deviceId:deviceID, deviceType:typeDevice, token:token}},)
+      cookieStore.set({name:'dId', value:deviceID, secure: process.env.NODE_ENV==='production', sameSite: 'strict', httpOnly:true, maxAge: 60*60*24*7, path:'/'})
+    }
     return NextResponse.json({ok:true, message:'Добро пожаловать!'})
   }catch(err){
     console.log(err)

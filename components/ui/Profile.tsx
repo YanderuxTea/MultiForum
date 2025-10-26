@@ -46,7 +46,7 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
           </div>
         </div>
         :
-        <Image src={avatar} alt='Profile avatar' draggable={false} width={128} height={128} onError={()=>setAvatar(nullAvatar)} className={`outline-2 rounded-full w-32 h-32 aspect-square ${props.role==='Admin'?'outline-red-600':props.role==='Moderator'?'outline-blue-700':'outline-gray-500 bg-white'}`} priority unoptimized={isGif.current}/>}
+        <Image src={avatar} alt='Profile avatar' draggable={false} width={128} height={128} onError={()=>setAvatar(nullAvatar)} className={`bg-white outline-2 rounded-full w-32 h-32 aspect-square ${props.role==='Admin'?'outline-red-600':props.role==='Moderator'?'outline-blue-700':'outline-gray-500'}`} priority unoptimized={isGif.current}/>}
       <p className='text-balance text-center font-medium text-neutral-600 dark:text-neutral-300 max-w-57.5'>Дата регистрации: {formattedDate}</p>
       {props.role==='Admin'?<AdminNameplate/>:props.role==='Moderator'?<ModeratorNameplate/>:<UserNameplate/>}
     </div>

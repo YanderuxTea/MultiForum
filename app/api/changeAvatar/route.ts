@@ -16,7 +16,7 @@ export async function POST(req: Request){
   const cookieStorage = await cookies()
   const token = cookieStorage.get('token')
   if(!token){
-    return NextResponse.json({ok:false, error:'Ошибка'})
+    return NextResponse.json({ok:false, status:404},{status:404})
   }
   const dataUser = validateJWT(token.value)
   try {
