@@ -12,6 +12,7 @@ import useCurrentWidth from '@/hooks/useCurrentWidth'
 import ProfileButton from '@/components/shared/ProfileButton'
 import ButtonSettings from '@/components/shared/ButtonSettings'
 import Link from 'next/link'
+import ButtonAdmins from '@/components/shared/ButtonAdmins'
 
 
 export default function MenuMobile() {
@@ -48,9 +49,10 @@ export default function MenuMobile() {
               </button>
             </div>
             <AnimatePresence>
-              {isOpenUserMenu&&<motion.div className='overflow-hidden w-[80%] ml-auto flex flex-col gap-2.5' initial={{maxHeight:0}} animate={{maxHeight:150, paddingTop:10, paddingBottom:5}} exit={{maxHeight:0, paddingTop:0, paddingBottom:0}} transition={{duration:0.3}} layout>
+              {isOpenUserMenu&&<motion.div className='overflow-hidden w-full ml-auto flex flex-col gap-2.5' initial={{maxHeight:0}} animate={{maxHeight:180, paddingTop:10, paddingBottom:5}} exit={{maxHeight:0, paddingTop:0, paddingBottom:0}} transition={{duration:0.3}} layout>
                 <ProfileButton/>
                 <ButtonSettings/>
+                {dataUser.role==='Admin'&&<ButtonAdmins/>}
                 <div className='pt-2.5 border-t border-neutral-300 dark:border-neutral-700'>
                   <ButtonLogout/>
                 </div>

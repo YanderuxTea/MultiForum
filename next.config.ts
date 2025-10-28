@@ -5,8 +5,19 @@ const nextConfig: NextConfig = {
 };
 
 
-
 module.exports = {
+  async headers() {
+    return [{
+      source: '/:path*',
+      headers: [{
+        key: 'X-Frame-Options',
+        value: 'DENY',
+      },{
+        key: 'X-Content-Type-Options',
+        value: 'nosniff',
+      }]
+    }]
+  },
   allowedDevOrigins: ['local-origin.dev', '*.local-origin.dev', '192.168.50.175'],
   images:{
     remotePatterns:[{
@@ -14,6 +25,8 @@ module.exports = {
       hostname: 'i.imgur.com',
       port:'',
     }]
-  }
+  },
+  poweredByHeader:false,
+  generateEtags: false,
 }
 export default nextConfig;
