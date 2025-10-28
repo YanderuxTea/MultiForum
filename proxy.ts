@@ -43,8 +43,10 @@ export async function proxy(req:NextRequest) {
       headers: reqHeaders,
     },
   });
+
   responseWithCsp.headers.set('Content-Security-Policy', cspValue)
   const url = req.nextUrl.pathname;
+
   if(url.startsWith('/_next')|| url.includes('/api/getDataUser')) {
     return responseWithCsp
   }
@@ -84,6 +86,7 @@ async function rateLimiterRecovery(req:Request) {
 }
 async function rateLimiterMiddleware(req: Request){
   const ip =  req.headers.get('x-forwarded-for')??'anonymous'
+
   const { success } = await rateLimit.limit(ip)
   if(!success) {
     return NextResponse.json({ok: false, error: 'Слишком много запросов'}, {status:429})
@@ -128,13 +131,4 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
     return NextResponse.redirect(new URL('/', req.url))
   }
   return responseWithCsp
-}
-export const config = {
-  matcher:[{
-    source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    missing: [
-      { type: 'header', key: 'next-router-prefetch' },
-      { type: 'header', key: 'purpose', value: 'prefetch' },
-    ],
-  }]
 }

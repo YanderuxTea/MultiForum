@@ -2,10 +2,10 @@ import {NextResponse} from 'next/server'
 import {prisma} from '@/lib/prisma'
 
 export async function POST(req:Request){
-  // const res = await rateLimiterSearch(req)
-  // if(res){
-  //   return res
-  // }
+  const res = await rateLimiterSearch(req)
+  if(res){
+    return res
+  }
   const body = await req.json()
   const {query, searchParams} = body
   if(!query.toString().trim() || !searchParams.toString().trim()){
