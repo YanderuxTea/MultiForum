@@ -25,9 +25,9 @@ export async function proxy(req:NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
   default-src 'self';
-  script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
-  style-src 'self' 'nonce-${nonce}';
-  img-src 'self' *.imgur.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.vercel-insights.com;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' https://*.imgur.com data:;
   font-src 'self';
   object-src 'none';
   base-uri 'self';
