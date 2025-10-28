@@ -1,5 +1,6 @@
 import {NextResponse} from 'next/server'
 import {prisma} from '@/lib/prisma'
+import {rateLimiterSearch} from '@/proxy'
 
 export async function POST(req:Request){
   const res = await rateLimiterSearch(req)
