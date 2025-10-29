@@ -27,6 +27,5 @@ module.exports = {
     }]
   },
   poweredByHeader:false,
-  generateEtags: false,
 }
 export default nextConfig;

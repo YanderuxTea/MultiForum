@@ -22,7 +22,6 @@ const rateLimitSearch = new Ratelimit({
   limiter: Ratelimit.slidingWindow(2, '30 s')
 })
 export async function proxy(req:NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.vercel-insights.com;
@@ -36,7 +35,6 @@ export async function proxy(req:NextRequest) {
  `
   const cspValue = cspHeader.replace(/\n/g, ' ').trim()
   const reqHeaders = new Headers(req.headers)
-  reqHeaders.set('x-nonce', nonce)
   reqHeaders.set('Content-Security-Policy', cspValue)
   const responseWithCsp = NextResponse.next({
     request:{
