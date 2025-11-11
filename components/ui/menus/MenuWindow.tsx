@@ -1,3 +1,4 @@
+'use client'
 import React, {JSX, useEffect, useRef} from 'react'
 import {motion} from 'framer-motion'
 import ExitIcon from '@/components/shared/icons/ExitIcon'

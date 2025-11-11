@@ -12,6 +12,7 @@ import CheckNameplateUser from '@/components/shared/users/CheckNameplateUser'
 import ColorNicknameUser from '@/components/shared/users/ColorNicknameUser'
 import CheckBanned from '@/components/shared/users/CheckBanned'
 import {IBans, IUnbans, IUnwarns, IWarns} from '@/data/interfaces/adminsPanel/PunishmentPanel/PunishmentPanelInterfaces'
+import OpenMenuAdminsPanelProvider from '@/components/providers/OpenMenuAdminsPanelProvider'
 
 interface IProfileProps{
   login: string,
@@ -52,7 +53,9 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   }, [avatar])
   return <main className='grid grid-cols-1 grid-rows-[2fr_1fr_5fr] w-full gap-5 lg:grid-cols-[1fr_3.5fr] lg:grid-rows-[1fr_3fr] lg:min-h-screen max-w-300 px-2.5 py-5 xl:px-0 max-h-screen'>
     <AnimatePresence>
-      {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
+      <OpenMenuAdminsPanelProvider>
+        {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
+      </OpenMenuAdminsPanelProvider>
     </AnimatePresence>
     <div className='w-full mx-auto flex items-center justify-center flex-col gap-2.5 bg-white dark:bg-[#212121] p-2.5 rounded-md border border-neutral-300 dark:border-neutral-700'>
       <ColorNicknameUser user={{role:props.role, login:props.login}} fontSize={20} fontWeight={700}/>
