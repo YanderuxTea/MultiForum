@@ -1,5 +1,5 @@
 'use client'
-import InputAny from '@/components/shared/InputAny'
+import InputAny from '@/components/shared/inputs/InputAny'
 import {AnimatePresence, motion} from 'framer-motion'
 import React from 'react'
 import useNotify from '@/hooks/useNotify'

@@ -1,10 +1,10 @@
-import SearchForm from '@/components/ui/SearchForm'
-import StubHeader from '@/components/shared/StubHeader'
-import StubUnderHeader from '@/components/shared/StubUnderHeader'
+import SearchForm from '@/components/ui/searches/SearchForm'
+import StubHeader from '@/components/shared/stubs/StubHeader'
+import StubUnderHeader from '@/components/shared/stubs/StubUnderHeader'
 import React from 'react'
-import FoundUsers from '@/components/ui/FoundUsers'
-import FoundThemes from '@/components/ui/FoundThemes'
-import TimeoutSearch from '@/components/shared/TimeoutSearch'
+import FoundUsers from '@/components/ui/searches/FoundUsers'
+import FoundThemes from '@/components/ui/searches/FoundThemes'
+import TimeoutSearch from '@/components/shared/searches/TimeoutSearch'
 
 interface ISearchParams {
   query?: string,
@@ -46,10 +46,10 @@ export default async function Page({searchParams}: {searchParams:Promise<ISearch
       </div>
     }
     {typeof users !=='number'&&query&&<div
-      className='flex bg-neutral-100 dark:bg-neutral-900 rounded-md border border-neutral-300 dark:border-neutral-700 flex-col gap-5 justify-center max-w-200 mx-auto px-2.5 py-5 lg:px-0 w-full'>
+      className='flex bg-neutral-100 dark:bg-neutral-900 rounded-md border border-neutral-300 dark:border-neutral-700 flex-col gap-5 justify-center max-w-200 mx-auto px-2.5 py-5 w-full'>
       {(searchFilter === 'All' || searchFilter === 'User') &&
         <div className='flex flex-col gap-5'>
-          <p className='text-lg font-bold text-neutral-800 lg:indent-2.5 dark:text-neutral-200'>Пользователи</p>
+          <p className='text-lg font-bold text-neutral-800 dark:text-neutral-200'>Пользователи</p>
           <FoundUsers users={users}/>
         </div>}
       {(searchFilter === 'All' || searchFilter === 'Themes') &&

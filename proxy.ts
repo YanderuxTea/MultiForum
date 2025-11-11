@@ -84,7 +84,6 @@ async function rateLimiterRecovery(req:Request) {
 }
 async function rateLimiterMiddleware(req: Request){
   const ip =  req.headers.get('x-forwarded-for')??'anonymous'
-
   const { success } = await rateLimit.limit(ip)
   if(!success) {
     return NextResponse.json({ok: false, error: 'Слишком много запросов'}, {status:429})
@@ -114,6 +113,9 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
 
   const dId = cookieStorage.get('dId')!.value
   const token = cookieStorage.get('token')?.value
+  if(!token && req.nextUrl.pathname === '/banned'){
+    return NextResponse.redirect(new URL('/', req.url))
+  }
   if(!token){
     return responseWithCsp
   }
@@ -124,6 +126,37 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
     cookieStorage.delete('dId')
     cookieStorage.delete('token')
     return NextResponse.redirect(new URL('/invalid', req.url))
+  }
+  if(typeof validateToken !== 'string'){
+    const bans = await prisma.bans.findMany({where:{idUser:validateToken.id}, include:{Unbans:true}})
+    if(bans){
+      const isBanned = bans.some(ban => {
+        if(ban.Unbans){
+          return false
+        }
+        const banEnd = new Date(ban.date).getTime() + ban.time*60*1000
+        return banEnd > Date.now() || ban.time === 0
+      })
+      const activeBan = bans.find(b => {
+        if(b.Unbans){
+          return false
+        }
+        const banEnd = new Date(b.date).getTime() + b.time*60*1000
+        if(banEnd> Date.now() || b.time === 0){
+          return b
+        }
+      })
+      const reason = req.nextUrl.searchParams.get('reason')
+      const time = req.nextUrl.searchParams.get('time')
+      const banEnd = req.nextUrl.searchParams.get('banEnd')
+      if(isBanned && req.nextUrl.pathname !=='/api/logout' && (req.nextUrl.pathname !=='/banned' || [...req.nextUrl.searchParams].length < 3|| reason !== activeBan?.reason || time !== activeBan?.time.toString() || banEnd !== (new Date(activeBan.date).getTime()+activeBan.time*60*1000).toString() )){
+        if(activeBan){
+          return NextResponse.redirect(new URL(`/banned?reason=${activeBan.reason}&time=${activeBan.time}&banEnd=${new Date(activeBan.date).getTime() + activeBan.time*60*1000}`, req.url))
+        }
+      }else if(!isBanned && req.nextUrl.pathname === '/banned'){
+        return NextResponse.redirect(new URL('/', req.url))
+      }
+    }
   }
   if(typeof validateToken !== 'string'&&validateToken.role !=='Admin'&&adminsRoute.some(route=>req.nextUrl.pathname.startsWith(route))){
     return NextResponse.redirect(new URL('/', req.url))

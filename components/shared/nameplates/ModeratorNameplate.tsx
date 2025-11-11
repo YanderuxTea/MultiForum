@@ -1,0 +1,18 @@
+'use client'
+import {CSSProperties, useEffect} from 'react'
+import {motion, useAnimationControls} from 'framer-motion'
+
+export default function UserNameplate() {
+  const controls = useAnimationControls()
+  useEffect(() => {
+    controls.start({
+      '--from':['-10%','100%'],
+      '--via': ['0%', '110%'],
+      '--to':['10%','120%'],
+      transition:{duration:2, repeat:Infinity, ease:'linear', repeatDelay:2},
+    })
+  }, [controls])
+  return <motion.div animate={controls} style={{'--via':'0%', '--from':'-10%', '--to':'10%',background:'linear-gradient(135deg, #2b7fff var(--from), #51a2ff var(--via), #2b7fff var(--to))'}as CSSProperties} className='px-2.5 py-1 bg- rounded-md relative overflow-hidden select-none'>
+    <p className='text-white font-bold relative z-1'>Модератор</p>
+  </motion.div>
+}

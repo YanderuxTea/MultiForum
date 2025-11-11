@@ -27,6 +27,10 @@ model Users {
   topic            Topic[]
   posts            Posts[]
   devices          Devices[]
+  warns            Warns[]
+  bans             Bans[]
+  Unwarns          Unwarns[]
+  Unbans           Unbans[]
 }
 
 model Category {
@@ -63,4 +67,47 @@ model Devices {
   token      String @unique
   deviceType String
   deviceId   String @unique
+}
+
+model Warns {
+  id      String   @id @default(uuid())
+  idUser  String
+  reason  String
+  date    DateTime @default(now())
+  user    Users    @relation(fields: [idUser], references: [id])
+  admin   String
+  Unwarns Unwarns?
+}
+
+model Bans {
+  id     String   @id @default(uuid())
+  idUser String
+  reason String
+  date   DateTime @default(now())
+  time   Int
+  user   Users    @relation(fields: [idUser], references: [id])
+  admin  String
+  Unbans Unbans?
+}
+
+model Unwarns {
+  id     String   @id @default(uuid())
+  idWarn String   @unique
+  warn   Warns    @relation(fields: [idWarn], references: [id])
+  idUser String
+  reason String
+  date   DateTime @default(now())
+  user   Users    @relation(fields: [idUser], references: [id])
+  admin  String
+}
+
+model Unbans {
+  id     String   @id @default(uuid())
+  idBan  String   @unique
+  ban    Bans     @relation(fields: [idBan], references: [id])
+  idUser String
+  reason String
+  date   DateTime @default(now())
+  user   Users    @relation(fields: [idUser], references: [id])
+  admin  String
 }

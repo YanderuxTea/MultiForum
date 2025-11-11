@@ -4,9 +4,12 @@ import {ChoosePhotoContext} from '@/context/ChoosePhotoContext'
 
 export default function ChoosePhotoProvider({children}: {children: ReactNode}) {
   const [isChoosePhoto, setIsChoosePhoto] = React.useState(false);
+  const [isHelp, setIsHelp] = React.useState(false);
   const value ={
     isChoosePhoto:isChoosePhoto,
     setIsChoosePhoto:setIsChoosePhoto,
+    isHelp:isHelp,
+    setIsHelp:setIsHelp
   }
   useEffect(() => {
     if(isChoosePhoto){

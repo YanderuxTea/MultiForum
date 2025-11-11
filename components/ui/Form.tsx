@@ -2,7 +2,7 @@
 import React, {useTransition} from 'react'
 import {useParams, useRouter} from 'next/navigation'
 import {loginInputs, registerInputs} from '@/data/formInputs'
-import InputCustom from '@/components/shared/InputCustom'
+import InputCustom from '@/components/shared/inputs/InputCustom'
 import useFormContext from '@/hooks/useFormContext'
 import {AnimatePresence, motion} from 'framer-motion'
 import useNotify from '@/hooks/useNotify'

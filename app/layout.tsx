@@ -5,14 +5,14 @@ import {ThemeProvider} from 'next-themes'
 import {montserrat} from '@/styles/font'
 import Preloader from '@/components/ui/Preloader'
 import HeaderProviders from '@/components/providers/HeaderProviders'
-import HeaderWrapper from '@/components/ui/HeaderWrapper'
+import HeaderWrapper from '@/components/ui/headers/HeaderWrapper'
 import Footer from '@/components/ui/Footer'
-import Notify from '@/components/shared/Notify'
+import Notify from '@/components/shared/notifys/Notify'
 import NotifyProvider from '@/components/providers/NotifyProvider'
 import DataUserProvider from '@/components/providers/DataUserProvider'
 import LoaderProvider from '@/components/providers/LoaderProvider'
-import NotifyVerifyEmail from '@/components/shared/NotifyVerifyEmail'
-import UnderHeader from '@/components/ui/UnderHeader'
+import NotifyVerifyEmail from '@/components/shared/notifys/NotifyVerifyEmail'
+import UnderHeader from '@/components/ui/headers/UnderHeader'
 
 
 export const metadata: Metadata = {
