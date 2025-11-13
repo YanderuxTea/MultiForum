@@ -13,8 +13,11 @@ export async function GET(){
   if(!validToken){
     return NextResponse.json({ok: false, message: 'No token provided.'})
   }
-  if(typeof validToken === 'object' && validToken.role !== 'Admin'){
-    return NextResponse.json({ok: false, message: 'No permission to access.'})
+  if(typeof validToken === 'object'){
+    const checkStaff = validToken.role === 'Admin' || validToken.role === 'Moderator'
+    if(!checkStaff){
+      return NextResponse.json({ok: false, message: 'No permission to access.'})
+    }
   }
   const users = await prisma.users.findMany({select:{id:true, login:true, role:true, avatar:true, bans: {include:{ Unbans:true}, orderBy:{date:'desc'}}, warns:{include:{Unwarns:true}, orderBy:{date:'desc'}}}})
   return NextResponse.json({ok: true, users: users})

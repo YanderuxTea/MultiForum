@@ -13,8 +13,11 @@ export async function POST(req:Request){
   if(!validToken){
     return NextResponse.json({ok: false, message: 'No token provided.'})
   }
-  if(typeof validToken === 'object' && validToken.role !== 'Admin'){
-    return NextResponse.json({ok: false, message: 'No permission to access.'})
+  if(typeof validToken === 'object'){
+    const checkStaff = validToken.role === 'Admin' || validToken.role === 'Moderator'
+    if(!checkStaff){
+      return NextResponse.json({ok: false, message: 'No permission to access.'})
+    }
   }
   const body = await req.json()
   const {id} = body

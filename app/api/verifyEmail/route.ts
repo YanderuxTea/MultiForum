@@ -27,7 +27,7 @@ export async function POST(req:Request){
     try {
       await prisma.users.update({where:{email:verifiedToken.email}, data:{verification:'Verify'}})
       if(user!==null){
-        const newToken = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:'Verify', verifyAdm:user.verificationAdm, deviceId:dId.value})
+        const newToken = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:'Verify', verifyAdm:user.verificationAdm, deviceId:dId.value, date:new Date()});
         cookieStorage.set('token', newToken)
       }
       return NextResponse.json({ok:true, message:'Успешно! Ожидайте подтверждения Администратора'})

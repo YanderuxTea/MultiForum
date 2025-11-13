@@ -9,6 +9,7 @@ export default function BannedPage() {
   const reason = searchParams.get('reason')
   const time = searchParams.get('time')
   const banEnd = searchParams.get('banEnd')
+  const admin = searchParams.get('admin')
   const [timerEnd, setTimerEnd] = React.useState<number>(0)
   useEffect(() => {
     const interval = setInterval(()=>{
@@ -28,6 +29,7 @@ export default function BannedPage() {
         ?
         <motion.div key='ban' initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0}} transition={{delay:0.3, duration:0.5}} className='relative z-1 flex flex-col gap-2.5 p-2.5 bg-white dark:bg-[#212121] border border-neutral-300 dark:border-neutral-700 rounded-md justify-center items-center lg:p-10 lg:px-20'>
           <p className='text-lg text-neutral-800 dark:text-neutral-200 font-bold w-full text-center'>Вы заблокированы</p>
+          <p className='text-neutral-700 dark:text-neutral-300 font-medium w-full text-center'>Вас заблокировал: <span className='font-bold text-red-600 dark:text-red-700'>{admin}</span></p>
           <p className='text-neutral-700 dark:text-neutral-300 font-medium w-full text-center'>Причина блокировки: <br/><span className='text-red-600 dark:text-red-700 underline underline-offset-4'>{reason}</span></p>
           <p className='text-neutral-700 dark:text-neutral-300 font-medium w-full text-center'>Время блокировки: <span className='text-red-600 dark:text-red-700'>{Number(time) === 0 ?'Навсегда':time} {Number(time)!==0&&'минут'}</span></p>
           <p className='text-neutral-700 dark:text-neutral-300 font-medium w-full text-center'>Окончание блокировки через: <br/> <span className='text-red-600 dark:text-red-700'>{Number(time) === 0 ? 'Никогда': `${Math.floor(timerEnd/3600).toString().padStart(2,'0')}:${Math.floor((timerEnd%3600)/60).toString().padStart(2, '0')}:${(timerEnd%60).toString().padStart(2,'0')}`}</span></p>

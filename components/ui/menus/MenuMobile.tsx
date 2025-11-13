@@ -13,6 +13,7 @@ import ProfileButton from '@/components/shared/buttons/ProfileButton'
 import ButtonSettings from '@/components/shared/buttons/ButtonSettings'
 import Link from 'next/link'
 import ButtonAdmins from '@/components/shared/buttons/ButtonAdmins'
+import useCheckingStaff from '@/hooks/useCheckingStaff'
 
 
 export default function MenuMobile() {
@@ -36,7 +37,7 @@ export default function MenuMobile() {
       document.body.style.overflow = 'unset'
     }
   }, [isOpenMenu])
-
+  const {checkStaff} = useCheckingStaff({role:dataUser?dataUser.role:'User'})
   return <><motion.div initial={{x:`100%`}} animate={{x:`0%`}} exit={{x:`100%`}} transition={{type:'tween', duration:0.2}} className='fixed min-h-screen flex z-10 bg-white dark:bg-[#212121] w-[80%] right-0'>
       <div className='flex flex-col overflow-y-auto max-h-screen z-10 w-full gap-2.5 p-2.5'>
         <StubHeader/>
@@ -52,7 +53,7 @@ export default function MenuMobile() {
               {isOpenUserMenu&&<motion.div className='overflow-hidden w-full ml-auto flex flex-col gap-2.5' initial={{maxHeight:0}} animate={{maxHeight:180, paddingTop:10, paddingBottom:5}} exit={{maxHeight:0, paddingTop:0, paddingBottom:0}} transition={{duration:0.3}} layout>
                 <ProfileButton/>
                 <ButtonSettings/>
-                {dataUser.role==='Admin'&&<ButtonAdmins/>}
+                {checkStaff&&<ButtonAdmins/>}
                 <div className='pt-2.5 border-t border-neutral-300 dark:border-neutral-700'>
                   <ButtonLogout/>
                 </div>

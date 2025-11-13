@@ -11,6 +11,7 @@ export interface IPayload {
   verifyEmail: string;
   verifyAdm: string;
   deviceId: string;
+  date: Date
 }
 export function generateJWT(payload: IPayload) {
   if(!JWT_SECRET){throw new Error('Нет JWT');}

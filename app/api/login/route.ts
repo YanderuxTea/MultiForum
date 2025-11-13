@@ -35,7 +35,7 @@ export async function POST(req:Request){
     const typeDevice = result.device.type ?? 'desktop'
     const deviceIDStorage = cookieStore.get('dId')?.value
     const deviceID = deviceIDStorage??randomBytes(32).toString('hex')
-    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm, deviceId:deviceID});
+    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm, deviceId:deviceID, date:new Date()});
     cookieStore.set({name: 'token', value: token, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', httpOnly:true, maxAge: 60 * 60 * 24 * 7, path: '/',})
     const existingDevice = await prisma.devices.findUnique({where:{deviceId:deviceID}});
     if(!existingDevice){

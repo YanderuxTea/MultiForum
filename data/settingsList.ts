@@ -13,5 +13,9 @@ export const settingsList: ISettingsList[] = [{
   {
     title: 'Устройства',
     url: 'devices'
+  },
+  {
+    title:'История наказаний',
+    url:'historyPunishment'
   }
   ]

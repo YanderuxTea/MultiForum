@@ -93,6 +93,7 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
   const publicRoute = ['/auth/login', '/auth/register', '/recovery']
   const secureRoute = ['/settings']
   const adminsRoute = ['/adminsPanel']
+  const ModeratorsRoutes = ['/main', '/AvatarManagement', '/PunishmentManagement']
   const cookieStorage = await cookies();
   const tokenHas = cookieStorage.has('token')
   const dIdHas = cookieStorage.has('dId')
@@ -149,17 +150,25 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
       const reason = req.nextUrl.searchParams.get('reason')
       const time = req.nextUrl.searchParams.get('time')
       const banEnd = req.nextUrl.searchParams.get('banEnd')
-      if(isBanned && req.nextUrl.pathname !=='/api/logout' && (req.nextUrl.pathname !=='/banned' || [...req.nextUrl.searchParams].length < 3|| reason !== activeBan?.reason || time !== activeBan?.time.toString() || banEnd !== (new Date(activeBan.date).getTime()+activeBan.time*60*1000).toString() )){
+      const admin = req.nextUrl.searchParams.get('admin')
+      if(isBanned && req.nextUrl.pathname !=='/api/logout' && (req.nextUrl.pathname !=='/banned' || [...req.nextUrl.searchParams].length < 4|| reason !== activeBan?.reason || time !== activeBan?.time.toString() || banEnd !== (new Date(activeBan.date).getTime()+activeBan.time*60*1000).toString() || admin!==activeBan.admin)){
         if(activeBan){
-          return NextResponse.redirect(new URL(`/banned?reason=${activeBan.reason}&time=${activeBan.time}&banEnd=${new Date(activeBan.date).getTime() + activeBan.time*60*1000}`, req.url))
+          return NextResponse.redirect(new URL(`/banned?reason=${activeBan.reason}&admin=${activeBan.admin}&time=${activeBan.time}&banEnd=${new Date(activeBan.date).getTime() + activeBan.time*60*1000}`, req.url))
         }
       }else if(!isBanned && req.nextUrl.pathname === '/banned'){
         return NextResponse.redirect(new URL('/', req.url))
       }
     }
   }
-  if(typeof validateToken !== 'string'&&validateToken.role !=='Admin'&&adminsRoute.some(route=>req.nextUrl.pathname.startsWith(route))){
-    return NextResponse.redirect(new URL('/', req.url))
+  if(typeof validateToken !== 'string'){
+    const checkStaff = validateToken.role === 'Admin' || validateToken.role === 'Moderator'
+    const isModerator = validateToken.role === 'Moderator'
+    if(!checkStaff&&adminsRoute.some(route=>req.nextUrl.pathname.startsWith(route))){
+      return NextResponse.redirect(new URL('/', req.url))
+    }
+    if(isModerator && req.nextUrl.pathname.startsWith('/adminsPanel')&&!ModeratorsRoutes.some(route=>req.nextUrl.pathname.endsWith(route))){
+      return NextResponse.redirect(new URL('/adminsPanel/main', req.url))
+    }
   }
   return responseWithCsp
 }

@@ -13,6 +13,7 @@ import ProfileButton from '@/components/shared/buttons/ProfileButton'
 import Link from 'next/link'
 import ButtonSettings from '@/components/shared/buttons/ButtonSettings'
 import ButtonAdmins from '@/components/shared/buttons/ButtonAdmins'
+import useCheckingStaff from '@/hooks/useCheckingStaff'
 
 export default function Header() {
   const width = useCurrentWidth()
@@ -29,6 +30,7 @@ export default function Header() {
     window.addEventListener('mousemove', toggleMenu)
     return () => {window.removeEventListener('mousemove', toggleMenu)}
   }, [])
+  const {checkStaff} = useCheckingStaff({role:userData?userData.role:'User'})
   return <header className='w-full flex items-center px-2.5 bg-white dark:bg-[#212121] fixed z-20 justify-center border-b border-neutral-300 dark:border-neutral-700'>
     <div className='max-w-300 w-full bg-white dark:bg-[#212121] flex flex-row justify-between'>
         <Logo/>
@@ -41,10 +43,10 @@ export default function Header() {
           </span>
           <AnimatePresence>
             {openMenuAuth&&
-              <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className={`flex-col gap-2.5 flex rounded-b-[14px] border-x border-b border-gray-700/25 dark:border-white/10 absolute right-0 top-14 -z-1 bg-white dark:bg-[#212121] p-2.5 ${userData&&userData.role==='Admin'?'w-60':'w-42.5'}`}>
+              <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className={`flex-col gap-2.5 flex rounded-b-[14px] border-x border-b border-gray-700/25 dark:border-white/10 absolute right-0 top-14 -z-1 bg-white dark:bg-[#212121] p-2.5 ${checkStaff?'w-60':'w-42.5'}`}>
                 <ProfileButton/>
                 <ButtonSettings/>
-                {userData&&userData.role==='Admin'&&<ButtonAdmins/>}
+                {checkStaff&&<ButtonAdmins/>}
                 <hr className='text-neutral-300 dark:text-neutral-700' />
                 <ButtonLogout/>
               </motion.div>}

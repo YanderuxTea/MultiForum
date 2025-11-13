@@ -7,9 +7,13 @@ import OpenListPunishmentHistory from '@/components/shared/adminspanels/OpenList
 import PunishmentPanel from '@/components/shared/adminspanels/PunishmentPanel'
 import SelectorPunishmentUnpunishment from '@/components/shared/adminspanels/SelectorPunishmentUnpunishment'
 import UserInfo from '@/components/shared/adminspanels/UserInfo'
+import useCheckingStaff from '@/hooks/useCheckingStaff'
+import useDataUser from '@/hooks/useDataUser'
 
 export default function ContentMenuPunishmentManagement({banned, setPending, setUsers, users, pending} : {banned: boolean, setPending: React.TransitionStartFunction, setUsers:React.Dispatch<React.SetStateAction<IUser[]>>, users:IUser[], pending:boolean}) {
   const { bans, warns, setIsOpenList, isOpenList} = useOpenMenuAdminsPanel()
+  const userData = useDataUser()
+  const {isAdmin} = useCheckingStaff({role:userData?.role||'User'})
   const [checked, setChecked] = React.useState<string>('')
   const [selectWarns, setSelectWarns] = React.useState<IWarns[]>([])
   const [selectBans, setSelectBans] = React.useState<IBans[]>([])
@@ -55,7 +59,7 @@ export default function ContentMenuPunishmentManagement({banned, setPending, set
     <div className='flex flex-col w-full p-1.25'>
       {checked === 'punishment'?
         <PunishmentPanel pending={pending} setPending={setPending} setUsers={setUsers}/>
-      : checked==='unpunishment'
+      : isAdmin&&checked==='unpunishment'
           ?
           <UnpunishmentPanel setUsers={setUsers} pending={pending} setPending={setPending} selectBans={selectBans} selectWarns={selectWarns} setSelectBans={setSelectBans} setSelectWarns={setSelectWarns} activeBans={activeBans} reason={reason} activeWarns={activeWarns} setReason={setReason}/>
           :null
