@@ -19,12 +19,13 @@ interface IProfileProps{
   role: string,
   createdAt: Date,
   avatar: string|null,
-  posts: {
+  Posts: {
     id: string
     createdAt: Date
-    authorId: string
-    content: string
-    topicId: string
+    idUser: string
+    title: string
+    idSubCategories: string
+    locked: boolean
   }[],
   warns: (IWarns & { Unwarns: IUnwarns | null })[]
   bans: (IBans & { Unbans: IUnbans | null })[]
@@ -54,7 +55,9 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   return <main className='grid grid-cols-1 grid-rows-[2fr_1fr_5fr] w-full gap-5 lg:grid-cols-[1fr_3.5fr] lg:grid-rows-[1fr_3fr] lg:min-h-screen max-w-300 px-2.5 py-5 xl:px-0 max-h-screen'>
     <AnimatePresence>
       <OpenMenuAdminsPanelProvider>
-        {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
+        <AnimatePresence>
+          {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
+        </AnimatePresence>
       </OpenMenuAdminsPanelProvider>
     </AnimatePresence>
     <div className='w-full mx-auto flex items-center justify-center flex-col gap-2.5 bg-white dark:bg-[#212121] p-2.5 rounded-md border border-neutral-300 dark:border-neutral-700'>
@@ -75,7 +78,7 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
     </div>
     <div className='bg-white p-2.5 dark:bg-[#212121] rounded-md border border-neutral-300 dark:border-neutral-700 flex flex-col max-w-300 mx-auto w-full gap-2.5 lg:col-start-1 lg:row-start-2 max-h-max'>
       <p className='text-lg font-bold text-neutral-700 dark:text-neutral-200'>Общая информация</p>
-      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Сообщений: {props.posts.length}</p>
+      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Сообщений: {props.Posts.length}</p>
       <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество активных предупреждений: {activeWarns}/3</p>
       <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество всех предупреждений: {props.warns.filter((w)=>{
         if(w.Unwarns){
@@ -94,8 +97,8 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
       <div className='pb-2.5 relative after:absolute after:inset-0 after:border-b-10 after:blur-[2px] after:border-white dark:after:border-[#212121] after:translate-y-1 after:scale-x-105'>
         <p className='text-lg font-bold text-neutral-700 dark:text-neutral-200'>Активность</p>
       </div>
-      <div className={`flex flex-col overflow-y-auto ${props.posts.length>0?'':'items-center justify-center h-full'}`}>
-        {props.posts.length>0?null: <p className='font-medium text-neutral-700 dark:text-neutral-200'>Нет активности :(</p>}
+      <div className={`flex flex-col overflow-y-auto ${props.Posts.length>0?'':'items-center justify-center h-full'}`}>
+        {props.Posts.length>0?null: <p className='font-medium text-neutral-700 dark:text-neutral-200'>Нет активности :(</p>}
       </div>
     </div>
   </main>

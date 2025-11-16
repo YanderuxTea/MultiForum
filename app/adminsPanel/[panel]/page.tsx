@@ -2,7 +2,16 @@ import {adminsPanelData} from '@/data/adminsPanelData'
 import {notFound, redirect} from 'next/navigation'
 import {roleManagementData} from '@/data/roleManagementData'
 import {punishmentManagementData} from '@/data/punishmentManagementData'
+import {Metadata} from 'next'
 
+export async function generateMetadata({params}:{params:Promise<{panel:string}>}): Promise<Metadata> {
+  const {panel} = await params
+  return {
+    title: panel === 'main' ? 'Multi Forum | Главная': panel === 'VerifyUsers' ? 'Multi Forum | Подтверждение пользователей' : panel === 'RoleManagement' ? 'Multi Forum | Управление ролями' : panel === 'AvatarManagement' ? 'Multi Forum | Удаление аватарок' : panel === 'PunishmentManagement' ?'Multi Forum | Управление наказаниями': 'Multi Forum',
+    robots: 'noindex, nofollow',
+    description: 'Панель администратора Multi Forum. Управление пользователями, контентом и настройками безопасности форума.'
+  }
+}
 export default async function Page({params, searchParams}:{params:Promise<{panel:string}>, searchParams:Promise<{query:string, searchParams:string}>}) {
   const {panel} = await params
   if(!adminsPanelData.some((panelData)=>panelData.url === panel)){

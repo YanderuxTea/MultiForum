@@ -13,11 +13,27 @@ import DataUserProvider from '@/components/providers/DataUserProvider'
 import LoaderProvider from '@/components/providers/LoaderProvider'
 import NotifyVerifyEmail from '@/components/shared/notifys/NotifyVerifyEmail'
 import UnderHeader from '@/components/ui/headers/UnderHeader'
-
+import CategoriesProvider from '@/components/providers/CategoriesProvider'
 
 export const metadata: Metadata = {
-  title: "Multi Forum главная",
-  description: "Форум разработчиков и программистов",
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
+  title: "Multi Forum | Главная",
+  description: "Форум для разработчиков и программистов. Обсуждайте Python, JavaScript, C++, Node.js, Next.js и другие технологии. Находите ответы по категориям.",
+  openGraph:{
+    title: 'Multi Forum | Главная',
+    description: 'Форум для разработчиков и программистов. Обсуждайте Python, JavaScript, C++, Node.js, Next.js и другие технологии. Находите ответы по категориям.',
+    url: process.env.NEXT_PUBLIC_SITE_URL,
+    siteName: 'Multi Forum',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630
+      }
+    ],
+    locale: 'ru_RU',
+    type:'website',
+  }
 };
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
@@ -27,7 +43,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
         <LoaderProvider>
           <DataUserProvider>
-            <NotifyProvider>
+            <CategoriesProvider>
+              <NotifyProvider>
                 <Preloader/>
                 <Notify/>
                 <NotifyVerifyEmail/>
@@ -35,9 +52,10 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                   <HeaderWrapper/>
                 </HeaderProviders>
                 <UnderHeader/>
-                  {children}
+                {children}
                 <Footer/>
-            </NotifyProvider>
+              </NotifyProvider>
+            </CategoriesProvider>
           </DataUserProvider>
         </LoaderProvider>
       </ThemeProvider>

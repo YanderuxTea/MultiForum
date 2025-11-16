@@ -5,12 +5,16 @@ import React from 'react'
 import FoundUsers from '@/components/ui/searches/FoundUsers'
 import FoundThemes from '@/components/ui/searches/FoundThemes'
 import TimeoutSearch from '@/components/shared/searches/TimeoutSearch'
+import {Metadata} from 'next'
 
 interface ISearchParams {
   query?: string,
   searchParams?: string,
 }
-
+export const metadata:Metadata = {
+  title: 'Multi Forum | Поиск',
+  description: 'Быстрый поиск по всем обсуждениям форума. Ищите конкретные темы, а также профили участников и опытных разработчиков по всем категориям.'
+}
 export default async function Page({searchParams}: {searchParams:Promise<ISearchParams>}) {
   const query = (await searchParams).query
   const searchFilter = (await searchParams).searchParams

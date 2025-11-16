@@ -5,7 +5,6 @@ import React from 'react'
 import useNotify from '@/hooks/useNotify'
 import {useRouter} from 'next/navigation'
 
-
 export default function Page() {
   const [email, setEmail] = React.useState('')
   const [sendEmail, setSendEmail] = React.useState(false)
@@ -52,8 +51,7 @@ export default function Page() {
       setIsNotify(true)
     }
   }
-  return <main className='min-h-screen flex items-center w-full px-2.5 justify-center'>
-    <div className='border max-w-150 gap-2.5 flex flex-col p-2.5 rounded-2xl bg-white dark:bg-[#212121] border-neutral-300 dark:border-neutral-700 w-full'>
+  return<div className='border max-w-150 gap-2.5 flex flex-col p-2.5 rounded-2xl bg-white dark:bg-[#212121] border-neutral-300 dark:border-neutral-700 w-full'>
       <p className='text-center font-medium text-lg text-neutral-800 dark:text-neutral-200'>Восстановление пароля</p>
       <AnimatePresence mode='popLayout'>
         {!sendEmail&&<motion.div key={'sendMailRecovery'} className='flex items-center flex-col gap-2.5 overflow-hidden ' layout initial={{scale:0, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0, opacity:0}} transition={{type:'spring', bounce:0.2}}>
@@ -75,5 +73,4 @@ export default function Page() {
         </motion.div>}
       </AnimatePresence>
     </div>
-  </main>
 }

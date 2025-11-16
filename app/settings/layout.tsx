@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import SettingsList from '@/components/shared/settings/SettingsList'
 import StubHeader from '@/components/shared/stubs/StubHeader'
