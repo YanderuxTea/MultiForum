@@ -27,12 +27,12 @@ export default function Page() {
           {categories.categories.length>0&&categories.categories.map((category) => {return <CategoriesMain key={category.id} props={category}/>})}
         </div>
         <div className='w-full lg:w-2/7 flex flex-col gap-5'>
-          <div className='rounded-md bg-white dark:bg-[#212121] p-2.5'>
-            Инфа
+          <div className='rounded-md bg-white dark:bg-[#212121] p-2.5 text-center'>
+            В разработке
           </div>
-          <div className='rounded-md bg-white dark:bg-[#212121] p-2.5'>
-            Инфа
-          </div>
+          {/*<div className='rounded-md bg-white dark:bg-[#212121] p-2.5'>*/}
+          {/*  Инфа*/}
+          {/*</div>*/}
         </div>
       </div>
     </div>
