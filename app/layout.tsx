@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     ],
     locale: 'ru_RU',
     type:'website',
+  },
+  other:{
+    'google-site-verification': '7RpuUJB_0Q46YWoZus_7cr6G5ZnHbwp1xdtJKFdfCGA'
   }
 };
 
