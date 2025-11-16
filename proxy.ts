@@ -36,6 +36,7 @@ export async function proxy(req:NextRequest) {
   const cspValue = cspHeader.replace(/\n/g, ' ').trim()
   const reqHeaders = new Headers(req.headers)
   reqHeaders.set('Content-Security-Policy', cspValue)
+  reqHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
   const responseWithCsp = NextResponse.next({
     request:{
       headers: reqHeaders,
