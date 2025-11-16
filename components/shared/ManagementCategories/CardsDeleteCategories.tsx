@@ -12,7 +12,7 @@ export default function CardsDeleteCategories({props, selectCategories, setSelec
   }
   return <div className='flex flex-row items-center justify-between'>
     <p className='max-w-[80%] break-all'>{props.title}</p>
-    <button disabled={pending} onClick={()=>handleAddCategories()} className={`transition-colors duration-300 ease-out border rounded-md w-8 aspect-square ${selectCategories.includes(props)?'bg-green-500 dark:bg-green-600 border-green-500 dark:border-green-600':'border-neutral-300 dark:border-neutral-700'} flex items-center justify-center cursor-pointer disabled:cursor-default disabled:bg-neutral-300 dark:disabled:bg-neutral-700`}>{selectCategories.includes(props)&&
+    <button disabled={pending} onClick={()=>handleAddCategories()} className={`transition-colors duration-300 ease-out border rounded-md w-8 aspect-square ${selectCategories.includes(props)?'bg-green-500 dark:bg-green-600 border-green-500 dark:border-green-600':'border-neutral-300 dark:border-neutral-700'} flex items-center justify-center cursor-pointer disabled:cursor-default disabled:bg-neutral-300 dark:disabled:bg-neutral-700 disabled:border-neutral-300 dark:disabled:border-neutral-700`}>{selectCategories.includes(props)&&
       <IconCheck/>}</button>
   </div>
 }
