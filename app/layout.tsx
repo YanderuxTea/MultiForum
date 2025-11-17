@@ -35,7 +35,8 @@ export const metadata: Metadata = {
     type:'website',
   },
   other:{
-    'google-site-verification': '7RpuUJB_0Q46YWoZus_7cr6G5ZnHbwp1xdtJKFdfCGA'
+    'google-site-verification': '7RpuUJB_0Q46YWoZus_7cr6G5ZnHbwp1xdtJKFdfCGA',
+    'yandex-verification': '539326b454f48665'
   },
   icons:{
     icon:'/favicon.ico',
