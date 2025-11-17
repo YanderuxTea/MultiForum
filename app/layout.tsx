@@ -36,6 +36,11 @@ export const metadata: Metadata = {
   },
   other:{
     'google-site-verification': '7RpuUJB_0Q46YWoZus_7cr6G5ZnHbwp1xdtJKFdfCGA'
+  },
+  icons:{
+    icon:'/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple:'/favicon.ico',
   }
 };
 
