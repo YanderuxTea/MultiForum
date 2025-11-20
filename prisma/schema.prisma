@@ -13,24 +13,28 @@ enum VerificationStatus {
 }
 
 model Users {
-  id               String             @id @default(uuid())
-  login            String             @unique
-  password         String
-  email            String             @unique
-  role             String             @default("User")
-  avatar           String?
-  verification     String
-  verificationAdm  VerificationStatus @default(No)
-  createdAt        DateTime           @default(now())
-  recoveryCode     String?
-  dateRecoveryCode DateTime?
-  devices          Devices[]
-  warns            Warns[]
-  bans             Bans[]
-  Unwarns          Unwarns[]
-  Unbans           Unbans[]
-  Posts            Posts[]
-  MessagesPosts    MessagesPosts[]
+  id                 String             @id @default(uuid())
+  login              String             @unique
+  password           String
+  email              String             @unique
+  role               String             @default("User")
+  avatar             String?
+  verification       String
+  verificationAdm    VerificationStatus @default(No)
+  createdAt          DateTime           @default(now())
+  recoveryCode       String?
+  dateRecoveryCode   DateTime?
+  devices            Devices[]
+  warns              Warns[]
+  bans               Bans[]
+  Unwarns            Unwarns[]
+  Unbans             Unbans[]
+  Posts              Posts[]
+  MessagesPosts      MessagesPosts[]
+  encryptedData      String?
+  iv                 String?
+  authTag            String?
+  isTwoFactorEnabled Boolean            @default(false)
 }
 
 model Categories {
@@ -44,6 +48,8 @@ model SubCategories {
   id           String     @id @default(uuid())
   title        String
   idCategories String
+  position     Int
+  icon         String
   Categories   Categories @relation(fields: [idCategories], references: [id], onDelete: Cascade)
   posts        Posts[]
 }
@@ -54,9 +60,10 @@ model Posts {
   idSubCategories String
   SubCategories   SubCategories   @relation(fields: [idSubCategories], references: [id], onDelete: Cascade)
   idUser          String
-  Users           Users           @relation(fields: [idUser], references: [id])
+  user            Users           @relation(fields: [idUser], references: [id])
   createdAt       DateTime        @default(now())
   locked          Boolean
+  pinned          Boolean         @default(false)
   MessagesPosts   MessagesPosts[]
 }
 
@@ -73,7 +80,7 @@ model MessagesPosts {
 model Devices {
   id         String @id @default(uuid())
   userId     String
-  user       Users  @relation(fields: [userId], references: [id])
+  user       Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   token      String @unique
   deviceType String
   deviceId   String @unique
@@ -84,7 +91,7 @@ model Warns {
   idUser  String
   reason  String
   date    DateTime @default(now())
-  user    Users    @relation(fields: [idUser], references: [id])
+  user    Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin   String
   Unwarns Unwarns?
 }
@@ -95,7 +102,7 @@ model Bans {
   reason String
   date   DateTime @default(now())
   time   Int
-  user   Users    @relation(fields: [idUser], references: [id])
+  user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin  String
   Unbans Unbans?
 }
@@ -107,7 +114,7 @@ model Unwarns {
   idUser String
   reason String
   date   DateTime @default(now())
-  user   Users    @relation(fields: [idUser], references: [id])
+  user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin  String
 }
 
@@ -118,6 +125,6 @@ model Unbans {
   idUser String
   reason String
   date   DateTime @default(now())
-  user   Users    @relation(fields: [idUser], references: [id])
+  user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin  String
 }

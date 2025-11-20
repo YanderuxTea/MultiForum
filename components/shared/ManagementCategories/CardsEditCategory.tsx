@@ -38,7 +38,7 @@ export default function CardsEditCategory({props, pending, setPending}:{props:IC
     })
   }
   return <div className='flex flex-row justify-between'>
-    <input type='text' id={props.id} disabled={pending} defaultValue={props.title} onChange={(e)=>setNewTitle(e.target.value)} className='outline-none border w-[85%] border-neutral-300 dark:border-neutral-700 rounded-md px-1.25'/>
+    <input type='text' id={props.id} disabled={pending} defaultValue={props.title} onChange={(e)=>setNewTitle(e.target.value)} className='outline-none border w-[85%] border-neutral-300 dark:border-neutral-700 rounded-md px-1.25 focus:border-neutral-400 dark:focus:border-neutral-600 transition-colors duration-300 ease-out'/>
     <button onClick={()=>editCategories()} disabled={pending} className='cursor-pointer transition-colors duration-300 ease-out hover:bg-green-400 dark:hover:bg-green-500 active:bg-green-600 dark:active:bg-green-700 flex items-center justify-center bg-green-500 dark:bg-green-600 p-1.25 rounded-md disabled:cursor-default disabled:bg-neutral-300 dark:disabled:bg-neutral-700 select-none'><IconCheck/></button>
   </div>
 }

@@ -46,6 +46,7 @@ export default function ContentMenuRoleManagement({props, setUser, users, pendin
           })
           setUser(newArray)
           setIsOpen(false)
+          window.document.body.style.overflow = 'unset'
           setIsOpenList(false)
           setIsNotify(true)
           setMessage(res.message)

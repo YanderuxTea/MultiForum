@@ -27,6 +27,7 @@ export default function ContentMenuAvatarManagement({setUsers, users, pending, s
         })
         setUsers(newArray)
         setIsOpen(false)
+        window.document.body.style.overflow = 'unset'
       }
     })
   }

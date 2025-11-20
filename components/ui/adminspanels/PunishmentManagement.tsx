@@ -58,7 +58,7 @@ export default function ManagementPunishmentPanel() {
   },[pageNumber, userSearch])
   return <div className='bg-white p-5 rounded-md flex flex-col border border-neutral-300 dark:border-neutral-700 dark:bg-[#212121] w-full gap-5'>
     <AnimatePresence>
-      {isOpen&&<MenuWindow props={{setIsOpenMenu:setIsOpen, content: <ContentMenuPunishmentManagement setUsers={setUsers} users={users} banned={searchParams==='banned'} setPending={setPending} pending={pending}/>, pending:pending}}/>}
+      {isOpen&&<MenuWindow props={{setIsOpenMenu:setIsOpen, isOpenMenu:isOpen, content: <ContentMenuPunishmentManagement setUsers={setUsers} users={users} banned={searchParams==='banned'} setPending={setPending} pending={pending}/>, pending:pending}}/>}
     </AnimatePresence>
     <div className='flex flex-col gap-2.5'>
       {punishmentManagementData.map((card, index)=>{return <SearchParamsCardAdminsPanel key={index} props={{title:card.title, url:card.url, searchParams:card.searchParams}}/>})}

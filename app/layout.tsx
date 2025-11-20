@@ -14,6 +14,9 @@ import LoaderProvider from '@/components/providers/LoaderProvider'
 import NotifyVerifyEmail from '@/components/shared/notifys/NotifyVerifyEmail'
 import UnderHeader from '@/components/ui/headers/UnderHeader'
 import CategoriesProvider from '@/components/providers/CategoriesProvider'
+import TwoFactorProvider from '@/components/providers/TwoFactorProvider'
+import {SpeedInsights} from '@vercel/speed-insights/next'
+import NotifyConfirmTwoFactor from '@/components/shared/notifys/NotifyConfirmTwoFactor'
 
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
@@ -51,23 +54,27 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
       <body className={`antialiased ${montserrat.className} bg-[#EDF0F4] dark:bg-[#121212] flex flex-col min-h-screen items-center`}>
       <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
         <LoaderProvider>
-          <DataUserProvider>
-            <CategoriesProvider>
-              <NotifyProvider>
-                <Preloader/>
-                <Notify/>
-                <NotifyVerifyEmail/>
-                <HeaderProviders>
-                  <HeaderWrapper/>
-                </HeaderProviders>
-                <UnderHeader/>
-                {children}
-                <Footer/>
-              </NotifyProvider>
-            </CategoriesProvider>
-          </DataUserProvider>
+          <TwoFactorProvider>
+            <DataUserProvider>
+              <CategoriesProvider>
+                <NotifyProvider>
+                  <Preloader/>
+                  <Notify/>
+                  <NotifyVerifyEmail/>
+                  <NotifyConfirmTwoFactor/>
+                  <HeaderProviders>
+                    <HeaderWrapper/>
+                  </HeaderProviders>
+                  <UnderHeader/>
+                  {children}
+                  <Footer/>
+                </NotifyProvider>
+              </CategoriesProvider>
+            </DataUserProvider>
+          </TwoFactorProvider>
         </LoaderProvider>
       </ThemeProvider>
+      <SpeedInsights/>
       </body>
     </html>
   );

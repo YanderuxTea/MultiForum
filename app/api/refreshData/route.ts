@@ -12,7 +12,7 @@ export async function GET(){
   }
   const validateToken = validateJWT(token)
   if(typeof validateToken === 'object' && validateToken){
-    const userData = await prisma.users.findUnique({where:{login:validateToken.login}, select:{id:true, login:true, role:true, email:true, verification:true, verificationAdm:true}})
+    const userData = await prisma.users.findUnique({where:{login:validateToken.login}, select:{id:true, login:true, role:true, email:true, verification:true, verificationAdm:true, isTwoFactorEnabled:true}})
     if(userData){
       const isSame = userData.id === validateToken.id&&
         userData.login === validateToken.login &&
@@ -25,7 +25,7 @@ export async function GET(){
       if(isSame){
         return NextResponse.json({ok:true, message:'Успешно'})
       }else {
-        const newToken = generateJWT({id:userData.id, login:userData.login, role:userData.role, email:userData.email, verifyEmail:userData.verification, verifyAdm:userData.verificationAdm, deviceId:dId, date:new Date()});
+        const newToken = generateJWT({id:userData.id, login:userData.login, role:userData.role, email:userData.email, verifyEmail:userData.verification, verifyAdm:userData.verificationAdm, deviceId:dId, date:new Date(), isTwoFactor:userData.isTwoFactorEnabled});
         cookieStorage.set({name:'token',value:newToken, httpOnly:true, secure:process.env.NODE_ENV==='production', sameSite:'strict', maxAge:60*60*24*7, path:'/'})
         await prisma.devices.update({where:{deviceId:dId},data:{token:newToken}})
         return NextResponse.json({ok:true, message:'Успешно'})

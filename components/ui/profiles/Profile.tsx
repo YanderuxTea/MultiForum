@@ -56,7 +56,7 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
     <AnimatePresence>
       <OpenMenuAdminsPanelProvider>
         <AnimatePresence>
-          {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
+          {choosePhoto.isChoosePhoto&&<MenuWindow props={{setIsOpenMenu: choosePhoto.setIsChoosePhoto,isOpenMenu:choosePhoto.isChoosePhoto, setIsHelp: choosePhoto.setIsHelp, content:<ChoosePhotoForm avatar={avatar} setAvatar={setAvatar}/>}}/>}
         </AnimatePresence>
       </OpenMenuAdminsPanelProvider>
     </AnimatePresence>

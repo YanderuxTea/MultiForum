@@ -26,6 +26,7 @@ export default function useBanUser({time, reason, setPending, setMessage, setIsN
           setIsNotify(true)
           setMessage(res.message)
           setIsOpen(false)
+          window.document.body.style.overflow = 'unset'
           setUsers(prevState => prevState.map(user=>{
             if(user.id !== res.result.idUser){
               return user

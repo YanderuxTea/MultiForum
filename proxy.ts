@@ -2,7 +2,7 @@ import {Redis} from '@upstash/redis'
 import {Ratelimit} from '@upstash/ratelimit'
 import {NextRequest, NextResponse} from 'next/server'
 import {cookies} from 'next/headers'
-import {deleteToken, validateJWT} from '@/lib/jwt'
+import {deleteToken, validateJWT, validateTwoFactor} from '@/lib/jwt'
 import {prisma} from '@/lib/prisma'
 
 const redis = new Redis({
@@ -24,7 +24,7 @@ const rateLimitSearch = new Ratelimit({
 export async function proxy(req:NextRequest) {
   const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.vercel-insights.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.vercel-insights.com https://va.vercel-scripts.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' https://*.imgur.com data:;
   font-src 'self';
@@ -49,12 +49,13 @@ export async function proxy(req:NextRequest) {
   if(url.startsWith('/_next')|| url.includes('/api/getDataUser')) {
     return responseWithCsp
   }
-  if(url === '/api/login'||url === '/api/register' || url === '/api/verifyEmail' || url === '/api/sendRecoveryCode'|| url === '/api/confirmRecoveryCode' || url === '/api/changeAvatar' || url === '/api/refreshData' || url === '/api/changePassword' || url==='/api/getDeviceList') {
+  if(url === '/api/login'||url === '/api/register' || url === '/api/verifyEmail' || url === '/api/sendRecoveryCode'|| url === '/api/confirmRecoveryCode' || url === '/api/changeAvatar' || url === '/api/refreshData' || url === '/api/changePassword' || url==='/api/getDeviceList' || url === '/api/twoFactor/confirm') {
     const response = await rateLimiterMiddleware(req)
     if(response){
       return response
     }
   }
+
   if(url === '/api/resetPassword'){
     const response = await rateLimiterRecovery(req)
     if(response){
@@ -65,6 +66,7 @@ export async function proxy(req:NextRequest) {
   if(tokenResponse){
     return tokenResponse
   }
+
   return responseWithCsp
 }
 export async function rateLimiterSearch(req:Request) {
@@ -90,7 +92,7 @@ async function rateLimiterMiddleware(req: Request){
     return NextResponse.json({ok: false, error: 'Слишком много запросов'}, {status:429})
   }
 }
-async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<unknown>) {
+async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse) {
   const publicRoute = ['/auth/login', '/auth/register', '/recovery']
   const secureRoute = ['/settings']
   const adminsRoute = ['/adminsPanel']
@@ -158,6 +160,23 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse<u
         }
       }else if(!isBanned && req.nextUrl.pathname === '/banned'){
         return NextResponse.redirect(new URL('/', req.url))
+      }
+      if(validateToken.verifyEmail!=='Verify' && req.nextUrl.pathname !== '/' && req.nextUrl.pathname !== '/api/logout' && !(req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname.includes('/api'))){
+        return NextResponse.redirect(new URL('/', req.url))
+      }
+      const confirm2fa = cookieStorage.get('2fa')?.value
+      if(confirm2fa){
+        const valid2fa = validateTwoFactor(confirm2fa)
+        if(valid2fa && typeof valid2fa !== 'string'){
+          if(!valid2fa.confirm && req.nextUrl.pathname !== '/' && req.nextUrl.pathname !== '/api/logout' && !(req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname === '/api/categories/get' || req.nextUrl.pathname === '/api/categories/get' || req.nextUrl.pathname === '/api/twoFactor/validateTwoFactor' || req.nextUrl.pathname === '/api/twoFactor/confirm')){
+            return NextResponse.redirect(new URL('/', req.url))
+          }
+        }
+      }else {
+        cookieStorage.delete('dId')
+        cookieStorage.delete('token')
+        await prisma.devices.delete({where:{deviceId:dId}})
+        return NextResponse.redirect(new URL('/invalid', req.url))
       }
     }
   }

@@ -29,6 +29,7 @@ export default function DeleteCategoriesPanel({pending, setPending, setOpenMenu}
           setIsNotify(true)
           setMessage(res.message)
           setOpenMenu(false)
+          window.document.body.style.overflow = 'unset'
         }else {
           setIsNotify(true)
           setMessage(`Ошибка: ${res.message}`)

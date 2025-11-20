@@ -21,6 +21,7 @@ export default function useUnbanUser({props}:{props:PropsUseUnbanUser}) {
           props.setMessage(res.message)
           props.setIsNotify(true)
           props.setIsOpen(false)
+          window.document.body.style.overflow = 'unset'
           props.setUsers(prevState => prevState.map(user=> {
             if(user.id !== props.id){
               return user

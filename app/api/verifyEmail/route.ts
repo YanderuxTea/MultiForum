@@ -20,14 +20,14 @@ export async function POST(req:Request){
   }
   const verifiedToken = validateJWT(token.value)
   if(typeof verifiedToken === 'object' && verifiedToken !== null){
-    const user = await prisma.users.findUnique({where:{email:verifiedToken.email}, select:{id:true, login:true, role:true, email:true, verification:true, verificationAdm:true}})
+    const user = await prisma.users.findUnique({where:{email:verifiedToken.email}, select:{id:true, login:true, role:true, email:true, verification:true, verificationAdm:true, isTwoFactorEnabled:true}})
     if(user!==null&&user.verification !== validateData.data.code){
       return NextResponse.json({ok:false, error:'Неверный код'})
     }
     try {
       await prisma.users.update({where:{email:verifiedToken.email}, data:{verification:'Verify'}})
       if(user!==null){
-        const newToken = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:'Verify', verifyAdm:user.verificationAdm, deviceId:dId.value, date:new Date()});
+        const newToken = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:'Verify', verifyAdm:user.verificationAdm, deviceId:dId.value, date:new Date(), isTwoFactor:user.isTwoFactorEnabled});
         cookieStorage.set('token', newToken)
       }
       return NextResponse.json({ok:true, message:'Успешно! Ожидайте подтверждения Администратора'})

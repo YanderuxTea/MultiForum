@@ -12,6 +12,16 @@ export interface IPayload {
   verifyAdm: string;
   deviceId: string;
   date: Date
+  isTwoFactor: boolean;
+}
+export interface ITwoFactor {
+  confirm: boolean;
+  date: Date;
+  deviceId: string;
+}
+export function generateTwoFactor(payload: ITwoFactor) {
+  if(!JWT_SECRET) throw new Error('JWT secret must be a JWT.')
+  return jwt.sign(payload, JWT_SECRET, {expiresIn: '7d'})
 }
 export function generateJWT(payload: IPayload) {
   if(!JWT_SECRET){throw new Error('Нет JWT');}
@@ -19,6 +29,14 @@ export function generateJWT(payload: IPayload) {
 }
 export function validateJWT(token: string) {
   if(!JWT_SECRET){throw new Error('Нет JWT');}
+  try {
+    return jwt.verify(token, JWT_SECRET);
+  }catch(err){
+    return null;
+  }
+}
+export function validateTwoFactor(token: string) {
+  if(!JWT_SECRET) throw new Error('JWT secret must be a JWT.')
   try {
     return jwt.verify(token, JWT_SECRET);
   }catch(err){

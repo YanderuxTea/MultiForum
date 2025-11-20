@@ -2,7 +2,7 @@ import {z} from 'zod'
 import {NextResponse} from 'next/server'
 import bcrypt from 'bcrypt'
 import {cookies, headers} from 'next/headers'
-import {generateJWT} from '@/lib/jwt'
+import {generateJWT, generateTwoFactor} from '@/lib/jwt'
 import {prisma} from '@/lib/prisma'
 import {UAParser} from 'ua-parser-js'
 import {randomBytes} from 'node:crypto'
@@ -35,7 +35,11 @@ export async function POST(req:Request){
     const typeDevice = result.device.type ?? 'desktop'
     const deviceIDStorage = cookieStore.get('dId')?.value
     const deviceID = deviceIDStorage??randomBytes(32).toString('hex')
-    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm, deviceId:deviceID, date:new Date()});
+    const token = generateJWT({id:user.id, login:user.login, role:user.role, email:user.email, verifyEmail:user.verification, verifyAdm:user.verificationAdm, deviceId:deviceID, date:new Date(), isTwoFactor:user.isTwoFactorEnabled});
+    const twoFactor = user.isTwoFactorEnabled && generateTwoFactor({deviceId:deviceID, date:new Date(), confirm:false})
+    if(twoFactor){
+      cookieStore.set({name:'2fa', value:twoFactor, secure: process.env.NODE_ENV === 'production', sameSite:'strict', httpOnly:true, maxAge:60*60*24*7, path:'/'})
+    }
     cookieStore.set({name: 'token', value: token, secure: process.env.NODE_ENV === 'production', sameSite: 'strict', httpOnly:true, maxAge: 60 * 60 * 24 * 7, path: '/',})
     const existingDevice = await prisma.devices.findUnique({where:{deviceId:deviceID}});
     if(!existingDevice){

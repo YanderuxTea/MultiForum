@@ -57,7 +57,7 @@ export default function DeleteUsersAvatar() {
   const {isOpen, setIsOpen} = useOpenMenuAdminsPanel()
   return <div className='bg-white dark:bg-[#212121] border border-neutral-300 dark:border-neutral-700 rounded-md p-5 flex flex-col gap-5 w-full'>
     <AnimatePresence>
-      {isOpen&&<MenuWindow props={{setIsOpenMenu: setIsOpen, content: <ContentMenuAvatarManagement setUsers={setUsers} users={users} setPending={setPending} pending={pending}/>, pending: pending}}/>}
+      {isOpen&&<MenuWindow props={{setIsOpenMenu: setIsOpen, isOpenMenu:isOpen, content: <ContentMenuAvatarManagement setUsers={setUsers} users={users} setPending={setPending} pending={pending}/>, pending: pending}}/>}
     </AnimatePresence>
     <InputForSearchAdminsPanels props={{query:query, setQuery:setQuery}} />
     <div className={`flex flex-col gap-2.5 h-97.5 overflow-clip ${usersAfterSearch.length===0&&'justify-center items-center'}`}>

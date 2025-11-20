@@ -11,9 +11,11 @@ export async function GET(){
     if(typeof validToken === 'object' && validToken){
       await prisma.devices.delete({where:{deviceId:validToken.deviceId}})
       cookieStore.delete('token')
+      cookieStore.delete('2fa')
       return NextResponse.json({ok:true})
     }else {
       cookieStore.delete('token')
+      cookieStore.delete('2fa')
       return NextResponse.json({ok:false})
     }
   }else {

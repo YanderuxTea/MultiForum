@@ -70,7 +70,7 @@ export default function ManagementRolesPanel() {
   const {isOpen, setIsOpen, role, login, avatar, id, setIsOpenList} = useOpenMenuAdminsPanel()
   return <div className='flex flex-col bg-white dark:bg-[#212121]  border rounded-md border-neutral-300 dark:border-neutral-700 p-5 gap-5 w-full'>
     <AnimatePresence>
-      {isOpen&&<MenuWindow props={{setIsOpenMenu:setIsOpen, setIsHelp:setIsOpenList, content:<ContentMenuRoleManagement props={{avatar:avatar, login:login, id:id, role:role}} setUser={setUsers} users={users} pending={pending} setPending={setPending}/>, pending:pending}}/>}
+      {isOpen&&<MenuWindow props={{setIsOpenMenu:setIsOpen, isOpenMenu:isOpen, setIsHelp:setIsOpenList, content:<ContentMenuRoleManagement props={{avatar:avatar, login:login, id:id, role:role}} setUser={setUsers} users={users} pending={pending} setPending={setPending}/>, pending:pending}}/>}
     </AnimatePresence>
     <div className='flex flex-col gap-2.5'>
       {roleManagementData.map((item, index) => {return <SearchParamsCardAdminsPanel key={index} props={item} count={countUsers}/>})}

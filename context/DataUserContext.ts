@@ -1,11 +1,4 @@
 import {createContext} from 'react'
+import {IPayload} from '@/lib/jwt'
 
-export interface DataUserContext {
-  id: string;
-  login: string;
-  role: string;
-  email: string;
-  verifyEmail: string;
-  verifyAdm: string;
-}
-export const DataUserContext = createContext<DataUserContext|null>(null)
+export const DataUserContext = createContext<IPayload|null>(null)

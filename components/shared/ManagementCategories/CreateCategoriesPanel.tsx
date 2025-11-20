@@ -25,6 +25,7 @@ export default function CreateCategoriesPanel({pending, setPending, setOpenMenu}
           setIsNotify(true)
           setMessage(res.message)
           setOpenMenu(false)
+          window.document.body.style.overflow = 'unset'
           setCategories(prevState => [...prevState, res.data])
         }else {
           setIsNotify(true)

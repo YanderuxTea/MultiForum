@@ -6,6 +6,9 @@ import useCheckingStaff from '@/hooks/useCheckingStaff'
 import ManagementCategoriesButton from '@/components/shared/buttons/ManagementCategoriesButton'
 import useCategories from '@/hooks/useCategories'
 import CategoriesMain from '@/components/shared/categories/CategoriesMain'
+import {additionalInformation} from '@/data/additionallyInformation'
+import AdditionallyInformation from '@/components/shared/categories/AdditionallyInformation'
+import React from 'react'
 
 
 export default function Page() {
@@ -27,12 +30,9 @@ export default function Page() {
           {categories.categories.length>0&&categories.categories.map((category) => {return <CategoriesMain key={category.id} props={category}/>})}
         </div>
         <div className='w-full lg:w-2/7 flex flex-col gap-5'>
-          <div className='rounded-md bg-white dark:bg-[#212121] p-2.5 text-center'>
-            В разработке
-          </div>
-          {/*<div className='rounded-md bg-white dark:bg-[#212121] p-2.5'>*/}
-          {/*  Инфа*/}
-          {/*</div>*/}
+          {additionalInformation.map((add, index)=>{
+            return <AdditionallyInformation key={index} props={add}/>
+          })}
         </div>
       </div>
     </div>

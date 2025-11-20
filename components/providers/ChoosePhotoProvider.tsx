@@ -1,5 +1,5 @@
 'use client'
-import React, {ReactNode, useEffect} from 'react'
+import React, {ReactNode} from 'react'
 import {ChoosePhotoContext} from '@/context/ChoosePhotoContext'
 
 export default function ChoosePhotoProvider({children}: {children: ReactNode}) {
@@ -11,12 +11,5 @@ export default function ChoosePhotoProvider({children}: {children: ReactNode}) {
     isHelp:isHelp,
     setIsHelp:setIsHelp
   }
-  useEffect(() => {
-    if(isChoosePhoto){
-      document.body.style.overflow = 'hidden'
-    }else {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isChoosePhoto])
   return <ChoosePhotoContext.Provider value={value}>{children}</ChoosePhotoContext.Provider>
 }
