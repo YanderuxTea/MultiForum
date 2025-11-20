@@ -172,7 +172,7 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse) 
             return NextResponse.redirect(new URL('/', req.url))
           }
         }
-      }else {
+      }else if(!confirm2fa && validateToken.isTwoFactor) {
         cookieStorage.delete('dId')
         cookieStorage.delete('token')
         await prisma.devices.delete({where:{deviceId:dId}})
