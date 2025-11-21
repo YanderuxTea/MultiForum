@@ -129,6 +129,7 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse) 
     await prisma.devices.deleteMany({where:{OR:[{ deviceId: dId} , {token:token}]}})
     cookieStorage.delete('dId')
     cookieStorage.delete('token')
+    cookieStorage.delete('2fa')
     return NextResponse.redirect(new URL('/invalid', req.url))
   }
   if(typeof validateToken !== 'string'){

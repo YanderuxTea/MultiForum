@@ -10,6 +10,7 @@ export default function SecureSettings() {
   const [currentPassword, setCurrentPassword] = React.useState<string>('')
   const [newPassword, setNewPassword] = React.useState<string>('')
   const [pending, setPending] = useTransition()
+  const [pending2fa, setPending2fa] = useTransition()
   const dataUser = useDataUser()
   const {setIsNotify, setMessage} = useNotify()
   const router = useRouter()
@@ -49,12 +50,12 @@ export default function SecureSettings() {
           <InputAny type='text' readonly={true} id='username' autoComplete='username' defaultValue={dataUser?.login} name='username'/>
         </div>
         <div className='flex flex-col gap-2.5 lg:flex-row'>
-          <InputAny type='password' value={currentPassword} onChange={setCurrentPassword} placeholder='Текущий пароль' autoComplete='current-password' readonly={pending} id='currPassRes' name='currPass'/>
-          <InputAny type='password' value={newPassword} onChange={setNewPassword} placeholder='Новый пароль' autoComplete='new-password' readonly={pending} id='newPassRes' name='newPass'/>
+          <InputAny type='password' value={currentPassword} onChange={setCurrentPassword} placeholder='Текущий пароль' autoComplete='current-password' readonly={pending || pending2fa} id='currPassRes' name='currPass'/>
+          <InputAny type='password' value={newPassword} onChange={setNewPassword} placeholder='Новый пароль' autoComplete='new-password' readonly={pending || pending2fa} id='newPassRes' name='newPass'/>
         </div>
-        <button type='submit' disabled={pending} className='text-white bg-blue-500 dark:bg-blue-600 hover:bg-blue-400 dark:hover:bg-blue-500 active:bg-blue-600 dark:active:bg-blue-700 font-medium py-1 rounded-md select-none cursor-pointer disabled:cursor-default disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-colors duration-300 ease-in-out'>{pending?'Меняем':'Сменить'}</button>
+        <button type='submit' disabled={pending || pending2fa} className='text-white bg-blue-500 dark:bg-blue-600 hover:bg-blue-400 dark:hover:bg-blue-500 active:bg-blue-600 dark:active:bg-blue-700 font-medium py-1 rounded-md select-none cursor-pointer disabled:cursor-default disabled:bg-gray-500/25 disabled:text-black/25 dark:disabled:text-white/25 dark:disabled:bg-gray-100/25 transition-colors duration-300 ease-in-out'>{pending?'Меняем':'Сменить'}</button>
       </form>
     </div>
-    <SetupAuth pending={pending} setPending={setPending}/>
+    <SetupAuth pending={pending2fa} isSecurePending={pending} setPending={setPending2fa}/>
   </div>
 }

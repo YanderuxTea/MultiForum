@@ -4,7 +4,7 @@ import SmartphoneIcon from '@/components/shared/icons/SmartphoneIcon'
 import TabletIcon from '@/components/shared/icons/TabletIcon'
 import DesktopIcon from '@/components/shared/icons/DesktopIcon'
 import TrashIcon from '@/components/shared/icons/TrashIcon'
-import React, {RefObject, useTransition} from 'react'
+import React, {RefObject} from 'react'
 import useCurrentWidth from '@/hooks/useCurrentWidth'
 import {useRouter} from 'next/navigation'
 import {DeviceList} from '@/components/ui/settings/DevicesSettings'
@@ -19,15 +19,16 @@ interface IProps {
   currentDeviceCardRef:RefObject<HTMLDivElement|null>;
   baseWidth:number;
   setDevices: React.Dispatch<React.SetStateAction<DeviceList[]>>
+  loading: boolean
+  setLoading: React.TransitionStartFunction
 }
-export default function DeviceCard({index, typeDevice, id, dId, currentDeviceId,currentDeviceCardRef, baseWidth, setDevices}: IProps) {
+export default function DeviceCard({index, typeDevice, id, dId, currentDeviceId,currentDeviceCardRef, baseWidth, setDevices, loading, setLoading}: IProps) {
   const avatar = typeDevice === 'mobile'?<SmartphoneIcon/>:typeDevice ==='tablet'?<TabletIcon/>:<DesktopIcon/>
   const x = useMotionValue(0)
   const widthButton = useTransform(x, [0,-40], [0,40])
   const widthCard = useTransform(x, [0, -40], [baseWidth, baseWidth-40])
   const opacityScaleButton = useTransform(x, [0,-40], [0, 1])
   const width = useCurrentWidth()
-  const [loading, setLoading] = useTransition()
   const router = useRouter()
   const {setIsNotify, setMessage} = useNotify()
   function dragEnd(){

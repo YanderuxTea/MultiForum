@@ -39,7 +39,7 @@ export default function NotifyVerifyEmail() {
   }
   return <AnimatePresence>
     {dataUser !== null && dataUser.verifyEmail === 'Verify' ? null : dataUser === null ? null :success?null:
-      <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} ref={notifyVerifyEmailRef} className='fixed z-100 bg-black/25 inset-0 flex items-center justify-center px-2.5'>
+      <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} ref={notifyVerifyEmailRef} className='fixed z-100 bg-black/25 inset-0 flex items-center justify-center px-2.5 backdrop-blur-[2px]'>
         <motion.div initial={{scale:0}} animate={{scale:1}} exit={{scale:0}} transition={{type:'spring', bounce:0.2}} className='w-full max-w-150 bg-white dark:bg-[#212121] flex flex-col items-center p-5 gap-4.5 rounded-3xl border border-neutral-300 dark:border-neutral-700'>
           <div className='flex flex-row gap-2.5'>
             <Lock/>
