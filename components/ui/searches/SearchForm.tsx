@@ -4,25 +4,29 @@ import {AnimatePresence, motion} from 'framer-motion'
 import ParamsSearchCard from '@/components/shared/searches/ParamsSearchCard'
 import {searchParams} from '@/data/searchParams'
 import {useRouter} from 'next/navigation'
+import useLoader from '@/hooks/useLoader'
 
 interface ISearchForm {
   query?: string,
-  searchFilter?: string
+  searchFilter?: string,
 }
 export default function SearchForm({query, searchFilter}:ISearchForm) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [error, setError] = React.useState<boolean>(false);
   const router = useRouter()
   const inputRef = React.useRef<HTMLInputElement>(null)
+  const {setLoading} = useLoader()
   function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const formObj = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formObj)
-    if(data.query.toString().trim().length > 0){
-      router.push(`/search?query=${data.query.toString().trim()}&searchParams=${data.searchParams}`)
-    }else {
-      setError(true)
-    }
+    setLoading(async ()=>{
+      const formObj = new FormData(event.currentTarget)
+      const data = Object.fromEntries(formObj)
+      if(data.query.toString().trim().length > 0){
+        router.push(`/search?query=${data.query.toString().trim()}&searchParams=${data.searchParams}`)
+      }else {
+        setError(true)
+      }
+    })
   }
   useEffect(() => {
     if(query){

@@ -1,47 +1,48 @@
+'use client'
 import SearchForm from '@/components/ui/searches/SearchForm'
 import StubHeader from '@/components/shared/stubs/StubHeader'
 import StubUnderHeader from '@/components/shared/stubs/StubUnderHeader'
-import React from 'react'
-import FoundUsers from '@/components/ui/searches/FoundUsers'
+import React, {useEffect, useState} from 'react'
+import FoundUsers, {IFoundUsers} from '@/components/ui/searches/FoundUsers'
 import FoundThemes from '@/components/ui/searches/FoundThemes'
 import TimeoutSearch from '@/components/shared/searches/TimeoutSearch'
-import {Metadata} from 'next'
+import {useSearchParams} from 'next/navigation'
+import useLoader from '@/hooks/useLoader'
 
-interface ISearchParams {
-  query?: string,
-  searchParams?: string,
-}
-export const metadata:Metadata = {
-  title: 'Multi Forum | Поиск',
-  description: 'Быстрый поиск по всем обсуждениям форума. Ищите конкретные темы, а также профили участников и опытных разработчиков по всем категориям.'
-}
-export default async function Page({searchParams}: {searchParams:Promise<ISearchParams>}) {
-  const query = (await searchParams).query
-  const searchFilter = (await searchParams).searchParams
+export default function Page() {
+  const searchParams = useSearchParams()
+  const query = searchParams.get('query')
+  const searchFilter = searchParams.get('searchParams')
   const baseUrl = (process.env.NODE_ENV !== 'production'?'http://localhost:3000/':process.env.NEXT_PUBLIC_SITE_URL)
-  async function search(){
-    const req = await fetch(`${baseUrl}api/searchUsersThemes`,
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({query: query, searchParams: searchFilter})
-      })
-    const res = await req.json()
-    if(res.ok){
-      return res.data
-    }else if(res.status === 429) {
-      return res.error
-    }else if (!res.ok) {
-      return []
-    }
-  }
-  const users = searchFilter&&query&&await search()
-  return<main className='min-h-screen mt-5 w-full gap-2.5 flex flex-col px-2.5 py-5'>
+  const [users, setUsers] = useState<IFoundUsers[] | number>([])
+  const {setLoading} = useLoader()
+  useEffect(() => {
+    setLoading(async ()=>{
+      if(query && searchFilter){
+        const req = await fetch(`${baseUrl}api/searchUsersThemes`,
+          {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({query: query, searchParams: searchFilter})
+          })
+        const res = await req.json()
+        if(res.ok){
+          setUsers(res.data)
+        }else if(res.status === 429) {
+          setUsers(res.error)
+        }else if (!res.ok) {
+          setUsers([])
+        }
+      }
+    })
+  }, [query, searchFilter, searchParams])
+
+  return<div className='min-h-screen mt-5 w-full gap-2.5 flex flex-col px-2.5 py-5'>
     <div>
       <StubHeader/>
       <StubUnderHeader/>
       <div className='w-full bg-white dark:bg-[#212121] flex justify-center p-2.5 max-w-200 mx-auto rounded-md border border-neutral-300 dark:border-neutral-700'>
-        <SearchForm query={query} searchFilter={searchFilter}/>
+        <SearchForm query={query??undefined} searchFilter={searchFilter??undefined}/>
       </div>
     </div>
     {typeof users === 'number'&&
@@ -62,5 +63,5 @@ export default async function Page({searchParams}: {searchParams:Promise<ISearch
           <FoundThemes/>
         </div>}
     </div>}
-    </main>
+    </div>
 }

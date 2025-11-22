@@ -1,28 +1,37 @@
+'use client'
 import Profile from '@/components/ui/profiles/Profile'
-import {notFound} from 'next/navigation'
-import {prisma} from '@/lib/prisma'
+import {notFound, useParams} from 'next/navigation'
 import ChoosePhotoProvider from '@/components/providers/ChoosePhotoProvider'
 import StubHeader from '@/components/shared/stubs/StubHeader'
 import StubUnderHeader from '@/components/shared/stubs/StubUnderHeader'
-import {Metadata} from 'next'
+import React, {useEffect} from 'react'
+import useLoader from '@/hooks/useLoader'
 
-export async function generateMetadata({params}:{params:Promise<{login: string}>}):Promise<Metadata>{
-  const {login} = await params
-  return {
-    title: `Multi Forum | ${login}`,
-    description: 'Cмотрите активность, уровень, заданные вопросы и ответы. Узнайте больше о других участниках сообщества.'
-  }
-}
-export default async function Page({params}:{params:Promise<{login: string}>}) {
-  const {login} = await params
-  const data = await prisma.users.findUnique({where:{login:login}, select:{id:true, login:true, role:true, createdAt:true, avatar:true, _count:{select:{bans:{where:{Unbans:null}}, warns:{where:{Unwarns:null}}, MessagesPosts:true, Posts:true}}, bans:{where:{Unbans:null}, orderBy:{date:'desc'}, take:1, select:{date:true, time:true}}}});
-  if(!data){
-    notFound()
-  }
 
+export default function Page() {
+  const params = useParams()
+  const [data, setData] = React.useState()
+  const {setLoading} = useLoader()
+  useEffect(() => {
+    setLoading(async ()=>{
+      const req = await fetch('/api/getDataProfile',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({login:params.login})
+      })
+      const res = await req.json()
+      if(res.ok){
+        setData(res.data)
+      }else {
+        notFound()
+      }
+    })
+  }, [])
   return <ChoosePhotoProvider>
     <StubHeader/>
     <StubUnderHeader/>
-    <Profile props={data}/>
+    {data?
+      <Profile props={data}/>:null
+    }
   </ChoosePhotoProvider>
 }

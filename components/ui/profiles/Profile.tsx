@@ -31,7 +31,7 @@ interface IProfileProps{
 }
 export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   const formatter = new Intl.DateTimeFormat('ru-RU',{day:'numeric', month:'long', year:'numeric'})
-  const formattedDate = formatter.format(props.createdAt)
+  const formattedDate = formatter.format(new Date(props.createdAt))
   const [avatar, setAvatar] = useState<string>(props.avatar?props.avatar:nullAvatar)
   const isGif = useRef<boolean>(typeof props.avatar === 'string' && props.avatar.toLowerCase().endsWith('.gif'))
   const dataUser = useDataUser()
@@ -40,7 +40,7 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   useEffect(() => {
     isGif.current = typeof props.avatar === 'string' && props.avatar.toLowerCase().endsWith('.gif')
   }, [avatar])
-  return <main className='grid grid-cols-1 grid-rows-[2fr_1fr_5fr] w-full gap-5 lg:grid-cols-[1fr_3.5fr] lg:grid-rows-[1fr_3fr] lg:min-h-screen max-w-300 px-2.5 py-5 xl:px-0 max-h-screen'>
+  return <div className='grid grid-cols-1 grid-rows-[2fr_1fr_5fr] w-full gap-5 lg:grid-cols-[1fr_3.5fr] lg:grid-rows-[1fr_3fr] lg:min-h-screen max-w-300 px-2.5 py-5 xl:px-0 max-h-screen'>
     <AnimatePresence>
       <OpenMenuAdminsPanelProvider>
         <AnimatePresence>
@@ -79,5 +79,5 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
         {props._count.Posts||props._count.MessagesPosts>0?null: <p className='font-medium text-neutral-700 dark:text-neutral-200'>Нет активности :(</p>}
       </div>
     </div>
-  </main>
+  </div>
 }

@@ -5,7 +5,7 @@ export default function useBanUser({time, reason, setPending, setMessage, setIsN
   async function banUser(){
     setPending(async ()=>{
       const timeNumber = Number(time.replace(/\s/g, ''))
-      if(isNaN(timeNumber)){
+      if(isNaN(timeNumber) || timeNumber < 0){
         setIsNotify(true)
         setMessage('Ошибка: введите время блокировки в минутах')
         return
