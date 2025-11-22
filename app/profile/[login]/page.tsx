@@ -10,12 +10,12 @@ export async function generateMetadata({params}:{params:Promise<{login: string}>
   const {login} = await params
   return {
     title: `Multi Forum | ${login}`,
-    description: 'Профиль разработчика: смотрите активность, уровень, заданные вопросы и ответы. Узнайте больше о других участниках сообщества.'
+    description: 'Cмотрите активность, уровень, заданные вопросы и ответы. Узнайте больше о других участниках сообщества.'
   }
 }
 export default async function Page({params}:{params:Promise<{login: string}>}) {
   const {login} = await params
-  const data = await prisma.users.findUnique({where:{login:login}, select:{login:true, role:true, createdAt:true, avatar:true, Posts:true, bans:{include:{Unbans:true}}, warns:{include:{Unwarns:true}}}});
+  const data = await prisma.users.findUnique({where:{login:login}, select:{id:true, login:true, role:true, createdAt:true, avatar:true, _count:{select:{bans:{where:{Unbans:null}}, warns:{where:{Unwarns:null}}, MessagesPosts:true, Posts:true}}, bans:{where:{Unbans:null}, orderBy:{date:'desc'}, take:1, select:{date:true, time:true}}}});
   if(!data){
     notFound()
   }

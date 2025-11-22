@@ -11,7 +11,6 @@ import MenuWindow from '@/components/ui/menus/MenuWindow'
 import CheckNameplateUser from '@/components/shared/users/CheckNameplateUser'
 import ColorNicknameUser from '@/components/shared/users/ColorNicknameUser'
 import CheckBanned from '@/components/shared/users/CheckBanned'
-import {IBans, IUnbans, IUnwarns, IWarns} from '@/data/interfaces/adminsPanel/PunishmentPanel/PunishmentPanelInterfaces'
 import OpenMenuAdminsPanelProvider from '@/components/providers/OpenMenuAdminsPanelProvider'
 
 interface IProfileProps{
@@ -19,16 +18,16 @@ interface IProfileProps{
   role: string,
   createdAt: Date,
   avatar: string|null,
-  Posts: {
-    id: string
-    createdAt: Date
-    idUser: string
-    title: string
-    idSubCategories: string
-    locked: boolean
-  }[],
-  warns: (IWarns & { Unwarns: IUnwarns | null })[]
-  bans: (IBans & { Unbans: IUnbans | null })[]
+  bans: {
+    date: Date
+    time: number
+  }[]
+  _count: {
+    warns: number
+    bans: number
+    Posts: number
+    MessagesPosts: number
+  }
 }
 export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   const formatter = new Intl.DateTimeFormat('ru-RU',{day:'numeric', month:'long', year:'numeric'})
@@ -37,18 +36,7 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
   const isGif = useRef<boolean>(typeof props.avatar === 'string' && props.avatar.toLowerCase().endsWith('.gif'))
   const dataUser = useDataUser()
   const choosePhoto = useChoosePhoto()
-  const activeWarns = props.warns.filter((warn) => {
-    if(warn.Unwarns){
-      return false
-    }
-    return warn
-  }).length % 3
-  const activeBan = props.bans.some(ban => {
-    if(ban.Unbans){
-      return false
-    }
-    return new Date(ban.date).getTime() + ban.time*60*1000 > Date.now() || ban.time === 0
-  })
+  const activeBan = props.bans.length >0 ? new Date(props.bans[0].date).getTime() + props.bans[0].time*60*1000 > Date.now() || props.bans[0].time === 0:false
   useEffect(() => {
     isGif.current = typeof props.avatar === 'string' && props.avatar.toLowerCase().endsWith('.gif')
   }, [avatar])
@@ -78,27 +66,17 @@ export default function Profile({props}: { props:IProfileProps }): JSX.Element {
     </div>
     <div className='bg-white p-2.5 dark:bg-[#212121] rounded-md border border-neutral-300 dark:border-neutral-700 flex flex-col max-w-300 mx-auto w-full gap-2.5 lg:col-start-1 lg:row-start-2 max-h-max'>
       <p className='text-lg font-bold text-neutral-700 dark:text-neutral-200'>Общая информация</p>
-      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Сообщений: {props.Posts.length}</p>
-      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество активных предупреждений: {activeWarns}/3</p>
-      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество всех предупреждений: {props.warns.filter((w)=>{
-        if(w.Unwarns){
-          return false
-        }
-        return w
-      }).length}</p>
-      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество блокировок: {props.bans.filter((b)=>{
-        if(b.Unbans){
-          return false
-        }
-        return b
-      }).length}</p>
+      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Сообщений: {props._count.MessagesPosts+props._count.Posts}</p>
+      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество активных предупреждений: {props._count.warns%3}/3</p>
+      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество всех предупреждений: {props._count.warns}</p>
+      <p className='font-medium text-neutral-600 dark:text-neutral-400'>Количество блокировок: {props._count.bans}</p>
     </div>
     <div className='bg-white p-2.5 dark:bg-[#212121] rounded-md border border-neutral-300 dark:border-neutral-700 flex flex-col max-w-300 mx-auto w-full overflow-hidden lg:col-start-2 lg:row-start-1 lg:row-span-2'>
       <div className='pb-2.5 relative after:absolute after:inset-0 after:border-b-10 after:blur-[2px] after:border-white dark:after:border-[#212121] after:translate-y-1 after:scale-x-105'>
         <p className='text-lg font-bold text-neutral-700 dark:text-neutral-200'>Активность</p>
       </div>
-      <div className={`flex flex-col overflow-y-auto ${props.Posts.length>0?'':'items-center justify-center h-full'}`}>
-        {props.Posts.length>0?null: <p className='font-medium text-neutral-700 dark:text-neutral-200'>Нет активности :(</p>}
+      <div className={`flex flex-col overflow-y-auto ${props._count.Posts||props._count.MessagesPosts>0?'':'items-center justify-center h-full'}`}>
+        {props._count.Posts||props._count.MessagesPosts>0?null: <p className='font-medium text-neutral-700 dark:text-neutral-200'>Нет активности :(</p>}
       </div>
     </div>
   </main>

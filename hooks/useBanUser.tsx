@@ -5,7 +5,7 @@ export default function useBanUser({time, reason, setPending, setMessage, setIsN
   async function banUser(){
     setPending(async ()=>{
       const timeNumber = Number(time.replace(/\s/g, ''))
-      if(timeNumber === 0 || isNaN(timeNumber)){
+      if(isNaN(timeNumber)){
         setIsNotify(true)
         setMessage('Ошибка: введите время блокировки в минутах')
         return
@@ -15,7 +15,7 @@ export default function useBanUser({time, reason, setPending, setMessage, setIsN
         setMessage('Ошибка: напишите причину бана')
         return
       }
-      if(reason.trim().length > 0 && timeNumber>0){
+      if(reason.trim().length > 0 && timeNumber>=0){
         const req = await fetch('/api/banUser', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},

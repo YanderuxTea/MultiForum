@@ -133,32 +133,22 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse) 
     return NextResponse.redirect(new URL('/invalid', req.url))
   }
   if(typeof validateToken !== 'string'){
-    const bans = await prisma.bans.findMany({where:{idUser:validateToken.id}, include:{Unbans:true}})
-    if(bans){
-      const isBanned = bans.some(ban => {
-        if(ban.Unbans){
-          return false
-        }
-        const banEnd = new Date(ban.date).getTime() + ban.time*60*1000
-        return banEnd > Date.now() || ban.time === 0
-      })
-      const activeBan = bans.find(b => {
-        if(b.Unbans){
-          return false
-        }
-        const banEnd = new Date(b.date).getTime() + b.time*60*1000
-        if(banEnd> Date.now() || b.time === 0){
-          return b
-        }
-      })
+    const bans = await prisma.bans.findMany({where:{idUser:validateToken.id, Unbans:null}, orderBy:{date:'desc'}, take:1})
+    if(bans.length>0){
+      const isBanned = new Date(bans[0].date).getTime() + bans[0].time*60*1000 > Date.now() || bans[0].time === 0
       const reason = req.nextUrl.searchParams.get('reason')
       const time = req.nextUrl.searchParams.get('time')
       const banEnd = req.nextUrl.searchParams.get('banEnd')
       const admin = req.nextUrl.searchParams.get('admin')
-      if(isBanned && req.nextUrl.pathname !=='/api/logout' && (req.nextUrl.pathname !=='/banned' || [...req.nextUrl.searchParams].length < 4|| reason !== activeBan?.reason || time !== activeBan?.time.toString() || banEnd !== (new Date(activeBan.date).getTime()+activeBan.time*60*1000).toString() || admin!==activeBan.admin)){
-        if(activeBan){
-          return NextResponse.redirect(new URL(`/banned?reason=${activeBan.reason}&admin=${activeBan.admin}&time=${activeBan.time}&banEnd=${new Date(activeBan.date).getTime() + activeBan.time*60*1000}`, req.url))
-        }
+      if(isBanned && req.nextUrl.pathname !=='/api/logout' && req.nextUrl.pathname!=='/api/twoFactor/validateTwoFactor' && req.nextUrl.pathname !=='/api/categories/get' && !req.nextUrl.pathname.startsWith('/_next') && req.nextUrl.pathname!=='/api/twoFactor/confirm' && (req.nextUrl.pathname !=='/banned' || [...req.nextUrl.searchParams].length < 4|| reason !== bans[0].reason || time !== bans[0].time.toString() || banEnd !== (new Date(bans[0].date).getTime()+bans[0].time*60*1000).toString() || admin!==bans[0].admin)){
+        const params = new URLSearchParams({
+          reason: bans[0].reason,
+          admin: bans[0].admin,
+          time: String(bans[0].time),
+          banEnd : String(new Date(bans[0].date).getTime()+bans[0].time*60*1000),
+        })
+        const url = `/banned?${params.toString()}`
+        return NextResponse.redirect(new URL(url, req.url))
       }else if(!isBanned && req.nextUrl.pathname === '/banned'){
         return NextResponse.redirect(new URL('/', req.url))
       }
@@ -169,7 +159,7 @@ async function tokenMiddleware(req: NextRequest, responseWithCsp: NextResponse) 
       if(confirm2fa){
         const valid2fa = validateTwoFactor(confirm2fa)
         if(valid2fa && typeof valid2fa !== 'string'){
-          if(!valid2fa.confirm && req.nextUrl.pathname !== '/' && req.nextUrl.pathname !== '/api/logout' && !(req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname === '/api/categories/get' || req.nextUrl.pathname === '/api/categories/get' || req.nextUrl.pathname === '/api/twoFactor/validateTwoFactor' || req.nextUrl.pathname === '/api/twoFactor/confirm')){
+          if(!valid2fa.confirm && req.nextUrl.pathname !== '/' && !req.nextUrl.pathname.startsWith('/banned') && req.nextUrl.pathname !== '/api/logout' && !(req.nextUrl.pathname.startsWith('/_next') || req.nextUrl.pathname === '/api/categories/get' || req.nextUrl.pathname === '/api/twoFactor/validateTwoFactor' || req.nextUrl.pathname === '/api/twoFactor/confirm')){
             return NextResponse.redirect(new URL('/', req.url))
           }
         }
