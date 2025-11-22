@@ -27,11 +27,13 @@ export default function Page() {
       }
     })
   }, [])
-  return <ChoosePhotoProvider>
+  return typeof data !== 'undefined'&&
+  <ChoosePhotoProvider>
     <StubHeader/>
     <StubUnderHeader/>
-    {data?
-      <Profile props={data}/>:null
+    {data ?
+      <Profile props={data}/> : null
     }
   </ChoosePhotoProvider>
+
 }
