@@ -35,7 +35,7 @@ export async function POST(req:Request){
   })
   try {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: `"Multi Forum" <${process.env.SMTP_USER}>`,
       to: email.trim(),
       subject: 'Код подтверждения',
       text: `Ваш код подтверждения: ${code}`
