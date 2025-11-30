@@ -22,6 +22,6 @@ export async function POST(req:Request){
     return NextResponse.json({ok: false, message: 'Вы не выбрали иконку или не вписали название'})
   }
   const lastPosition = await prisma.subCategories.findFirst({orderBy:{position:'desc'},select:{position:true}})
-  const subCategories = await prisma.subCategories.create({data:{title:title, idCategories:id, icon:selectIcon, position:lastPosition?lastPosition.position+1:1}, include:{posts:{include:{user:{select:{login:true, avatar:true, role:true}}}}}})
+  const subCategories = await prisma.subCategories.create({data:{title:title, idCategories:id, icon:selectIcon, position:lastPosition?lastPosition.position+1:1}, include:{posts:{include:{user:{select:{login:true, avatar:true, role:true}}}}, _count:{select:{posts:true}}}})
   return NextResponse.json({ok:true, message:'Успешно', sub:subCategories})
 }
