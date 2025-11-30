@@ -20,6 +20,7 @@ export async function POST(req: Request){
   const {id, type} = body
   if(type === 'verify'){
     await prisma.users.update({where:{id:id}, data:{verificationAdm:'Yes'}})
+    await prisma.devices.deleteMany({where:{userId:id}})
   }else if(type === 'delete'){
     await prisma.users.delete({where:{id:id}})
   }

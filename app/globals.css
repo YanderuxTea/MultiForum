@@ -1,2 +1,27 @@
 @import "tailwindcss";
+html.dark{
+    @import "highlight.js/styles/atom-one-dark.css";
+}
+html.light{
+    @import "highlight.js/styles/atom-one-light.css";
+}
 @custom-variant dark (&:where(.dark, .dark *));
+.tiptap p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+.tiptap .node-codeBlock{
+    padding: 5px 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+html.dark .tiptap .node-codeBlock {
+    background-color: #1A1A1A;
+}
+html.light .tiptap .node-codeBlock {
+    background-color: #F6F6F6;
+}
