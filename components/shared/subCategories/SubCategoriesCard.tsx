@@ -3,7 +3,6 @@ import useCheckIconSubCategory from '@/hooks/useCheckIconSubCategory'
 import Link from 'next/link'
 
 export default function SubCategoriesCard({props}:{props:ISubCategories}) {
-  console.log(props)
   const icon = useCheckIconSubCategory({props:props})
   return <div className='flex flex-row items-center p-2.5 gap-5'>
     <div className='bg-orange-500 dark:bg-orange-600 opacity-40 p-1.25 rounded-full'>
