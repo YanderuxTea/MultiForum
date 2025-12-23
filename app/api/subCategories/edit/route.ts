@@ -17,7 +17,7 @@ export async function POST(req:Request){
     return NextResponse.json({ok: false, message: 'No permission to access.'})
   }
   const body = await req.json()
-  const {newTitle, newIcon, id} = body
-  await prisma.subCategories.update({where:{id:id}, data:{title: newTitle, icon: newIcon}})
+  const {newTitle, newIcon, id, isChange, visible} = body
+  await prisma.subCategories.update({where:{id:id}, data:{title: newTitle, icon: newIcon, change:isChange, visible:visible}})
   return NextResponse.json({ok: true, message: 'Успешно'})
 }

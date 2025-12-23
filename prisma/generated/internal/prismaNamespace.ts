@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models"
-import { type PrismaClient } from "./class"
+import type * as Prisma from "../models.ts"
+import { type PrismaClient } from "./class.ts"
 
-export type * from '../models'
+export type * from '../models.ts'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.1
- * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+ * Prisma Client JS version: 7.2.0
+ * Query Engine version: 0c8ef2ce45c83248ab3df073180d5eda9e8be7a3
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.1",
-  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
+  client: "7.2.0",
+  engine: "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3"
 }
 
 /**
@@ -389,6 +389,7 @@ export const ModelName = {
   SubCategories: 'SubCategories',
   Posts: 'Posts',
   MessagesPosts: 'MessagesPosts',
+  HistoryMessage: 'HistoryMessage',
   Devices: 'Devices',
   Warns: 'Warns',
   Bans: 'Bans',
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "categories" | "subCategories" | "posts" | "messagesPosts" | "devices" | "warns" | "bans" | "unwarns" | "unbans"
+    modelProps: "users" | "categories" | "subCategories" | "posts" | "messagesPosts" | "historyMessage" | "devices" | "warns" | "bans" | "unwarns" | "unbans"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,6 +781,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MessagesPostsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MessagesPostsCountAggregateOutputType> | number
+        }
+      }
+    }
+    HistoryMessage: {
+      payload: Prisma.$HistoryMessagePayload<ExtArgs>
+      fields: Prisma.HistoryMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HistoryMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HistoryMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.HistoryMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HistoryMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        findMany: {
+          args: Prisma.HistoryMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>[]
+        }
+        create: {
+          args: Prisma.HistoryMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        createMany: {
+          args: Prisma.HistoryMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HistoryMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.HistoryMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        update: {
+          args: Prisma.HistoryMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.HistoryMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HistoryMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HistoryMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.HistoryMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoryMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.HistoryMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHistoryMessage>
+        }
+        groupBy: {
+          args: Prisma.HistoryMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HistoryMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HistoryMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HistoryMessageCountAggregateOutputType> | number
         }
       }
     }
@@ -1216,7 +1291,8 @@ export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof Us
 export const CategoriesScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  position: 'position'
+  position: 'position',
+  visible: 'visible'
 } as const
 
 export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
@@ -1227,7 +1303,9 @@ export const SubCategoriesScalarFieldEnum = {
   title: 'title',
   idCategories: 'idCategories',
   position: 'position',
-  icon: 'icon'
+  icon: 'icon',
+  change: 'change',
+  visible: 'visible'
 } as const
 
 export type SubCategoriesScalarFieldEnum = (typeof SubCategoriesScalarFieldEnum)[keyof typeof SubCategoriesScalarFieldEnum]
@@ -1240,7 +1318,8 @@ export const PostsScalarFieldEnum = {
   idUser: 'idUser',
   createdAt: 'createdAt',
   locked: 'locked',
-  pinned: 'pinned'
+  pinned: 'pinned',
+  lastUpdate: 'lastUpdate'
 } as const
 
 export type PostsScalarFieldEnum = (typeof PostsScalarFieldEnum)[keyof typeof PostsScalarFieldEnum]
@@ -1255,6 +1334,18 @@ export const MessagesPostsScalarFieldEnum = {
 } as const
 
 export type MessagesPostsScalarFieldEnum = (typeof MessagesPostsScalarFieldEnum)[keyof typeof MessagesPostsScalarFieldEnum]
+
+
+export const HistoryMessageScalarFieldEnum = {
+  id: 'id',
+  updateAt: 'updateAt',
+  idUser: 'idUser',
+  idMessage: 'idMessage',
+  beforeText: 'beforeText',
+  afterText: 'afterText'
+} as const
+
+export type HistoryMessageScalarFieldEnum = (typeof HistoryMessageScalarFieldEnum)[keyof typeof HistoryMessageScalarFieldEnum]
 
 
 export const DevicesScalarFieldEnum = {
@@ -1285,7 +1376,8 @@ export const BansScalarFieldEnum = {
   reason: 'reason',
   date: 'date',
   time: 'time',
-  admin: 'admin'
+  admin: 'admin',
+  unbansDate: 'unbansDate'
 } as const
 
 export type BansScalarFieldEnum = (typeof BansScalarFieldEnum)[keyof typeof BansScalarFieldEnum]
@@ -1323,6 +1415,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -1337,6 +1436,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1409,6 +1517,34 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'VisibleCategories'
+ */
+export type EnumVisibleCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VisibleCategories'>
+    
+
+
+/**
+ * Reference to a field of type 'VisibleCategories[]'
+ */
+export type ListEnumVisibleCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VisibleCategories[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1470,7 +1606,7 @@ export type PrismaClientOptions = ({
    *  { emit: 'stdout', level: 'error' }
    * 
    * ```
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+   * Read more in our [docs](https://pris.ly/d/logging).
    */
   log?: (LogLevel | LogDefinition)[]
   /**
@@ -1498,6 +1634,22 @@ export type PrismaClientOptions = ({
    * ```
    */
   omit?: GlobalOmitConfig
+  /**
+   * SQL commenter plugins that add metadata to SQL queries as comments.
+   * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   comments: [
+   *     traceContext(),
+   *     queryInsights(),
+   *   ],
+   * })
+   * ```
+   */
+  comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
   users?: Prisma.UsersOmit
@@ -1505,6 +1657,7 @@ export type GlobalOmitConfig = {
   subCategories?: Prisma.SubCategoriesOmit
   posts?: Prisma.PostsOmit
   messagesPosts?: Prisma.MessagesPostsOmit
+  historyMessage?: Prisma.HistoryMessageOmit
   devices?: Prisma.DevicesOmit
   warns?: Prisma.WarnsOmit
   bans?: Prisma.BansOmit

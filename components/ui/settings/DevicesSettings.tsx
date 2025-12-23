@@ -26,7 +26,6 @@ export default function DevicesSettings() {
       })
       const res = await req.json()
       if(res.ok){
-        console.log(res.dId)
         setDevices(prevState => prevState.filter(device => device.deviceId === res.dId))
       }
     })

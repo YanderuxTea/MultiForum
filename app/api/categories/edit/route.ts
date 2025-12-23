@@ -17,10 +17,11 @@ export async function POST(req:Request){
     return NextResponse.json({ok: false, message: 'No permission to access.'})
   }
   const body = await req.json()
-  const {id, title} = body
+  const {id, title, privateVisible} = body
   if(!id||!title){
     return NextResponse.json({ok: false, message: 'неизвестная ошибка'})
   }
-  await prisma.categories.update({where: {id: id}, data:{title: title}})
+  const visible = privateVisible ? 'Admin':'All'
+  await prisma.categories.update({where: {id: id}, data:{title: title, visible: visible}})
   return NextResponse.json({ok: true, message: 'Успешно'})
 }

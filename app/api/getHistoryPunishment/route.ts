@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server'
 import {validateJWT} from '@/lib/jwt'
 import {prisma} from '@/lib/prisma'
 
-export async function GET(req:Request){
+export async function GET(){
   const cookieStorage = await cookies()
   const token = cookieStorage.get('token')?.value
   const dId = cookieStorage.get('dId')?.value
@@ -18,10 +18,10 @@ export async function GET(req:Request){
   if (!user){
     return NextResponse.json({ok: true, user: user})
   }
-  const combinedPunisments = [
+  const combinedPunishments = [
     ...user.bans,
     ...user.warns,
   ]
-  combinedPunisments.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  return NextResponse.json({ok: true, user:combinedPunisments})
+  combinedPunishments.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  return NextResponse.json({ok: true, user:combinedPunishments})
 }

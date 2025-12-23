@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Users
@@ -269,6 +269,7 @@ export type UsersWhereInput = {
   Unbans?: Prisma.UnbansListRelationFilter
   Posts?: Prisma.PostsListRelationFilter
   MessagesPosts?: Prisma.MessagesPostsListRelationFilter
+  HistoryMessage?: Prisma.HistoryMessageListRelationFilter
 }
 
 export type UsersOrderByWithRelationInput = {
@@ -294,6 +295,7 @@ export type UsersOrderByWithRelationInput = {
   Unbans?: Prisma.UnbansOrderByRelationAggregateInput
   Posts?: Prisma.PostsOrderByRelationAggregateInput
   MessagesPosts?: Prisma.MessagesPostsOrderByRelationAggregateInput
+  HistoryMessage?: Prisma.HistoryMessageOrderByRelationAggregateInput
 }
 
 export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -322,6 +324,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   Unbans?: Prisma.UnbansListRelationFilter
   Posts?: Prisma.PostsListRelationFilter
   MessagesPosts?: Prisma.MessagesPostsListRelationFilter
+  HistoryMessage?: Prisma.HistoryMessageListRelationFilter
 }, "id" | "login" | "email">
 
 export type UsersOrderByWithAggregationInput = {
@@ -389,6 +392,7 @@ export type UsersCreateInput = {
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateInput = {
@@ -414,6 +418,7 @@ export type UsersUncheckedCreateInput = {
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUpdateInput = {
@@ -439,6 +444,7 @@ export type UsersUpdateInput = {
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateInput = {
@@ -464,6 +470,7 @@ export type UsersUncheckedUpdateInput = {
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateManyInput = {
@@ -631,6 +638,20 @@ export type UsersUpdateOneRequiredWithoutMessagesPostsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutMessagesPostsInput, Prisma.UsersUpdateWithoutMessagesPostsInput>, Prisma.UsersUncheckedUpdateWithoutMessagesPostsInput>
 }
 
+export type UsersCreateNestedOneWithoutHistoryMessageInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutHistoryMessageInput, Prisma.UsersUncheckedCreateWithoutHistoryMessageInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutHistoryMessageInput
+  connect?: Prisma.UsersWhereUniqueInput
+}
+
+export type UsersUpdateOneRequiredWithoutHistoryMessageNestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutHistoryMessageInput, Prisma.UsersUncheckedCreateWithoutHistoryMessageInput>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutHistoryMessageInput
+  upsert?: Prisma.UsersUpsertWithoutHistoryMessageInput
+  connect?: Prisma.UsersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutHistoryMessageInput, Prisma.UsersUpdateWithoutHistoryMessageInput>, Prisma.UsersUncheckedUpdateWithoutHistoryMessageInput>
+}
+
 export type UsersCreateNestedOneWithoutDevicesInput = {
   create?: Prisma.XOR<Prisma.UsersCreateWithoutDevicesInput, Prisma.UsersUncheckedCreateWithoutDevicesInput>
   connectOrCreate?: Prisma.UsersCreateOrConnectWithoutDevicesInput
@@ -723,6 +744,7 @@ export type UsersCreateWithoutPostsInput = {
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutPostsInput = {
@@ -747,6 +769,7 @@ export type UsersUncheckedCreateWithoutPostsInput = {
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutPostsInput = {
@@ -787,6 +810,7 @@ export type UsersUpdateWithoutPostsInput = {
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutPostsInput = {
@@ -811,6 +835,7 @@ export type UsersUncheckedUpdateWithoutPostsInput = {
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutMessagesPostsInput = {
@@ -835,6 +860,7 @@ export type UsersCreateWithoutMessagesPostsInput = {
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutMessagesPostsInput = {
@@ -859,6 +885,7 @@ export type UsersUncheckedCreateWithoutMessagesPostsInput = {
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutMessagesPostsInput = {
@@ -899,6 +926,7 @@ export type UsersUpdateWithoutMessagesPostsInput = {
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutMessagesPostsInput = {
@@ -923,6 +951,123 @@ export type UsersUncheckedUpdateWithoutMessagesPostsInput = {
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
+}
+
+export type UsersCreateWithoutHistoryMessageInput = {
+  id?: string
+  login: string
+  password: string
+  email: string
+  role?: string
+  avatar?: string | null
+  verification: string
+  verificationAdm?: $Enums.VerificationStatus
+  createdAt?: Date | string
+  recoveryCode?: string | null
+  dateRecoveryCode?: Date | string | null
+  encryptedData?: string | null
+  iv?: string | null
+  authTag?: string | null
+  isTwoFactorEnabled?: boolean
+  devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
+  warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
+  bans?: Prisma.BansCreateNestedManyWithoutUserInput
+  Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
+  Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
+  Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
+  MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+}
+
+export type UsersUncheckedCreateWithoutHistoryMessageInput = {
+  id?: string
+  login: string
+  password: string
+  email: string
+  role?: string
+  avatar?: string | null
+  verification: string
+  verificationAdm?: $Enums.VerificationStatus
+  createdAt?: Date | string
+  recoveryCode?: string | null
+  dateRecoveryCode?: Date | string | null
+  encryptedData?: string | null
+  iv?: string | null
+  authTag?: string | null
+  isTwoFactorEnabled?: boolean
+  devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
+  warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
+  bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
+  Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
+  Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
+  Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
+  MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type UsersCreateOrConnectWithoutHistoryMessageInput = {
+  where: Prisma.UsersWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsersCreateWithoutHistoryMessageInput, Prisma.UsersUncheckedCreateWithoutHistoryMessageInput>
+}
+
+export type UsersUpsertWithoutHistoryMessageInput = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutHistoryMessageInput, Prisma.UsersUncheckedUpdateWithoutHistoryMessageInput>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutHistoryMessageInput, Prisma.UsersUncheckedCreateWithoutHistoryMessageInput>
+  where?: Prisma.UsersWhereInput
+}
+
+export type UsersUpdateToOneWithWhereWithoutHistoryMessageInput = {
+  where?: Prisma.UsersWhereInput
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutHistoryMessageInput, Prisma.UsersUncheckedUpdateWithoutHistoryMessageInput>
+}
+
+export type UsersUpdateWithoutHistoryMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationAdm?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recoveryCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateRecoveryCode?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  encryptedData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iv?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
+  warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
+  bans?: Prisma.BansUpdateManyWithoutUserNestedInput
+  Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
+  Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
+  Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
+  MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+}
+
+export type UsersUncheckedUpdateWithoutHistoryMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verification?: Prisma.StringFieldUpdateOperationsInput | string
+  verificationAdm?: Prisma.EnumVerificationStatusFieldUpdateOperationsInput | $Enums.VerificationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recoveryCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateRecoveryCode?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  encryptedData?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iv?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
+  warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
+  bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
+  Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
+  Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
+  Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
+  MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutDevicesInput = {
@@ -947,6 +1092,7 @@ export type UsersCreateWithoutDevicesInput = {
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutDevicesInput = {
@@ -971,6 +1117,7 @@ export type UsersUncheckedCreateWithoutDevicesInput = {
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutDevicesInput = {
@@ -1011,6 +1158,7 @@ export type UsersUpdateWithoutDevicesInput = {
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutDevicesInput = {
@@ -1035,6 +1183,7 @@ export type UsersUncheckedUpdateWithoutDevicesInput = {
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutWarnsInput = {
@@ -1059,6 +1208,7 @@ export type UsersCreateWithoutWarnsInput = {
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutWarnsInput = {
@@ -1083,6 +1233,7 @@ export type UsersUncheckedCreateWithoutWarnsInput = {
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutWarnsInput = {
@@ -1123,6 +1274,7 @@ export type UsersUpdateWithoutWarnsInput = {
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutWarnsInput = {
@@ -1147,6 +1299,7 @@ export type UsersUncheckedUpdateWithoutWarnsInput = {
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutBansInput = {
@@ -1171,6 +1324,7 @@ export type UsersCreateWithoutBansInput = {
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutBansInput = {
@@ -1195,6 +1349,7 @@ export type UsersUncheckedCreateWithoutBansInput = {
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutBansInput = {
@@ -1235,6 +1390,7 @@ export type UsersUpdateWithoutBansInput = {
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutBansInput = {
@@ -1259,6 +1415,7 @@ export type UsersUncheckedUpdateWithoutBansInput = {
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutUnwarnsInput = {
@@ -1283,6 +1440,7 @@ export type UsersCreateWithoutUnwarnsInput = {
   Unbans?: Prisma.UnbansCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutUnwarnsInput = {
@@ -1307,6 +1465,7 @@ export type UsersUncheckedCreateWithoutUnwarnsInput = {
   Unbans?: Prisma.UnbansUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutUnwarnsInput = {
@@ -1347,6 +1506,7 @@ export type UsersUpdateWithoutUnwarnsInput = {
   Unbans?: Prisma.UnbansUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutUnwarnsInput = {
@@ -1371,6 +1531,7 @@ export type UsersUncheckedUpdateWithoutUnwarnsInput = {
   Unbans?: Prisma.UnbansUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersCreateWithoutUnbansInput = {
@@ -1395,6 +1556,7 @@ export type UsersCreateWithoutUnbansInput = {
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutUsersInput
 }
 
 export type UsersUncheckedCreateWithoutUnbansInput = {
@@ -1419,6 +1581,7 @@ export type UsersUncheckedCreateWithoutUnbansInput = {
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
   Posts?: Prisma.PostsUncheckedCreateNestedManyWithoutUserInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutUsersInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutUsersInput
 }
 
 export type UsersCreateOrConnectWithoutUnbansInput = {
@@ -1459,6 +1622,7 @@ export type UsersUpdateWithoutUnbansInput = {
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutUsersNestedInput
 }
 
 export type UsersUncheckedUpdateWithoutUnbansInput = {
@@ -1483,6 +1647,7 @@ export type UsersUncheckedUpdateWithoutUnbansInput = {
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
   Posts?: Prisma.PostsUncheckedUpdateManyWithoutUserNestedInput
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 
@@ -1498,6 +1663,7 @@ export type UsersCountOutputType = {
   Unbans: number
   Posts: number
   MessagesPosts: number
+  HistoryMessage: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1508,6 +1674,7 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   Unbans?: boolean | UsersCountOutputTypeCountUnbansArgs
   Posts?: boolean | UsersCountOutputTypeCountPostsArgs
   MessagesPosts?: boolean | UsersCountOutputTypeCountMessagesPostsArgs
+  HistoryMessage?: boolean | UsersCountOutputTypeCountHistoryMessageArgs
 }
 
 /**
@@ -1569,6 +1736,13 @@ export type UsersCountOutputTypeCountMessagesPostsArgs<ExtArgs extends runtime.T
   where?: Prisma.MessagesPostsWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountHistoryMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HistoryMessageWhereInput
+}
+
 
 export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1593,6 +1767,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   Unbans?: boolean | Prisma.Users$UnbansArgs<ExtArgs>
   Posts?: boolean | Prisma.Users$PostsArgs<ExtArgs>
   MessagesPosts?: boolean | Prisma.Users$MessagesPostsArgs<ExtArgs>
+  HistoryMessage?: boolean | Prisma.Users$HistoryMessageArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -1659,6 +1834,7 @@ export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   Unbans?: boolean | Prisma.Users$UnbansArgs<ExtArgs>
   Posts?: boolean | Prisma.Users$PostsArgs<ExtArgs>
   MessagesPosts?: boolean | Prisma.Users$MessagesPostsArgs<ExtArgs>
+  HistoryMessage?: boolean | Prisma.Users$HistoryMessageArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1674,6 +1850,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     Unbans: Prisma.$UnbansPayload<ExtArgs>[]
     Posts: Prisma.$PostsPayload<ExtArgs>[]
     MessagesPosts: Prisma.$MessagesPostsPayload<ExtArgs>[]
+    HistoryMessage: Prisma.$HistoryMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2092,6 +2269,7 @@ export interface Prisma__UsersClient<T, Null = never, ExtArgs extends runtime.Ty
   Unbans<T extends Prisma.Users$UnbansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$UnbansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UnbansPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Posts<T extends Prisma.Users$PostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$PostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   MessagesPosts<T extends Prisma.Users$MessagesPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$MessagesPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagesPostsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  HistoryMessage<T extends Prisma.Users$HistoryMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$HistoryMessageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HistoryMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2689,6 +2867,30 @@ export type Users$MessagesPostsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.MessagesPostsScalarFieldEnum | Prisma.MessagesPostsScalarFieldEnum[]
+}
+
+/**
+ * Users.HistoryMessage
+ */
+export type Users$HistoryMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HistoryMessage
+   */
+  select?: Prisma.HistoryMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HistoryMessage
+   */
+  omit?: Prisma.HistoryMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HistoryMessageInclude<ExtArgs> | null
+  where?: Prisma.HistoryMessageWhereInput
+  orderBy?: Prisma.HistoryMessageOrderByWithRelationInput | Prisma.HistoryMessageOrderByWithRelationInput[]
+  cursor?: Prisma.HistoryMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HistoryMessageScalarFieldEnum | Prisma.HistoryMessageScalarFieldEnum[]
 }
 
 /**

@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Categories
@@ -38,18 +38,21 @@ export type CategoriesMinAggregateOutputType = {
   id: string | null
   title: string | null
   position: number | null
+  visible: $Enums.VisibleCategories | null
 }
 
 export type CategoriesMaxAggregateOutputType = {
   id: string | null
   title: string | null
   position: number | null
+  visible: $Enums.VisibleCategories | null
 }
 
 export type CategoriesCountAggregateOutputType = {
   id: number
   title: number
   position: number
+  visible: number
   _all: number
 }
 
@@ -66,18 +69,21 @@ export type CategoriesMinAggregateInputType = {
   id?: true
   title?: true
   position?: true
+  visible?: true
 }
 
 export type CategoriesMaxAggregateInputType = {
   id?: true
   title?: true
   position?: true
+  visible?: true
 }
 
 export type CategoriesCountAggregateInputType = {
   id?: true
   title?: true
   position?: true
+  visible?: true
   _all?: true
 }
 
@@ -171,6 +177,7 @@ export type CategoriesGroupByOutputType = {
   id: string
   title: string
   position: number
+  visible: $Enums.VisibleCategories
   _count: CategoriesCountAggregateOutputType | null
   _avg: CategoriesAvgAggregateOutputType | null
   _sum: CategoriesSumAggregateOutputType | null
@@ -200,6 +207,7 @@ export type CategoriesWhereInput = {
   id?: Prisma.StringFilter<"Categories"> | string
   title?: Prisma.StringFilter<"Categories"> | string
   position?: Prisma.IntFilter<"Categories"> | number
+  visible?: Prisma.EnumVisibleCategoriesFilter<"Categories"> | $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesListRelationFilter
 }
 
@@ -207,6 +215,7 @@ export type CategoriesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
   subCategories?: Prisma.SubCategoriesOrderByRelationAggregateInput
 }
 
@@ -217,6 +226,7 @@ export type CategoriesWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CategoriesWhereInput | Prisma.CategoriesWhereInput[]
   title?: Prisma.StringFilter<"Categories"> | string
   position?: Prisma.IntFilter<"Categories"> | number
+  visible?: Prisma.EnumVisibleCategoriesFilter<"Categories"> | $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesListRelationFilter
 }, "id">
 
@@ -224,6 +234,7 @@ export type CategoriesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
   _count?: Prisma.CategoriesCountOrderByAggregateInput
   _avg?: Prisma.CategoriesAvgOrderByAggregateInput
   _max?: Prisma.CategoriesMaxOrderByAggregateInput
@@ -238,12 +249,14 @@ export type CategoriesScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Categories"> | string
   title?: Prisma.StringWithAggregatesFilter<"Categories"> | string
   position?: Prisma.IntWithAggregatesFilter<"Categories"> | number
+  visible?: Prisma.EnumVisibleCategoriesWithAggregatesFilter<"Categories"> | $Enums.VisibleCategories
 }
 
 export type CategoriesCreateInput = {
   id?: string
   title: string
   position: number
+  visible?: $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesCreateNestedManyWithoutCategoriesInput
 }
 
@@ -251,6 +264,7 @@ export type CategoriesUncheckedCreateInput = {
   id?: string
   title: string
   position: number
+  visible?: $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesUncheckedCreateNestedManyWithoutCategoriesInput
 }
 
@@ -258,6 +272,7 @@ export type CategoriesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesUpdateManyWithoutCategoriesNestedInput
 }
 
@@ -265,6 +280,7 @@ export type CategoriesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
   subCategories?: Prisma.SubCategoriesUncheckedUpdateManyWithoutCategoriesNestedInput
 }
 
@@ -272,24 +288,28 @@ export type CategoriesCreateManyInput = {
   id?: string
   title: string
   position: number
+  visible?: $Enums.VisibleCategories
 }
 
 export type CategoriesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
 }
 
 export type CategoriesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
 }
 
 export type CategoriesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type CategoriesAvgOrderByAggregateInput = {
@@ -300,12 +320,14 @@ export type CategoriesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type CategoriesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type CategoriesSumOrderByAggregateInput = {
@@ -323,6 +345,10 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type EnumVisibleCategoriesFieldUpdateOperationsInput = {
+  set?: $Enums.VisibleCategories
 }
 
 export type CategoriesCreateNestedOneWithoutSubCategoriesInput = {
@@ -343,12 +369,14 @@ export type CategoriesCreateWithoutSubCategoriesInput = {
   id?: string
   title: string
   position: number
+  visible?: $Enums.VisibleCategories
 }
 
 export type CategoriesUncheckedCreateWithoutSubCategoriesInput = {
   id?: string
   title: string
   position: number
+  visible?: $Enums.VisibleCategories
 }
 
 export type CategoriesCreateOrConnectWithoutSubCategoriesInput = {
@@ -371,12 +399,14 @@ export type CategoriesUpdateWithoutSubCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
 }
 
 export type CategoriesUncheckedUpdateWithoutSubCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  visible?: Prisma.EnumVisibleCategoriesFieldUpdateOperationsInput | $Enums.VisibleCategories
 }
 
 
@@ -414,6 +444,7 @@ export type CategoriesSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   title?: boolean
   position?: boolean
+  visible?: boolean
   subCategories?: boolean | Prisma.Categories$subCategoriesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categories"]>
@@ -422,21 +453,24 @@ export type CategoriesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   title?: boolean
   position?: boolean
+  visible?: boolean
 }, ExtArgs["result"]["categories"]>
 
 export type CategoriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
   position?: boolean
+  visible?: boolean
 }, ExtArgs["result"]["categories"]>
 
 export type CategoriesSelectScalar = {
   id?: boolean
   title?: boolean
   position?: boolean
+  visible?: boolean
 }
 
-export type CategoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "position", ExtArgs["result"]["categories"]>
+export type CategoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "position" | "visible", ExtArgs["result"]["categories"]>
 export type CategoriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subCategories?: boolean | Prisma.Categories$subCategoriesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriesCountOutputTypeDefaultArgs<ExtArgs>
@@ -453,6 +487,7 @@ export type $CategoriesPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     title: string
     position: number
+    visible: $Enums.VisibleCategories
   }, ExtArgs["result"]["categories"]>
   composites: {}
 }
@@ -880,6 +915,7 @@ export interface CategoriesFieldRefs {
   readonly id: Prisma.FieldRef<"Categories", 'String'>
   readonly title: Prisma.FieldRef<"Categories", 'String'>
   readonly position: Prisma.FieldRef<"Categories", 'Int'>
+  readonly visible: Prisma.FieldRef<"Categories", 'VisibleCategories'>
 }
     
 

@@ -15,3 +15,11 @@ export const VerificationStatus = {
 } as const
 
 export type VerificationStatus = (typeof VerificationStatus)[keyof typeof VerificationStatus]
+
+
+export const VisibleCategories = {
+  All: 'All',
+  Admin: 'Admin'
+} as const
+
+export type VisibleCategories = (typeof VisibleCategories)[keyof typeof VisibleCategories]

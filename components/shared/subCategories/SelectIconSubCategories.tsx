@@ -12,7 +12,7 @@ export default function SelectIconSubCategories({setOpenSelect, openSelect, sele
     window.addEventListener('click', handleClose)
     return () => {window.removeEventListener('click', handleClose)}
   }, [])
-  return <div onClick={pending?undefined:()=>setOpenSelect(prevState => !prevState)} ref={containerRef} className={`relative w-8 h-8 aspect-square border flex items-center justify-center border-neutral-400 bg-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 rounded-md ${pending?'cursor-default':'cursor-pointer'}`}>
+  return <div onClick={pending?undefined:()=>setOpenSelect(prevState => !prevState)} ref={containerRef} className={`relative w-8.5 h-8.5 aspect-square border flex items-center justify-center border-neutral-400 bg-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 rounded-md ${pending?'cursor-default':'cursor-pointer'}`}>
     {openSelect&&
       <div className='fixed z-1 bg-neutral-500 dark:bg-neutral-900 flex flex-col translate-y-26.25 rounded-md border border-neutral-400 dark:border-neutral-700'>
         {iconsSubCategories.map((icon) => {

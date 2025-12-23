@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model SubCategories
@@ -40,6 +40,8 @@ export type SubCategoriesMinAggregateOutputType = {
   idCategories: string | null
   position: number | null
   icon: string | null
+  change: boolean | null
+  visible: boolean | null
 }
 
 export type SubCategoriesMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type SubCategoriesMaxAggregateOutputType = {
   idCategories: string | null
   position: number | null
   icon: string | null
+  change: boolean | null
+  visible: boolean | null
 }
 
 export type SubCategoriesCountAggregateOutputType = {
@@ -56,6 +60,8 @@ export type SubCategoriesCountAggregateOutputType = {
   idCategories: number
   position: number
   icon: number
+  change: number
+  visible: number
   _all: number
 }
 
@@ -74,6 +80,8 @@ export type SubCategoriesMinAggregateInputType = {
   idCategories?: true
   position?: true
   icon?: true
+  change?: true
+  visible?: true
 }
 
 export type SubCategoriesMaxAggregateInputType = {
@@ -82,6 +90,8 @@ export type SubCategoriesMaxAggregateInputType = {
   idCategories?: true
   position?: true
   icon?: true
+  change?: true
+  visible?: true
 }
 
 export type SubCategoriesCountAggregateInputType = {
@@ -90,6 +100,8 @@ export type SubCategoriesCountAggregateInputType = {
   idCategories?: true
   position?: true
   icon?: true
+  change?: true
+  visible?: true
   _all?: true
 }
 
@@ -185,6 +197,8 @@ export type SubCategoriesGroupByOutputType = {
   idCategories: string
   position: number
   icon: string
+  change: boolean
+  visible: boolean
   _count: SubCategoriesCountAggregateOutputType | null
   _avg: SubCategoriesAvgAggregateOutputType | null
   _sum: SubCategoriesSumAggregateOutputType | null
@@ -216,6 +230,8 @@ export type SubCategoriesWhereInput = {
   idCategories?: Prisma.StringFilter<"SubCategories"> | string
   position?: Prisma.IntFilter<"SubCategories"> | number
   icon?: Prisma.StringFilter<"SubCategories"> | string
+  change?: Prisma.BoolFilter<"SubCategories"> | boolean
+  visible?: Prisma.BoolFilter<"SubCategories"> | boolean
   Categories?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.CategoriesWhereInput>
   posts?: Prisma.PostsListRelationFilter
 }
@@ -226,6 +242,8 @@ export type SubCategoriesOrderByWithRelationInput = {
   idCategories?: Prisma.SortOrder
   position?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  change?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
   Categories?: Prisma.CategoriesOrderByWithRelationInput
   posts?: Prisma.PostsOrderByRelationAggregateInput
 }
@@ -239,6 +257,8 @@ export type SubCategoriesWhereUniqueInput = Prisma.AtLeast<{
   idCategories?: Prisma.StringFilter<"SubCategories"> | string
   position?: Prisma.IntFilter<"SubCategories"> | number
   icon?: Prisma.StringFilter<"SubCategories"> | string
+  change?: Prisma.BoolFilter<"SubCategories"> | boolean
+  visible?: Prisma.BoolFilter<"SubCategories"> | boolean
   Categories?: Prisma.XOR<Prisma.CategoriesScalarRelationFilter, Prisma.CategoriesWhereInput>
   posts?: Prisma.PostsListRelationFilter
 }, "id">
@@ -249,6 +269,8 @@ export type SubCategoriesOrderByWithAggregationInput = {
   idCategories?: Prisma.SortOrder
   position?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  change?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
   _count?: Prisma.SubCategoriesCountOrderByAggregateInput
   _avg?: Prisma.SubCategoriesAvgOrderByAggregateInput
   _max?: Prisma.SubCategoriesMaxOrderByAggregateInput
@@ -265,6 +287,8 @@ export type SubCategoriesScalarWhereWithAggregatesInput = {
   idCategories?: Prisma.StringWithAggregatesFilter<"SubCategories"> | string
   position?: Prisma.IntWithAggregatesFilter<"SubCategories"> | number
   icon?: Prisma.StringWithAggregatesFilter<"SubCategories"> | string
+  change?: Prisma.BoolWithAggregatesFilter<"SubCategories"> | boolean
+  visible?: Prisma.BoolWithAggregatesFilter<"SubCategories"> | boolean
 }
 
 export type SubCategoriesCreateInput = {
@@ -272,6 +296,8 @@ export type SubCategoriesCreateInput = {
   title: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
   Categories: Prisma.CategoriesCreateNestedOneWithoutSubCategoriesInput
   posts?: Prisma.PostsCreateNestedManyWithoutSubCategoriesInput
 }
@@ -282,6 +308,8 @@ export type SubCategoriesUncheckedCreateInput = {
   idCategories: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
   posts?: Prisma.PostsUncheckedCreateNestedManyWithoutSubCategoriesInput
 }
 
@@ -290,6 +318,8 @@ export type SubCategoriesUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Categories?: Prisma.CategoriesUpdateOneRequiredWithoutSubCategoriesNestedInput
   posts?: Prisma.PostsUpdateManyWithoutSubCategoriesNestedInput
 }
@@ -300,6 +330,8 @@ export type SubCategoriesUncheckedUpdateInput = {
   idCategories?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostsUncheckedUpdateManyWithoutSubCategoriesNestedInput
 }
 
@@ -309,6 +341,8 @@ export type SubCategoriesCreateManyInput = {
   idCategories: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
 }
 
 export type SubCategoriesUpdateManyMutationInput = {
@@ -316,6 +350,8 @@ export type SubCategoriesUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubCategoriesUncheckedUpdateManyInput = {
@@ -324,6 +360,8 @@ export type SubCategoriesUncheckedUpdateManyInput = {
   idCategories?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubCategoriesListRelationFilter = {
@@ -342,6 +380,8 @@ export type SubCategoriesCountOrderByAggregateInput = {
   idCategories?: Prisma.SortOrder
   position?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  change?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type SubCategoriesAvgOrderByAggregateInput = {
@@ -354,6 +394,8 @@ export type SubCategoriesMaxOrderByAggregateInput = {
   idCategories?: Prisma.SortOrder
   position?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  change?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type SubCategoriesMinOrderByAggregateInput = {
@@ -362,6 +404,8 @@ export type SubCategoriesMinOrderByAggregateInput = {
   idCategories?: Prisma.SortOrder
   position?: Prisma.SortOrder
   icon?: Prisma.SortOrder
+  change?: Prisma.SortOrder
+  visible?: Prisma.SortOrder
 }
 
 export type SubCategoriesSumOrderByAggregateInput = {
@@ -434,6 +478,8 @@ export type SubCategoriesCreateWithoutCategoriesInput = {
   title: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
   posts?: Prisma.PostsCreateNestedManyWithoutSubCategoriesInput
 }
 
@@ -442,6 +488,8 @@ export type SubCategoriesUncheckedCreateWithoutCategoriesInput = {
   title: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
   posts?: Prisma.PostsUncheckedCreateNestedManyWithoutSubCategoriesInput
 }
 
@@ -480,6 +528,8 @@ export type SubCategoriesScalarWhereInput = {
   idCategories?: Prisma.StringFilter<"SubCategories"> | string
   position?: Prisma.IntFilter<"SubCategories"> | number
   icon?: Prisma.StringFilter<"SubCategories"> | string
+  change?: Prisma.BoolFilter<"SubCategories"> | boolean
+  visible?: Prisma.BoolFilter<"SubCategories"> | boolean
 }
 
 export type SubCategoriesCreateWithoutPostsInput = {
@@ -487,6 +537,8 @@ export type SubCategoriesCreateWithoutPostsInput = {
   title: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
   Categories: Prisma.CategoriesCreateNestedOneWithoutSubCategoriesInput
 }
 
@@ -496,6 +548,8 @@ export type SubCategoriesUncheckedCreateWithoutPostsInput = {
   idCategories: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
 }
 
 export type SubCategoriesCreateOrConnectWithoutPostsInput = {
@@ -519,6 +573,8 @@ export type SubCategoriesUpdateWithoutPostsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   Categories?: Prisma.CategoriesUpdateOneRequiredWithoutSubCategoriesNestedInput
 }
 
@@ -528,6 +584,8 @@ export type SubCategoriesUncheckedUpdateWithoutPostsInput = {
   idCategories?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SubCategoriesCreateManyCategoriesInput = {
@@ -535,6 +593,8 @@ export type SubCategoriesCreateManyCategoriesInput = {
   title: string
   position: number
   icon: string
+  change?: boolean
+  visible?: boolean
 }
 
 export type SubCategoriesUpdateWithoutCategoriesInput = {
@@ -542,6 +602,8 @@ export type SubCategoriesUpdateWithoutCategoriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostsUpdateManyWithoutSubCategoriesNestedInput
 }
 
@@ -550,6 +612,8 @@ export type SubCategoriesUncheckedUpdateWithoutCategoriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostsUncheckedUpdateManyWithoutSubCategoriesNestedInput
 }
 
@@ -558,6 +622,8 @@ export type SubCategoriesUncheckedUpdateManyWithoutCategoriesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   icon?: Prisma.StringFieldUpdateOperationsInput | string
+  change?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -597,6 +663,8 @@ export type SubCategoriesSelect<ExtArgs extends runtime.Types.Extensions.Interna
   idCategories?: boolean
   position?: boolean
   icon?: boolean
+  change?: boolean
+  visible?: boolean
   Categories?: boolean | Prisma.CategoriesDefaultArgs<ExtArgs>
   posts?: boolean | Prisma.SubCategories$postsArgs<ExtArgs>
   _count?: boolean | Prisma.SubCategoriesCountOutputTypeDefaultArgs<ExtArgs>
@@ -608,6 +676,8 @@ export type SubCategoriesSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   idCategories?: boolean
   position?: boolean
   icon?: boolean
+  change?: boolean
+  visible?: boolean
   Categories?: boolean | Prisma.CategoriesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subCategories"]>
 
@@ -617,6 +687,8 @@ export type SubCategoriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   idCategories?: boolean
   position?: boolean
   icon?: boolean
+  change?: boolean
+  visible?: boolean
   Categories?: boolean | Prisma.CategoriesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subCategories"]>
 
@@ -626,9 +698,11 @@ export type SubCategoriesSelectScalar = {
   idCategories?: boolean
   position?: boolean
   icon?: boolean
+  change?: boolean
+  visible?: boolean
 }
 
-export type SubCategoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "idCategories" | "position" | "icon", ExtArgs["result"]["subCategories"]>
+export type SubCategoriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "idCategories" | "position" | "icon" | "change" | "visible", ExtArgs["result"]["subCategories"]>
 export type SubCategoriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Categories?: boolean | Prisma.CategoriesDefaultArgs<ExtArgs>
   posts?: boolean | Prisma.SubCategories$postsArgs<ExtArgs>
@@ -653,6 +727,8 @@ export type $SubCategoriesPayload<ExtArgs extends runtime.Types.Extensions.Inter
     idCategories: string
     position: number
     icon: string
+    change: boolean
+    visible: boolean
   }, ExtArgs["result"]["subCategories"]>
   composites: {}
 }
@@ -1083,6 +1159,8 @@ export interface SubCategoriesFieldRefs {
   readonly idCategories: Prisma.FieldRef<"SubCategories", 'String'>
   readonly position: Prisma.FieldRef<"SubCategories", 'Int'>
   readonly icon: Prisma.FieldRef<"SubCategories", 'String'>
+  readonly change: Prisma.FieldRef<"SubCategories", 'Boolean'>
+  readonly visible: Prisma.FieldRef<"SubCategories", 'Boolean'>
 }
     
 

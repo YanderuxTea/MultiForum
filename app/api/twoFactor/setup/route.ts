@@ -30,7 +30,7 @@ export async function POST(req:Request){
         if(!dId){
           return NextResponse.json({ok: false, message: 'No token provided.'})
         }
-        const newToken = generateJWT({id:validToken.id, login:validToken.login, role:validToken.role, email:validToken.email, verifyEmail:validToken.verifyEmail, verifyAdm:validToken.verificationAdm, deviceId:dId, date:new Date(), isTwoFactor:true});
+        const newToken = generateJWT({id:validToken.id, login:validToken.login, role:validToken.role, email:validToken.email, verifyEmail:validToken.verifyEmail, verifyAdm:validToken.verifyAdm, deviceId:dId, date:new Date(), isTwoFactor:true});
         const twoFactor = generateTwoFactor({deviceId:dId, date:new Date(), confirm:true})
         cookieStorage.set({name:'2fa', value:twoFactor, secure: process.env.NODE_ENV === 'production', sameSite:'strict', httpOnly:true, maxAge:60*60*24*7, path:'/'})
         cookieStorage.set({name:'token',value:newToken, httpOnly:true, secure:process.env.NODE_ENV==='production', sameSite:'strict', maxAge:60*60*24*7, path:'/'})

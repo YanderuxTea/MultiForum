@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models'
-export type * from './prismaNamespace'
+export type * from '../models.ts'
+export type * from './prismaNamespace.ts'
 
 export const Decimal = runtime.Decimal
 
@@ -56,6 +56,7 @@ export const ModelName = {
   SubCategories: 'SubCategories',
   Posts: 'Posts',
   MessagesPosts: 'MessagesPosts',
+  HistoryMessage: 'HistoryMessage',
   Devices: 'Devices',
   Warns: 'Warns',
   Bans: 'Bans',
@@ -103,7 +104,8 @@ export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof Us
 export const CategoriesScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  position: 'position'
+  position: 'position',
+  visible: 'visible'
 } as const
 
 export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
@@ -114,7 +116,9 @@ export const SubCategoriesScalarFieldEnum = {
   title: 'title',
   idCategories: 'idCategories',
   position: 'position',
-  icon: 'icon'
+  icon: 'icon',
+  change: 'change',
+  visible: 'visible'
 } as const
 
 export type SubCategoriesScalarFieldEnum = (typeof SubCategoriesScalarFieldEnum)[keyof typeof SubCategoriesScalarFieldEnum]
@@ -127,7 +131,8 @@ export const PostsScalarFieldEnum = {
   idUser: 'idUser',
   createdAt: 'createdAt',
   locked: 'locked',
-  pinned: 'pinned'
+  pinned: 'pinned',
+  lastUpdate: 'lastUpdate'
 } as const
 
 export type PostsScalarFieldEnum = (typeof PostsScalarFieldEnum)[keyof typeof PostsScalarFieldEnum]
@@ -142,6 +147,18 @@ export const MessagesPostsScalarFieldEnum = {
 } as const
 
 export type MessagesPostsScalarFieldEnum = (typeof MessagesPostsScalarFieldEnum)[keyof typeof MessagesPostsScalarFieldEnum]
+
+
+export const HistoryMessageScalarFieldEnum = {
+  id: 'id',
+  updateAt: 'updateAt',
+  idUser: 'idUser',
+  idMessage: 'idMessage',
+  beforeText: 'beforeText',
+  afterText: 'afterText'
+} as const
+
+export type HistoryMessageScalarFieldEnum = (typeof HistoryMessageScalarFieldEnum)[keyof typeof HistoryMessageScalarFieldEnum]
 
 
 export const DevicesScalarFieldEnum = {
@@ -172,7 +189,8 @@ export const BansScalarFieldEnum = {
   reason: 'reason',
   date: 'date',
   time: 'time',
-  admin: 'admin'
+  admin: 'admin',
+  unbansDate: 'unbansDate'
 } as const
 
 export type BansScalarFieldEnum = (typeof BansScalarFieldEnum)[keyof typeof BansScalarFieldEnum]
@@ -210,6 +228,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -224,4 +249,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

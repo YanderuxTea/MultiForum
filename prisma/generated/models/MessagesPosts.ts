@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model MessagesPosts
@@ -26,7 +26,6 @@ export type AggregateMessagesPosts = {
 
 export type MessagesPostsMinAggregateOutputType = {
   id: string | null
-  text: string | null
   createdAt: Date | null
   idUser: string | null
   idPosts: string | null
@@ -34,7 +33,6 @@ export type MessagesPostsMinAggregateOutputType = {
 
 export type MessagesPostsMaxAggregateOutputType = {
   id: string | null
-  text: string | null
   createdAt: Date | null
   idUser: string | null
   idPosts: string | null
@@ -52,7 +50,6 @@ export type MessagesPostsCountAggregateOutputType = {
 
 export type MessagesPostsMinAggregateInputType = {
   id?: true
-  text?: true
   createdAt?: true
   idUser?: true
   idPosts?: true
@@ -60,7 +57,6 @@ export type MessagesPostsMinAggregateInputType = {
 
 export type MessagesPostsMaxAggregateInputType = {
   id?: true
-  text?: true
   createdAt?: true
   idUser?: true
   idPosts?: true
@@ -149,7 +145,7 @@ export type MessagesPostsGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type MessagesPostsGroupByOutputType = {
   id: string
-  text: string
+  text: runtime.JsonValue
   createdAt: Date
   idUser: string
   idPosts: string
@@ -178,12 +174,13 @@ export type MessagesPostsWhereInput = {
   OR?: Prisma.MessagesPostsWhereInput[]
   NOT?: Prisma.MessagesPostsWhereInput | Prisma.MessagesPostsWhereInput[]
   id?: Prisma.StringFilter<"MessagesPosts"> | string
-  text?: Prisma.StringFilter<"MessagesPosts"> | string
+  text?: Prisma.JsonFilter<"MessagesPosts">
   createdAt?: Prisma.DateTimeFilter<"MessagesPosts"> | Date | string
   idUser?: Prisma.StringFilter<"MessagesPosts"> | string
   idPosts?: Prisma.StringFilter<"MessagesPosts"> | string
   Users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Posts?: Prisma.XOR<Prisma.PostsScalarRelationFilter, Prisma.PostsWhereInput>
+  HistoryMessage?: Prisma.HistoryMessageListRelationFilter
 }
 
 export type MessagesPostsOrderByWithRelationInput = {
@@ -194,6 +191,7 @@ export type MessagesPostsOrderByWithRelationInput = {
   idPosts?: Prisma.SortOrder
   Users?: Prisma.UsersOrderByWithRelationInput
   Posts?: Prisma.PostsOrderByWithRelationInput
+  HistoryMessage?: Prisma.HistoryMessageOrderByRelationAggregateInput
 }
 
 export type MessagesPostsWhereUniqueInput = Prisma.AtLeast<{
@@ -201,12 +199,13 @@ export type MessagesPostsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.MessagesPostsWhereInput | Prisma.MessagesPostsWhereInput[]
   OR?: Prisma.MessagesPostsWhereInput[]
   NOT?: Prisma.MessagesPostsWhereInput | Prisma.MessagesPostsWhereInput[]
-  text?: Prisma.StringFilter<"MessagesPosts"> | string
+  text?: Prisma.JsonFilter<"MessagesPosts">
   createdAt?: Prisma.DateTimeFilter<"MessagesPosts"> | Date | string
   idUser?: Prisma.StringFilter<"MessagesPosts"> | string
   idPosts?: Prisma.StringFilter<"MessagesPosts"> | string
   Users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Posts?: Prisma.XOR<Prisma.PostsScalarRelationFilter, Prisma.PostsWhereInput>
+  HistoryMessage?: Prisma.HistoryMessageListRelationFilter
 }, "id">
 
 export type MessagesPostsOrderByWithAggregationInput = {
@@ -225,7 +224,7 @@ export type MessagesPostsScalarWhereWithAggregatesInput = {
   OR?: Prisma.MessagesPostsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.MessagesPostsScalarWhereWithAggregatesInput | Prisma.MessagesPostsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"MessagesPosts"> | string
-  text?: Prisma.StringWithAggregatesFilter<"MessagesPosts"> | string
+  text?: Prisma.JsonWithAggregatesFilter<"MessagesPosts">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MessagesPosts"> | Date | string
   idUser?: Prisma.StringWithAggregatesFilter<"MessagesPosts"> | string
   idPosts?: Prisma.StringWithAggregatesFilter<"MessagesPosts"> | string
@@ -233,39 +232,43 @@ export type MessagesPostsScalarWhereWithAggregatesInput = {
 
 export type MessagesPostsCreateInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
   Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idUser: string
   idPosts: string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
   Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsCreateManyInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idUser: string
   idPosts: string
@@ -273,13 +276,13 @@ export type MessagesPostsCreateManyInput = {
 
 export type MessagesPostsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type MessagesPostsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
@@ -305,7 +308,6 @@ export type MessagesPostsCountOrderByAggregateInput = {
 
 export type MessagesPostsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   idUser?: Prisma.SortOrder
   idPosts?: Prisma.SortOrder
@@ -313,10 +315,14 @@ export type MessagesPostsMaxOrderByAggregateInput = {
 
 export type MessagesPostsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   idUser?: Prisma.SortOrder
   idPosts?: Prisma.SortOrder
+}
+
+export type MessagesPostsScalarRelationFilter = {
+  is?: Prisma.MessagesPostsWhereInput
+  isNot?: Prisma.MessagesPostsWhereInput
 }
 
 export type MessagesPostsCreateNestedManyWithoutUsersInput = {
@@ -403,18 +409,34 @@ export type MessagesPostsUncheckedUpdateManyWithoutPostsNestedInput = {
   deleteMany?: Prisma.MessagesPostsScalarWhereInput | Prisma.MessagesPostsScalarWhereInput[]
 }
 
+export type MessagesPostsCreateNestedOneWithoutHistoryMessageInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedCreateWithoutHistoryMessageInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutHistoryMessageInput
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+}
+
+export type MessagesPostsUpdateOneRequiredWithoutHistoryMessageNestedInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedCreateWithoutHistoryMessageInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutHistoryMessageInput
+  upsert?: Prisma.MessagesPostsUpsertWithoutHistoryMessageInput
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessagesPostsUpdateToOneWithWhereWithoutHistoryMessageInput, Prisma.MessagesPostsUpdateWithoutHistoryMessageInput>, Prisma.MessagesPostsUncheckedUpdateWithoutHistoryMessageInput>
+}
+
 export type MessagesPostsCreateWithoutUsersInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateWithoutUsersInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idPosts: string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsCreateOrConnectWithoutUsersInput = {
@@ -448,7 +470,7 @@ export type MessagesPostsScalarWhereInput = {
   OR?: Prisma.MessagesPostsScalarWhereInput[]
   NOT?: Prisma.MessagesPostsScalarWhereInput | Prisma.MessagesPostsScalarWhereInput[]
   id?: Prisma.StringFilter<"MessagesPosts"> | string
-  text?: Prisma.StringFilter<"MessagesPosts"> | string
+  text?: Prisma.JsonFilter<"MessagesPosts">
   createdAt?: Prisma.DateTimeFilter<"MessagesPosts"> | Date | string
   idUser?: Prisma.StringFilter<"MessagesPosts"> | string
   idPosts?: Prisma.StringFilter<"MessagesPosts"> | string
@@ -456,16 +478,18 @@ export type MessagesPostsScalarWhereInput = {
 
 export type MessagesPostsCreateWithoutPostsInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateWithoutPostsInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idUser: string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsCreateOrConnectWithoutPostsInput = {
@@ -494,62 +518,143 @@ export type MessagesPostsUpdateManyWithWhereWithoutPostsInput = {
   data: Prisma.XOR<Prisma.MessagesPostsUpdateManyMutationInput, Prisma.MessagesPostsUncheckedUpdateManyWithoutPostsInput>
 }
 
+export type MessagesPostsCreateWithoutHistoryMessageInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
+  Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+}
+
+export type MessagesPostsUncheckedCreateWithoutHistoryMessageInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  idUser: string
+  idPosts: string
+}
+
+export type MessagesPostsCreateOrConnectWithoutHistoryMessageInput = {
+  where: Prisma.MessagesPostsWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedCreateWithoutHistoryMessageInput>
+}
+
+export type MessagesPostsUpsertWithoutHistoryMessageInput = {
+  update: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedUpdateWithoutHistoryMessageInput>
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedCreateWithoutHistoryMessageInput>
+  where?: Prisma.MessagesPostsWhereInput
+}
+
+export type MessagesPostsUpdateToOneWithWhereWithoutHistoryMessageInput = {
+  where?: Prisma.MessagesPostsWhereInput
+  data: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutHistoryMessageInput, Prisma.MessagesPostsUncheckedUpdateWithoutHistoryMessageInput>
+}
+
+export type MessagesPostsUpdateWithoutHistoryMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
+  Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+}
+
+export type MessagesPostsUncheckedUpdateWithoutHistoryMessageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idUser?: Prisma.StringFieldUpdateOperationsInput | string
+  idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type MessagesPostsCreateManyUsersInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idPosts: string
 }
 
 export type MessagesPostsUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateManyWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MessagesPostsCreateManyPostsInput = {
   id?: string
-  text: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   idUser: string
 }
 
 export type MessagesPostsUpdateWithoutPostsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateWithoutPostsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateManyWithoutPostsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+
+/**
+ * Count Type MessagesPostsCountOutputType
+ */
+
+export type MessagesPostsCountOutputType = {
+  HistoryMessage: number
+}
+
+export type MessagesPostsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  HistoryMessage?: boolean | MessagesPostsCountOutputTypeCountHistoryMessageArgs
+}
+
+/**
+ * MessagesPostsCountOutputType without action
+ */
+export type MessagesPostsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MessagesPostsCountOutputType
+   */
+  select?: Prisma.MessagesPostsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MessagesPostsCountOutputType without action
+ */
+export type MessagesPostsCountOutputTypeCountHistoryMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HistoryMessageWhereInput
+}
 
 
 export type MessagesPostsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -560,6 +665,8 @@ export type MessagesPostsSelect<ExtArgs extends runtime.Types.Extensions.Interna
   idPosts?: boolean
   Users?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Posts?: boolean | Prisma.PostsDefaultArgs<ExtArgs>
+  HistoryMessage?: boolean | Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>
+  _count?: boolean | Prisma.MessagesPostsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["messagesPosts"]>
 
 export type MessagesPostsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -594,6 +701,8 @@ export type MessagesPostsOmit<ExtArgs extends runtime.Types.Extensions.InternalA
 export type MessagesPostsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Users?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Posts?: boolean | Prisma.PostsDefaultArgs<ExtArgs>
+  HistoryMessage?: boolean | Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>
+  _count?: boolean | Prisma.MessagesPostsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MessagesPostsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Users?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
@@ -609,10 +718,11 @@ export type $MessagesPostsPayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     Users: Prisma.$UsersPayload<ExtArgs>
     Posts: Prisma.$PostsPayload<ExtArgs>
+    HistoryMessage: Prisma.$HistoryMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    text: string
+    text: runtime.JsonValue
     createdAt: Date
     idUser: string
     idPosts: string
@@ -1012,6 +1122,7 @@ export interface Prisma__MessagesPostsClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Users<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Posts<T extends Prisma.PostsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PostsDefaultArgs<ExtArgs>>): Prisma.Prisma__PostsClient<runtime.Types.Result.GetResult<Prisma.$PostsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  HistoryMessage<T extends Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HistoryMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1042,7 +1153,7 @@ export interface Prisma__MessagesPostsClient<T, Null = never, ExtArgs extends ru
  */
 export interface MessagesPostsFieldRefs {
   readonly id: Prisma.FieldRef<"MessagesPosts", 'String'>
-  readonly text: Prisma.FieldRef<"MessagesPosts", 'String'>
+  readonly text: Prisma.FieldRef<"MessagesPosts", 'Json'>
   readonly createdAt: Prisma.FieldRef<"MessagesPosts", 'DateTime'>
   readonly idUser: Prisma.FieldRef<"MessagesPosts", 'String'>
   readonly idPosts: Prisma.FieldRef<"MessagesPosts", 'String'>
@@ -1439,6 +1550,30 @@ export type MessagesPostsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many MessagesPosts to delete.
    */
   limit?: number
+}
+
+/**
+ * MessagesPosts.HistoryMessage
+ */
+export type MessagesPosts$HistoryMessageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HistoryMessage
+   */
+  select?: Prisma.HistoryMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HistoryMessage
+   */
+  omit?: Prisma.HistoryMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HistoryMessageInclude<ExtArgs> | null
+  where?: Prisma.HistoryMessageWhereInput
+  orderBy?: Prisma.HistoryMessageOrderByWithRelationInput | Prisma.HistoryMessageOrderByWithRelationInput[]
+  cursor?: Prisma.HistoryMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HistoryMessageScalarFieldEnum | Prisma.HistoryMessageScalarFieldEnum[]
 }
 
 /**

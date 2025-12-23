@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Posts
@@ -32,6 +32,7 @@ export type PostsMinAggregateOutputType = {
   createdAt: Date | null
   locked: boolean | null
   pinned: boolean | null
+  lastUpdate: Date | null
 }
 
 export type PostsMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type PostsMaxAggregateOutputType = {
   createdAt: Date | null
   locked: boolean | null
   pinned: boolean | null
+  lastUpdate: Date | null
 }
 
 export type PostsCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type PostsCountAggregateOutputType = {
   createdAt: number
   locked: number
   pinned: number
+  lastUpdate: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type PostsMinAggregateInputType = {
   createdAt?: true
   locked?: true
   pinned?: true
+  lastUpdate?: true
 }
 
 export type PostsMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type PostsMaxAggregateInputType = {
   createdAt?: true
   locked?: true
   pinned?: true
+  lastUpdate?: true
 }
 
 export type PostsCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type PostsCountAggregateInputType = {
   createdAt?: true
   locked?: true
   pinned?: true
+  lastUpdate?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type PostsGroupByOutputType = {
   createdAt: Date
   locked: boolean
   pinned: boolean
+  lastUpdate: Date
   _count: PostsCountAggregateOutputType | null
   _min: PostsMinAggregateOutputType | null
   _max: PostsMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type PostsWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Posts"> | Date | string
   locked?: Prisma.BoolFilter<"Posts"> | boolean
   pinned?: Prisma.BoolFilter<"Posts"> | boolean
+  lastUpdate?: Prisma.DateTimeFilter<"Posts"> | Date | string
   SubCategories?: Prisma.XOR<Prisma.SubCategoriesScalarRelationFilter, Prisma.SubCategoriesWhereInput>
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   MessagesPosts?: Prisma.MessagesPostsListRelationFilter
@@ -211,6 +219,7 @@ export type PostsOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   locked?: Prisma.SortOrder
   pinned?: Prisma.SortOrder
+  lastUpdate?: Prisma.SortOrder
   SubCategories?: Prisma.SubCategoriesOrderByWithRelationInput
   user?: Prisma.UsersOrderByWithRelationInput
   MessagesPosts?: Prisma.MessagesPostsOrderByRelationAggregateInput
@@ -227,6 +236,7 @@ export type PostsWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Posts"> | Date | string
   locked?: Prisma.BoolFilter<"Posts"> | boolean
   pinned?: Prisma.BoolFilter<"Posts"> | boolean
+  lastUpdate?: Prisma.DateTimeFilter<"Posts"> | Date | string
   SubCategories?: Prisma.XOR<Prisma.SubCategoriesScalarRelationFilter, Prisma.SubCategoriesWhereInput>
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   MessagesPosts?: Prisma.MessagesPostsListRelationFilter
@@ -240,6 +250,7 @@ export type PostsOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   locked?: Prisma.SortOrder
   pinned?: Prisma.SortOrder
+  lastUpdate?: Prisma.SortOrder
   _count?: Prisma.PostsCountOrderByAggregateInput
   _max?: Prisma.PostsMaxOrderByAggregateInput
   _min?: Prisma.PostsMinOrderByAggregateInput
@@ -256,14 +267,16 @@ export type PostsScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Posts"> | Date | string
   locked?: Prisma.BoolWithAggregatesFilter<"Posts"> | boolean
   pinned?: Prisma.BoolWithAggregatesFilter<"Posts"> | boolean
+  lastUpdate?: Prisma.DateTimeWithAggregatesFilter<"Posts"> | Date | string
 }
 
 export type PostsCreateInput = {
   id?: string
   title: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   SubCategories: Prisma.SubCategoriesCreateNestedOneWithoutPostsInput
   user: Prisma.UsersCreateNestedOneWithoutPostsInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutPostsInput
@@ -275,8 +288,9 @@ export type PostsUncheckedCreateInput = {
   idSubCategories: string
   idUser: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutPostsInput
 }
 
@@ -286,6 +300,7 @@ export type PostsUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   SubCategories?: Prisma.SubCategoriesUpdateOneRequiredWithoutPostsNestedInput
   user?: Prisma.UsersUpdateOneRequiredWithoutPostsNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutPostsNestedInput
@@ -299,6 +314,7 @@ export type PostsUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutPostsNestedInput
 }
 
@@ -308,8 +324,9 @@ export type PostsCreateManyInput = {
   idSubCategories: string
   idUser: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
 }
 
 export type PostsUpdateManyMutationInput = {
@@ -318,6 +335,7 @@ export type PostsUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PostsUncheckedUpdateManyInput = {
@@ -328,6 +346,7 @@ export type PostsUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PostsListRelationFilter = {
@@ -348,6 +367,7 @@ export type PostsCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   locked?: Prisma.SortOrder
   pinned?: Prisma.SortOrder
+  lastUpdate?: Prisma.SortOrder
 }
 
 export type PostsMaxOrderByAggregateInput = {
@@ -358,6 +378,7 @@ export type PostsMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   locked?: Prisma.SortOrder
   pinned?: Prisma.SortOrder
+  lastUpdate?: Prisma.SortOrder
 }
 
 export type PostsMinOrderByAggregateInput = {
@@ -368,6 +389,7 @@ export type PostsMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   locked?: Prisma.SortOrder
   pinned?: Prisma.SortOrder
+  lastUpdate?: Prisma.SortOrder
 }
 
 export type PostsScalarRelationFilter = {
@@ -477,8 +499,9 @@ export type PostsCreateWithoutUserInput = {
   id?: string
   title: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   SubCategories: Prisma.SubCategoriesCreateNestedOneWithoutPostsInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutPostsInput
 }
@@ -488,8 +511,9 @@ export type PostsUncheckedCreateWithoutUserInput = {
   title: string
   idSubCategories: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutPostsInput
 }
 
@@ -530,14 +554,16 @@ export type PostsScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Posts"> | Date | string
   locked?: Prisma.BoolFilter<"Posts"> | boolean
   pinned?: Prisma.BoolFilter<"Posts"> | boolean
+  lastUpdate?: Prisma.DateTimeFilter<"Posts"> | Date | string
 }
 
 export type PostsCreateWithoutSubCategoriesInput = {
   id?: string
   title: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   user: Prisma.UsersCreateNestedOneWithoutPostsInput
   MessagesPosts?: Prisma.MessagesPostsCreateNestedManyWithoutPostsInput
 }
@@ -547,8 +573,9 @@ export type PostsUncheckedCreateWithoutSubCategoriesInput = {
   title: string
   idUser: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedCreateNestedManyWithoutPostsInput
 }
 
@@ -582,8 +609,9 @@ export type PostsCreateWithoutMessagesPostsInput = {
   id?: string
   title: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
   SubCategories: Prisma.SubCategoriesCreateNestedOneWithoutPostsInput
   user: Prisma.UsersCreateNestedOneWithoutPostsInput
 }
@@ -594,8 +622,9 @@ export type PostsUncheckedCreateWithoutMessagesPostsInput = {
   idSubCategories: string
   idUser: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
 }
 
 export type PostsCreateOrConnectWithoutMessagesPostsInput = {
@@ -620,6 +649,7 @@ export type PostsUpdateWithoutMessagesPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   SubCategories?: Prisma.SubCategoriesUpdateOneRequiredWithoutPostsNestedInput
   user?: Prisma.UsersUpdateOneRequiredWithoutPostsNestedInput
 }
@@ -632,6 +662,7 @@ export type PostsUncheckedUpdateWithoutMessagesPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PostsCreateManyUserInput = {
@@ -639,8 +670,9 @@ export type PostsCreateManyUserInput = {
   title: string
   idSubCategories: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
 }
 
 export type PostsUpdateWithoutUserInput = {
@@ -649,6 +681,7 @@ export type PostsUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   SubCategories?: Prisma.SubCategoriesUpdateOneRequiredWithoutPostsNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutPostsNestedInput
 }
@@ -660,6 +693,7 @@ export type PostsUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutPostsNestedInput
 }
 
@@ -670,6 +704,7 @@ export type PostsUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PostsCreateManySubCategoriesInput = {
@@ -677,8 +712,9 @@ export type PostsCreateManySubCategoriesInput = {
   title: string
   idUser: string
   createdAt?: Date | string
-  locked: boolean
+  locked?: boolean
   pinned?: boolean
+  lastUpdate?: Date | string
 }
 
 export type PostsUpdateWithoutSubCategoriesInput = {
@@ -687,6 +723,7 @@ export type PostsUpdateWithoutSubCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UsersUpdateOneRequiredWithoutPostsNestedInput
   MessagesPosts?: Prisma.MessagesPostsUpdateManyWithoutPostsNestedInput
 }
@@ -698,6 +735,7 @@ export type PostsUncheckedUpdateWithoutSubCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   MessagesPosts?: Prisma.MessagesPostsUncheckedUpdateManyWithoutPostsNestedInput
 }
 
@@ -708,6 +746,7 @@ export type PostsUncheckedUpdateManyWithoutSubCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastUpdate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -749,6 +788,7 @@ export type PostsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   locked?: boolean
   pinned?: boolean
+  lastUpdate?: boolean
   SubCategories?: boolean | Prisma.SubCategoriesDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   MessagesPosts?: boolean | Prisma.Posts$MessagesPostsArgs<ExtArgs>
@@ -763,6 +803,7 @@ export type PostsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdAt?: boolean
   locked?: boolean
   pinned?: boolean
+  lastUpdate?: boolean
   SubCategories?: boolean | Prisma.SubCategoriesDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["posts"]>
@@ -775,6 +816,7 @@ export type PostsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdAt?: boolean
   locked?: boolean
   pinned?: boolean
+  lastUpdate?: boolean
   SubCategories?: boolean | Prisma.SubCategoriesDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["posts"]>
@@ -787,9 +829,10 @@ export type PostsSelectScalar = {
   createdAt?: boolean
   locked?: boolean
   pinned?: boolean
+  lastUpdate?: boolean
 }
 
-export type PostsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "idSubCategories" | "idUser" | "createdAt" | "locked" | "pinned", ExtArgs["result"]["posts"]>
+export type PostsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "idSubCategories" | "idUser" | "createdAt" | "locked" | "pinned" | "lastUpdate", ExtArgs["result"]["posts"]>
 export type PostsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   SubCategories?: boolean | Prisma.SubCategoriesDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
@@ -820,6 +863,7 @@ export type $PostsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     createdAt: Date
     locked: boolean
     pinned: boolean
+    lastUpdate: Date
   }, ExtArgs["result"]["posts"]>
   composites: {}
 }
@@ -1253,6 +1297,7 @@ export interface PostsFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Posts", 'DateTime'>
   readonly locked: Prisma.FieldRef<"Posts", 'Boolean'>
   readonly pinned: Prisma.FieldRef<"Posts", 'Boolean'>
+  readonly lastUpdate: Prisma.FieldRef<"Posts", 'DateTime'>
 }
     
 

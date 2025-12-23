@@ -1,48 +1,74 @@
 'use client'
-import {EditorContent, ReactNodeViewRenderer, useEditor} from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import {FontSize} from '@tiptap/extension-text-style'
+import {EditorContent} from '@tiptap/react'
 import InputToolbar from '@/components/shared/InputToolbar'
-import {CharacterCount, Placeholder} from '@tiptap/extensions'
-import {useEffect, useState} from 'react'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import {all, createLowlight} from 'lowlight'
-import CodeBlockWrapper from '@/components/shared/CodeBlockWrapper'
+import React, {useEffect, useState} from 'react'
+import useNotify from '@/hooks/useNotify'
+import useCategories from '@/hooks/useCategories'
+import useEditorHook from '@/hooks/useEditorHook'
+import {useRouter} from 'next/navigation'
 
-export default function InputArea() {
-  const draft = localStorage.getItem('draft') ?? ''
-  const [value, setValue] = useState(localStorage.getItem('draft')?JSON.parse(draft):'')
-  const lowlight = createLowlight(all)
-  const editor = useEditor({
-    extensions:[
-      StarterKit.configure({
-        codeBlock:false
-      }),
-      FontSize,
-      Placeholder.configure({
-        emptyEditorClass: 'is-editor-empty',
-        placeholder: 'Начните вводить свой текст...'
-      }),
-      CharacterCount.configure({
-        limit:6000
-      }),
-      CodeBlockLowlight.extend({
-        addNodeView(){
-          return ReactNodeViewRenderer(CodeBlockWrapper)
-        }
-      }).configure({lowlight})
-    ],
-    content:value,
-    editorProps: {
-      attributes:{
-        class:'border outline-none p-2.5 grow rounded-md border-neutral-300 dark:border-neutral-700 transition-colors duration-300 ease-out focus:border-neutral-400 dark:focus:border-neutral-600'
-      }
-    },
-    onUpdate: ({editor})=>{
-      setValue(JSON.stringify(editor.getJSON()))
-    },
-    immediatelyRender:false
+export default function InputArea({title, pending, setPending, id}:{title?:string, pending:boolean, setPending:React.TransitionStartFunction, id:string}) {
+  const [value, setValue] = useState(()=>{
+    try {
+      const draft = localStorage.getItem('draft')
+      return draft ? JSON.parse(draft) : ''
+    }catch{
+      return ''
+    }
   })
+  const {setMessage, setIsNotify} = useNotify()
+  const {setCategories} = useCategories()
+  const editor = useEditorHook({value: value, setValue:setValue})
+  const router = useRouter()
+  async function handleSubmit(){
+    setPending(async ()=>{
+      if((!title||title.trim().length === 0) || editor?.getText().trim().length === 0) {
+        setMessage('Ошибка: вы не заполнили поля')
+        setIsNotify(true)
+        return
+      }
+      if(title.trim().length>50){
+        setMessage('Ошибка: название темы не может быть больше 50 символов')
+        setIsNotify(true)
+        return
+      }
+      const req = await fetch('/api/posts/createTheme',{
+        method: 'POST',
+        body: JSON.stringify({title:title, data:editor?.getJSON(), id:id}),
+        headers: {'Content-Type': 'application/json'}
+      })
+      const res = await req.json()
+      if(res.ok){
+        setMessage('Успешно')
+        setIsNotify(true)
+        localStorage.setItem('draft', '')
+        setValue('')
+        setCategories(prevState => prevState.map((category)=>{
+          if(!category.subCategories.some(sub=>sub.id === id)){
+            return category
+          }
+          return {
+            ...category,
+            subCategories: category.subCategories.map(sub=>{
+              if(sub.id !== id) return sub
+              return {
+                ...sub,
+                _count:{
+                  ...sub._count,
+                  posts:sub._count.posts+1
+                },
+                posts:[...sub.posts,res.theme]
+              }
+            })
+          }
+        }))
+        router.push(`/theme/${decodeURIComponent(res.theme.title)}?themeId=${decodeURIComponent(res.theme.id)}&subCategoryId=${decodeURIComponent(res.theme.idSubCategories)}`)
+      }else {
+        setMessage(`Ошибка: ${res.error}`)
+        setIsNotify(true)
+      }
+    })
+  }
   useEffect(() => {
     if(!editor) return
     function save(){
@@ -54,9 +80,9 @@ export default function InputArea() {
   }, [editor])
   return <div className='bg-white dark:bg-[#212121] border border-neutral-300 dark:border-neutral-700 w-full max-w-300 rounded-sm grow p-2.5 flex flex-col gap-2.5'>
     <div className='flex flex-col grow'>
-      <InputToolbar editor={editor}/>
-      <EditorContent editor={editor} className='grow flex'/>
+      <InputToolbar pending={pending} editor={editor}/>
+      <EditorContent readOnly={pending} editor={editor} className='grow flex break-all'/>
     </div>
-    <button className='bg-sky-500 dark:bg-sky-600 py-1.25 max-w-max px-2.5 text-white font-medium rounded-md cursor-pointer hover:bg-sky-400 dark:hover:bg-sky-500 active:bg-sky-600 dark:active:bg-sky-700 transition-colors duration-300 ease-out'>Отправить</button>
+    <button disabled={pending} onClick={pending?undefined:()=>handleSubmit()} className='disabled:cursor-default disabled:bg-neutral-300 dark:disabled:bg-neutral-700 bg-sky-500 dark:bg-sky-600 py-1.25 max-w-max px-2.5 text-white font-medium rounded-md cursor-pointer hover:bg-sky-400 dark:hover:bg-sky-500 active:bg-sky-600 dark:active:bg-sky-700 transition-colors duration-300 ease-out'>Отправить</button>
   </div>
 }

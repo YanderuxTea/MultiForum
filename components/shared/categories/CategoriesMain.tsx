@@ -36,9 +36,9 @@ export default function CategoriesMain({props}:{props:ICategories}) {
       <motion.div initial={{height:0}} animate={{height:'auto'}} exit={{height:0}} className={`flex flex-col overflow-clip ${props.subCategories.length===0&&'items-center'}`}>
         {props.subCategories.length>0?
           <div className='flex flex-col divide-y divide-neutral-300 dark:divide-neutral-700'>
-            {props.subCategories.map((sub) => (
-                <SubCategoriesCard key={sub.id} props={sub}/>
-            ))}
+            {props.subCategories.map((subCat)=>{
+              return <SubCategoriesCard props={subCat} key={subCat.id}/>
+            })}
           </div>
           :
           <p className='text-neutral-700 dark:text-neutral-300 font-medium py-2.5'>Разделов нет :(</p>

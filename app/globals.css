@@ -1,27 +1,78 @@
 @import "tailwindcss";
-html.dark{
-    @import "highlight.js/styles/atom-one-dark.css";
+html.dark {
+  @import "highlight.js/styles/atom-one-dark.css";
 }
-html.light{
-    @import "highlight.js/styles/atom-one-light.css";
+html.light {
+  @import "highlight.js/styles/atom-one-light.css";
 }
 @custom-variant dark (&:where(.dark, .dark *));
 .tiptap p.is-editor-empty:first-child::before {
-    color: #adb5bd;
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
-.tiptap .node-codeBlock{
-    padding: 5px 5px;
-    border-radius: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.tiptap .node-codeBlock {
+  padding: 5px 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 html.dark .tiptap .node-codeBlock {
-    background-color: #1A1A1A;
+  background-color: #1a1a1a;
 }
 html.light .tiptap .node-codeBlock {
-    background-color: #F6F6F6;
+  background-color: #f6f6f6;
+}
+.tiptap a {
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+html.light .tiptap a {
+  color: #1f6feb;
+}
+html.dark .tiptap a {
+  color: #0d8dff;
+}
+.tiptap img {
+  border-radius: 10px;
+}
+.ProseMirror {
+  caret-color: #ff7c00;
+}
+html.dark .ProseMirror blockquote {
+  background-color: rgba(41, 41, 41, 0.75);
+}
+html.light .ProseMirror blockquote {
+  background-color: rgba(41, 41, 41, 0.05);
+}
+.ProseMirror blockquote {
+  padding: 10px;
+  border-left: 3px solid #ff7c00;
+}
+.ProseMirror blockquote > p:first-of-type {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  border-bottom: 2px solid #ff7c00;
+  padding: 2px;
+}
+.ProseMirror blockquote > p:first-of-type a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+html.light .ProseMirror blockquote > p:first-of-type {
+  color: #474747;
+}
+html.light .ProseMirror blockquote > p:first-of-type a {
+  color: #474747;
+}
+html.dark .ProseMirror blockquote > p:first-of-type {
+  color: #b2b2b2;
+}
+html.dark .ProseMirror blockquote > p:first-of-type a {
+  color: #b2b2b2;
 }

@@ -1,4 +1,4 @@
-import {JSX} from 'react'
+import React, {JSX} from 'react'
 import BoldIcon from '@/components/shared/icons/toolbar/BoldIcon'
 import ItalicIcon from '@/components/shared/icons/toolbar/ItalicIcon'
 import StrikeIcon from '@/components/shared/icons/toolbar/StrikeIcon'
@@ -11,12 +11,18 @@ import AdminsDeclineIcon from '@/components/shared/icons/toolbar/AdminsDeclineIc
 import AdminsCloseIcon from '@/components/shared/icons/toolbar/AdminsCloseIcon'
 import AdminsCheckIcon from '@/components/shared/icons/toolbar/AdminsCheckIcon'
 import {Editor} from '@tiptap/core'
+import YouTubeIcon from '@/components/shared/icons/toolbar/YouTubeIcon'
+import LinkContent from '@/components/shared/MenuContentToolBar/LinkContent'
+import ImageContent from '@/components/shared/MenuContentToolBar/ImageContent'
+import VideoContent from '@/components/shared/MenuContentToolBar/VideoContent'
+import PreviewContent from '@/components/shared/MenuContentToolBar/PreviewContent'
 
 export interface IToolbarButtonsData {
   type: string;
   icon: JSX.Element;
   mark?:string;
   command?: (editor: Editor|null) => void;
+  menuContent?: (editor:Editor|null, setIsOpenMenu:React.Dispatch<React.SetStateAction<boolean>>)=>JSX.Element;
 }
 export const toolbarButtonsData: IToolbarButtonsData[] =[
   {
@@ -52,25 +58,96 @@ export const toolbarButtonsData: IToolbarButtonsData[] =[
   {
     type:'linkButton',
     icon: <LinkIcon/>,
+    menuContent: (editor,setIsOpenMenu) => <LinkContent editor={editor} setIsOpenMenu={setIsOpenMenu}/>
   },
   {
     type:'imageButton',
-    icon: <ImageIcon/>
+    icon: <ImageIcon/>,
+    menuContent: (editor,setIsOpenMenu) => <ImageContent editor={editor} setIsOpenMenu={setIsOpenMenu}/>
+  },
+  {
+    type: 'videoButton',
+    icon: <YouTubeIcon/>,
+    menuContent: (editor,setIsOpenMenu) => <VideoContent editor={editor} setIsOpenMenu={setIsOpenMenu}/>
   },
   {
     type:'previewButton',
-    icon: <PreviewIcon/>
+    icon: <PreviewIcon/>,
+    menuContent: editor => <PreviewContent editor={editor}/>
   },
   {
     type:'adminsDeclineButton',
-    icon: <AdminsDeclineIcon/>
+    icon: <AdminsDeclineIcon/>,
+    command: editor => editor?.chain().focus().insertContent([
+      {
+        type:'text',
+        text:'Отказ',
+        marks:[
+          {
+            type:'textStyle',
+            attrs:{
+              color:'#FA0000',
+              fontSize:'24px',
+            },
+          },
+          {
+            type:'bold'
+          }
+        ]
+      },
+      {
+        type: 'paragraph',
+      }
+    ]).run()
   },
   {
     type:'adminsCloseButton',
-    icon: <AdminsCloseIcon/>
+    icon: <AdminsCloseIcon/>,
+    command: editor => editor?.chain().focus().insertContent([
+      {
+        type:'text',
+        text:'Закрыто',
+        marks:[
+          {
+            type:'textStyle',
+            attrs:{
+              color:'#3B79FF',
+              fontSize:'24px',
+            },
+          },
+          {
+            type:'bold'
+          }
+        ]
+      },
+      {
+        type: 'paragraph',
+      }
+    ]).run()
   },
   {
     type:'adminsCheckButton',
-    icon: <AdminsCheckIcon/>
+    icon: <AdminsCheckIcon/>,
+    command: editor => editor?.chain().focus().insertContent([
+      {
+        type:'text',
+        text:'Меры приняты',
+        marks:[
+          {
+            type:'textStyle',
+            attrs:{
+              color:'#00A946',
+              fontSize:'24px',
+            },
+          },
+          {
+            type:'bold'
+          }
+        ]
+      },
+      {
+        type: 'paragraph',
+      }
+    ]).run()
   }
 ]

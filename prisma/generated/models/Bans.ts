@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.ts"
+import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model Bans
@@ -41,6 +41,7 @@ export type BansMinAggregateOutputType = {
   date: Date | null
   time: number | null
   admin: string | null
+  unbansDate: Date | null
 }
 
 export type BansMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type BansMaxAggregateOutputType = {
   date: Date | null
   time: number | null
   admin: string | null
+  unbansDate: Date | null
 }
 
 export type BansCountAggregateOutputType = {
@@ -59,6 +61,7 @@ export type BansCountAggregateOutputType = {
   date: number
   time: number
   admin: number
+  unbansDate: number
   _all: number
 }
 
@@ -78,6 +81,7 @@ export type BansMinAggregateInputType = {
   date?: true
   time?: true
   admin?: true
+  unbansDate?: true
 }
 
 export type BansMaxAggregateInputType = {
@@ -87,6 +91,7 @@ export type BansMaxAggregateInputType = {
   date?: true
   time?: true
   admin?: true
+  unbansDate?: true
 }
 
 export type BansCountAggregateInputType = {
@@ -96,6 +101,7 @@ export type BansCountAggregateInputType = {
   date?: true
   time?: true
   admin?: true
+  unbansDate?: true
   _all?: true
 }
 
@@ -192,6 +198,7 @@ export type BansGroupByOutputType = {
   date: Date
   time: number
   admin: string
+  unbansDate: Date | null
   _count: BansCountAggregateOutputType | null
   _avg: BansAvgAggregateOutputType | null
   _sum: BansSumAggregateOutputType | null
@@ -224,6 +231,7 @@ export type BansWhereInput = {
   date?: Prisma.DateTimeFilter<"Bans"> | Date | string
   time?: Prisma.IntFilter<"Bans"> | number
   admin?: Prisma.StringFilter<"Bans"> | string
+  unbansDate?: Prisma.DateTimeNullableFilter<"Bans"> | Date | string | null
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Unbans?: Prisma.XOR<Prisma.UnbansNullableScalarRelationFilter, Prisma.UnbansWhereInput> | null
 }
@@ -235,6 +243,7 @@ export type BansOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   time?: Prisma.SortOrder
   admin?: Prisma.SortOrder
+  unbansDate?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UsersOrderByWithRelationInput
   Unbans?: Prisma.UnbansOrderByWithRelationInput
 }
@@ -249,6 +258,7 @@ export type BansWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeFilter<"Bans"> | Date | string
   time?: Prisma.IntFilter<"Bans"> | number
   admin?: Prisma.StringFilter<"Bans"> | string
+  unbansDate?: Prisma.DateTimeNullableFilter<"Bans"> | Date | string | null
   user?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Unbans?: Prisma.XOR<Prisma.UnbansNullableScalarRelationFilter, Prisma.UnbansWhereInput> | null
 }, "id">
@@ -260,6 +270,7 @@ export type BansOrderByWithAggregationInput = {
   date?: Prisma.SortOrder
   time?: Prisma.SortOrder
   admin?: Prisma.SortOrder
+  unbansDate?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BansCountOrderByAggregateInput
   _avg?: Prisma.BansAvgOrderByAggregateInput
   _max?: Prisma.BansMaxOrderByAggregateInput
@@ -277,6 +288,7 @@ export type BansScalarWhereWithAggregatesInput = {
   date?: Prisma.DateTimeWithAggregatesFilter<"Bans"> | Date | string
   time?: Prisma.IntWithAggregatesFilter<"Bans"> | number
   admin?: Prisma.StringWithAggregatesFilter<"Bans"> | string
+  unbansDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Bans"> | Date | string | null
 }
 
 export type BansCreateInput = {
@@ -285,6 +297,7 @@ export type BansCreateInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
   user: Prisma.UsersCreateNestedOneWithoutBansInput
   Unbans?: Prisma.UnbansCreateNestedOneWithoutBanInput
 }
@@ -296,6 +309,7 @@ export type BansUncheckedCreateInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
   Unbans?: Prisma.UnbansUncheckedCreateNestedOneWithoutBanInput
 }
 
@@ -305,6 +319,7 @@ export type BansUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UsersUpdateOneRequiredWithoutBansNestedInput
   Unbans?: Prisma.UnbansUpdateOneWithoutBanNestedInput
 }
@@ -316,6 +331,7 @@ export type BansUncheckedUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Unbans?: Prisma.UnbansUncheckedUpdateOneWithoutBanNestedInput
 }
 
@@ -326,6 +342,7 @@ export type BansCreateManyInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
 }
 
 export type BansUpdateManyMutationInput = {
@@ -334,6 +351,7 @@ export type BansUpdateManyMutationInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BansUncheckedUpdateManyInput = {
@@ -343,6 +361,7 @@ export type BansUncheckedUpdateManyInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BansListRelationFilter = {
@@ -362,6 +381,7 @@ export type BansCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   time?: Prisma.SortOrder
   admin?: Prisma.SortOrder
+  unbansDate?: Prisma.SortOrder
 }
 
 export type BansAvgOrderByAggregateInput = {
@@ -375,6 +395,7 @@ export type BansMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   time?: Prisma.SortOrder
   admin?: Prisma.SortOrder
+  unbansDate?: Prisma.SortOrder
 }
 
 export type BansMinOrderByAggregateInput = {
@@ -384,6 +405,7 @@ export type BansMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   time?: Prisma.SortOrder
   admin?: Prisma.SortOrder
+  unbansDate?: Prisma.SortOrder
 }
 
 export type BansSumOrderByAggregateInput = {
@@ -457,6 +479,7 @@ export type BansCreateWithoutUserInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
   Unbans?: Prisma.UnbansCreateNestedOneWithoutBanInput
 }
 
@@ -466,6 +489,7 @@ export type BansUncheckedCreateWithoutUserInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
   Unbans?: Prisma.UnbansUncheckedCreateNestedOneWithoutBanInput
 }
 
@@ -505,6 +529,7 @@ export type BansScalarWhereInput = {
   date?: Prisma.DateTimeFilter<"Bans"> | Date | string
   time?: Prisma.IntFilter<"Bans"> | number
   admin?: Prisma.StringFilter<"Bans"> | string
+  unbansDate?: Prisma.DateTimeNullableFilter<"Bans"> | Date | string | null
 }
 
 export type BansCreateWithoutUnbansInput = {
@@ -513,6 +538,7 @@ export type BansCreateWithoutUnbansInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
   user: Prisma.UsersCreateNestedOneWithoutBansInput
 }
 
@@ -523,6 +549,7 @@ export type BansUncheckedCreateWithoutUnbansInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
 }
 
 export type BansCreateOrConnectWithoutUnbansInput = {
@@ -547,6 +574,7 @@ export type BansUpdateWithoutUnbansInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UsersUpdateOneRequiredWithoutBansNestedInput
 }
 
@@ -557,6 +585,7 @@ export type BansUncheckedUpdateWithoutUnbansInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type BansCreateManyUserInput = {
@@ -565,6 +594,7 @@ export type BansCreateManyUserInput = {
   date?: Date | string
   time: number
   admin: string
+  unbansDate?: Date | string | null
 }
 
 export type BansUpdateWithoutUserInput = {
@@ -573,6 +603,7 @@ export type BansUpdateWithoutUserInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Unbans?: Prisma.UnbansUpdateOneWithoutBanNestedInput
 }
 
@@ -582,6 +613,7 @@ export type BansUncheckedUpdateWithoutUserInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Unbans?: Prisma.UnbansUncheckedUpdateOneWithoutBanNestedInput
 }
 
@@ -591,6 +623,7 @@ export type BansUncheckedUpdateManyWithoutUserInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   time?: Prisma.IntFieldUpdateOperationsInput | number
   admin?: Prisma.StringFieldUpdateOperationsInput | string
+  unbansDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -602,6 +635,7 @@ export type BansSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   date?: boolean
   time?: boolean
   admin?: boolean
+  unbansDate?: boolean
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Unbans?: boolean | Prisma.Bans$UnbansArgs<ExtArgs>
 }, ExtArgs["result"]["bans"]>
@@ -613,6 +647,7 @@ export type BansSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   date?: boolean
   time?: boolean
   admin?: boolean
+  unbansDate?: boolean
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bans"]>
 
@@ -623,6 +658,7 @@ export type BansSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   date?: boolean
   time?: boolean
   admin?: boolean
+  unbansDate?: boolean
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bans"]>
 
@@ -633,9 +669,10 @@ export type BansSelectScalar = {
   date?: boolean
   time?: boolean
   admin?: boolean
+  unbansDate?: boolean
 }
 
-export type BansOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "reason" | "date" | "time" | "admin", ExtArgs["result"]["bans"]>
+export type BansOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "idUser" | "reason" | "date" | "time" | "admin" | "unbansDate", ExtArgs["result"]["bans"]>
 export type BansInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Unbans?: boolean | Prisma.Bans$UnbansArgs<ExtArgs>
@@ -660,6 +697,7 @@ export type $BansPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     date: Date
     time: number
     admin: string
+    unbansDate: Date | null
   }, ExtArgs["result"]["bans"]>
   composites: {}
 }
@@ -1091,6 +1129,7 @@ export interface BansFieldRefs {
   readonly date: Prisma.FieldRef<"Bans", 'DateTime'>
   readonly time: Prisma.FieldRef<"Bans", 'Int'>
   readonly admin: Prisma.FieldRef<"Bans", 'String'>
+  readonly unbansDate: Prisma.FieldRef<"Bans", 'DateTime'>
 }
     
 

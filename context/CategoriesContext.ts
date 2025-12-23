@@ -1,36 +1,120 @@
 import React, {createContext} from 'react'
+import {JSONContent} from '@tiptap/core'
 
 export interface IUser{
   login: string,
   avatar: string | null,
   role: string,
+  _count:{
+    MessagesPosts:number
+  }
 }
-export interface IPosts{
+export interface IHistory{
+  id: string
+  idUser: string
+  updateAt: Date
+  idMessage: string
+  beforeText: JSONContent
+  afterText: JSONContent
+}
+export interface IHistoryMessages {
+  HistoryMessage: IHistory[],
+  _count:{
+    HistoryMessage:number,
+  }
+}
+export interface IMessage{
   id: string
   createdAt: Date
   idUser: string
-  title: string
-  idSubCategories: string
-  locked: boolean
-  pinned: boolean
-  user: IUser
+  text: JSONContent
+  idPosts: string
+  Users: IUser
+  Posts:{
+    title: string
+    user:{
+      login: string,
+      avatar: string | null,
+      role: string,
+    },
+    createdAt: Date,
+    _count: {
+      MessagesPosts: number
+    },
+    locked: boolean
+  },
+  HistoryMessage:{
+    updateAt:Date,
+  }[]
 }
-
+export interface IPost{
+  _count: {
+    MessagesPosts: number
+  }
+  pinned: boolean
+  locked: boolean
+  title: string
+  id: string
+  lastUpdate: Date
+  user:{
+    login: string,
+    role:string
+  },
+  createdAt: Date
+  MessagesPosts:{
+    id: string,
+    createdAt: Date,
+    Users:{
+      login: string,
+      role: string,
+      avatar: string | null,
+    },
+    _count:{
+      MessagesPosts: number
+    }
+  }[]
+}
+export interface IPosts{
+  id: string
+  _count: {
+    posts: number
+  }
+  title: string
+  change:boolean
+  posts: IPost[]
+}
+export interface IMessMain{
+  createdAt: Date
+  Users:{
+    role:string
+    login: string,
+    avatar: string | null,
+  }
+}
+export interface IPostsMain{
+  id: string
+  idSubCategories:string
+  title: string
+  MessagesPosts:IMessMain[]
+}
 export interface ISubCategories{
   id: string
   title: string
-  position: number
-  icon: string
-  idCategories: string
-  posts: IPosts[]
+  visible: boolean
   _count:{
     posts:number
   }
+  idCategories: string
+  icon: string
+  change: boolean
+  position:number
+  posts: IPostsMain[]
 }
 export interface ICategories{
   id: string
   title: string
-  position: number
+  visible: string
+  position:number
   subCategories: ISubCategories[]
 }
 export interface ICategoriesContext {
