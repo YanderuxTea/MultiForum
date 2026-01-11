@@ -5,8 +5,7 @@ import InformationStats from "./InformationStats";
 import InformationStatuses from "./InformationStatuses";
 import InformationTop from "./InformationTop";
 import InformationThemes from "./InformationThemes";
-export const dynamic = "force-static";
-export const revalidate = 30;
+export const revalidate = 60;
 export interface ILastThemes {
   id: string;
   title: string;
