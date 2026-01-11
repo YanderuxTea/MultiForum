@@ -52,6 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Users: 'Users',
+  ActivityUser: 'ActivityUser',
+  Reaction: 'Reaction',
+  Statuses: 'Statuses',
   Categories: 'Categories',
   SubCategories: 'SubCategories',
   Posts: 'Posts',
@@ -95,10 +98,46 @@ export const UsersScalarFieldEnum = {
   encryptedData: 'encryptedData',
   iv: 'iv',
   authTag: 'authTag',
-  isTwoFactorEnabled: 'isTwoFactorEnabled'
+  isTwoFactorEnabled: 'isTwoFactorEnabled',
+  reputation: 'reputation'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
+
+
+export const ActivityUserScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  idUser: 'idUser',
+  messId: 'messId',
+  statusId: 'statusId',
+  activityType: 'activityType',
+  reactionId: 'reactionId'
+} as const
+
+export type ActivityUserScalarFieldEnum = (typeof ActivityUserScalarFieldEnum)[keyof typeof ActivityUserScalarFieldEnum]
+
+
+export const ReactionScalarFieldEnum = {
+  id: 'id',
+  messagesPostsId: 'messagesPostsId',
+  reactionType: 'reactionType',
+  createdAt: 'createdAt',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId'
+} as const
+
+export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
+
+
+export const StatusesScalarFieldEnum = {
+  id: 'id',
+  idUser: 'idUser',
+  text: 'text',
+  createdAt: 'createdAt'
+} as const
+
+export type StatusesScalarFieldEnum = (typeof StatusesScalarFieldEnum)[keyof typeof StatusesScalarFieldEnum]
 
 
 export const CategoriesScalarFieldEnum = {

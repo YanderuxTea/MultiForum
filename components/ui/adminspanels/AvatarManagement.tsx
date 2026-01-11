@@ -30,6 +30,9 @@ export default function DeleteUsersAvatar() {
     return Math.ceil(countUsers / 5);
   }, [countUsers]);
   useEffect(() => {
+    setPageNumber(0);
+  }, [debouncedQuery]);
+  useEffect(() => {
     async function getUsers() {
       const search = debouncedQuery.trim();
       setLoading(async () => {

@@ -23,3 +23,21 @@ export const VisibleCategories = {
 } as const
 
 export type VisibleCategories = (typeof VisibleCategories)[keyof typeof VisibleCategories]
+
+
+export const ReactionType = {
+  up: 'up',
+  like: 'like',
+  down: 'down'
+} as const
+
+export type ReactionType = (typeof ReactionType)[keyof typeof ReactionType]
+
+
+export const ActivityType = {
+  message: 'message',
+  status: 'status',
+  reaction: 'reaction'
+} as const
+
+export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]

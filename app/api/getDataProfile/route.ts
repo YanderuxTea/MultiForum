@@ -5,6 +5,7 @@ export interface IProfileProps {
   role: string;
   avatar: string | null;
   createdAt: Date;
+  reputation: number;
   bans: {
     date: Date;
     time: number;
@@ -25,6 +26,7 @@ export async function POST(req: Request) {
       role: true,
       createdAt: true,
       avatar: true,
+      reputation: true,
       _count: {
         select: {
           bans: { where: { Unbans: null } },

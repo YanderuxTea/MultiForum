@@ -30,6 +30,7 @@ export default function ThemePage() {
   const params = useParams();
   const themeId = searchParams.get("themeId");
   const subCategoryId = searchParams.get("subCategoryId");
+
   useEffect(() => {
     if (messages && messages.length === 0 && typeof pageNumber === "number") {
       setPageNumber((prevState) => prevState! - 1);

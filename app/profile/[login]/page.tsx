@@ -6,10 +6,11 @@ import StubHeader from "@/components/shared/stubs/StubHeader";
 import StubUnderHeader from "@/components/shared/stubs/StubUnderHeader";
 import React, { useEffect } from "react";
 import useLoader from "@/hooks/useLoader";
+import { IProfileProps } from "@/app/api/getDataProfile/route";
 
 export default function Page() {
   const params = useParams();
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState<IProfileProps>();
   const { setLoading } = useLoader();
   useEffect(() => {
     setLoading(async () => {

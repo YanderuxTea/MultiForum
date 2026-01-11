@@ -17,6 +17,18 @@ enum VisibleCategories {
   Admin
 }
 
+enum ReactionType {
+  up
+  like
+  down
+}
+
+enum ActivityType {
+  message
+  status
+  reaction
+}
+
 model Users {
   id                 String             @id @default(uuid())
   login              String             @unique
@@ -41,6 +53,55 @@ model Users {
   authTag            String?
   isTwoFactorEnabled Boolean            @default(false)
   HistoryMessage     HistoryMessage[]
+  statuses           Statuses[]
+  activityUser       ActivityUser[]
+  sentReactions      Reaction[]         @relation("sentReactions")
+  receivedReactions  Reaction[]         @relation("receivedReactions")
+  reputation         Int                @default(0)
+
+  @@index([login])
+  @@index([createdAt])
+}
+
+model ActivityUser {
+  id           String         @id @default(uuid())
+  createdAt    DateTime       @default(now())
+  idUser       String
+  user         Users          @relation(fields: [idUser], references: [id])
+  messId       String?        @unique
+  mess         MessagesPosts? @relation(fields: [messId], references: [id], onDelete: Cascade)
+  statusId     String?        @unique
+  status       Statuses?      @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  activityType ActivityType
+  reactionId   String?
+  reaction     Reaction?      @relation(fields: [reactionId], references: [id], onDelete: Cascade)
+
+  @@index([reactionId])
+  @@index([createdAt])
+}
+
+model Reaction {
+  id              String         @id @default(uuid())
+  activityUser    ActivityUser[]
+  messagesPosts   MessagesPosts  @relation(fields: [messagesPostsId], references: [id])
+  messagesPostsId String
+  reactionType    ReactionType
+  createdAt       DateTime       @default(now())
+  fromUserId      String
+  fromUser        Users          @relation("sentReactions", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toUserId        String
+  toUser          Users          @relation("receivedReactions", fields: [toUserId], references: [id], onDelete: Cascade)
+}
+
+model Statuses {
+  id           String        @id @default(uuid())
+  idUser       String
+  text         String
+  createdAt    DateTime      @default(now())
+  user         Users         @relation(fields: [idUser], references: [id])
+  activityUser ActivityUser?
+
+  @@index([createdAt])
 }
 
 model Categories {
@@ -75,6 +136,9 @@ model Posts {
   pinned          Boolean         @default(false)
   MessagesPosts   MessagesPosts[]
   lastUpdate      DateTime        @default(now())
+
+  @@index([createdAt])
+  @@index([lastUpdate])
 }
 
 model MessagesPosts {
@@ -86,6 +150,10 @@ model MessagesPosts {
   idPosts        String
   Posts          Posts            @relation(fields: [idPosts], references: [id], onDelete: Cascade)
   HistoryMessage HistoryMessage[]
+  activityUsers  ActivityUser[]
+  reactions      Reaction[]
+
+  @@index([createdAt])
 }
 
 model HistoryMessage {
@@ -97,6 +165,8 @@ model HistoryMessage {
   afterText     Json
   Users         Users         @relation(fields: [idUser], references: [id], onDelete: Cascade)
   MessagesPosts MessagesPosts @relation(fields: [idMessage], references: [id], onDelete: Cascade)
+
+  @@index([updateAt])
 }
 
 model Devices {
@@ -116,18 +186,22 @@ model Warns {
   user    Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin   String
   Unwarns Unwarns?
+
+  @@index([date])
 }
 
 model Bans {
-  id     String   @id @default(uuid())
-  idUser String
-  reason String
-  date   DateTime @default(now())
-  time   Int
-  user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
-  admin  String
-  unbansDate DateTime? 
-  Unbans Unbans?
+  id         String    @id @default(uuid())
+  idUser     String
+  reason     String
+  date       DateTime  @default(now())
+  time       Int
+  user       Users     @relation(fields: [idUser], references: [id], onDelete: Cascade)
+  admin      String
+  unbansDate DateTime?
+  Unbans     Unbans?
+
+  @@index([date])
 }
 
 model Unwarns {
@@ -139,6 +213,8 @@ model Unwarns {
   date   DateTime @default(now())
   user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin  String
+
+  @@index([date])
 }
 
 model Unbans {
@@ -150,4 +226,6 @@ model Unbans {
   date   DateTime @default(now())
   user   Users    @relation(fields: [idUser], references: [id], onDelete: Cascade)
   admin  String
+
+  @@index([date])
 }

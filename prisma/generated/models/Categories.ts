@@ -339,14 +339,6 @@ export type CategoriesScalarRelationFilter = {
   isNot?: Prisma.CategoriesWhereInput
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EnumVisibleCategoriesFieldUpdateOperationsInput = {
   set?: $Enums.VisibleCategories
 }

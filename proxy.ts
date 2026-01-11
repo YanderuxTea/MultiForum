@@ -12,18 +12,32 @@ const redis = new Redis({
 const rateLimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(5, "40 s"),
+  ephemeralCache: new Map(),
+  prefix: "ratelimit:rate",
 });
 const rateLimitRecovery = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(3, "1 h"),
+  ephemeralCache: new Map(),
+  prefix: "ratelimit:recovery",
 });
 const rateLimitSearch = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(5, "30 s"),
+  ephemeralCache: new Map(),
+  prefix: "ratelimit:search",
+});
+const rateLimitCreateStatus = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(1, "180s"),
+  ephemeralCache: new Map(),
+  prefix: "ratelimit:createStatus",
 });
 const rateLimitCreateAnswer = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(1, "60 s"),
+  ephemeralCache: new Map(),
+  prefix: "ratelimit:createAnswer",
 });
 export async function proxy(req: NextRequest) {
   const cspHeader = `
@@ -84,6 +98,18 @@ export async function proxy(req: NextRequest) {
   }
 
   return responseWithCsp;
+}
+export async function rateLimiterCreateStatus(req: Request) {
+  const ip = req.headers.get("x-forwarder-for") ?? "anonymous";
+  const { success, reset } = await rateLimitCreateStatus.limit(ip);
+  if (!success) {
+    const now = Date.now();
+    const timeLeft = Math.floor((reset - now) / 1000);
+    return NextResponse.json(
+      { ok: false, error: timeLeft, status: 429 },
+      { status: 429 }
+    );
+  }
 }
 export async function rateLimiterCreateAnswer(req: Request) {
   const ip = req.headers.get("x-forwarded-for") ?? "anonymous";

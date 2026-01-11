@@ -4,6 +4,7 @@ import VerifyUsersPanel from "@/components/ui/adminspanels/VerifyUsers";
 import ManagementRolesPanel from "@/components/ui/adminspanels/RoleManagement";
 import DeleteUsersAvatar from "@/components/ui/adminspanels/AvatarManagement";
 import ManagementPunishmentPanel from "@/components/ui/adminspanels/PunishmentManagement";
+import ReputationManagement from "@/components/ui/adminspanels/ReputationManagement";
 
 export interface IAdminsPanelData {
   title: string;
@@ -35,5 +36,10 @@ export const adminsPanelData: IAdminsPanelData[] = [
     title: "Управление наказаниями",
     url: "PunishmentManagement",
     JSX: ManagementPunishmentPanel,
+  },
+  {
+    title: "Управление репутацией",
+    url: "ReputationManagement",
+    JSX: ReputationManagement,
   },
 ];

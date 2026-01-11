@@ -48,7 +48,7 @@ export default function FoundThemesCard({ theme }: { theme: IThemesSearch }) {
             {theme.locked && <SmallLockIcon />}
             <Link
               href={`/theme/${theme.title}?themeId=${theme.id}&subCategoryId=${theme.SubCategories.id}`}
-              className="transition-colors duration-300 ease-out hover:text-blue-500 dark:hover:text-blue-600 truncate block font-medium text-neutral-800 dark:text-neutral-200 max-w-[90%]"
+              className="transition-colors duration-300 ease-out hover:text-blue-500 dark:hover:text-blue-600 break block font-medium text-neutral-800 dark:text-neutral-200 max-w-[90%]"
             >
               {theme.title}
             </Link>

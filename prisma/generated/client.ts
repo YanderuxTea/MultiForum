@@ -45,6 +45,21 @@ export { Prisma }
  */
 export type Users = Prisma.UsersModel
 /**
+ * Model ActivityUser
+ * 
+ */
+export type ActivityUser = Prisma.ActivityUserModel
+/**
+ * Model Reaction
+ * 
+ */
+export type Reaction = Prisma.ReactionModel
+/**
+ * Model Statuses
+ * 
+ */
+export type Statuses = Prisma.StatusesModel
+/**
  * Model Categories
  * 
  */

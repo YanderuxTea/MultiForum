@@ -49,24 +49,23 @@ export default function Profile({
   return (
     <div className="min-h-screen flex flex-col gap-2.5 lg:flex-row lg:w-full max-w-300 mx-auto">
       <div className="flex flex-col gap-2.5 lg:w-1/4">
-        <AnimatePresence>
-          <OpenMenuAdminsPanelProvider>
-            <AnimatePresence>
-              {choosePhoto.isChoosePhoto && (
-                <MenuWindow
-                  props={{
-                    setIsOpenMenu: choosePhoto.setIsChoosePhoto,
-                    isOpenMenu: choosePhoto.isChoosePhoto,
-                    setIsHelp: choosePhoto.setIsHelp,
-                    content: (
-                      <ChoosePhotoForm avatar={avatar} setAvatar={setAvatar} />
-                    ),
-                  }}
-                />
-              )}
-            </AnimatePresence>
-          </OpenMenuAdminsPanelProvider>
-        </AnimatePresence>
+        <OpenMenuAdminsPanelProvider>
+          <AnimatePresence>
+            {choosePhoto.isChoosePhoto && (
+              <MenuWindow
+                props={{
+                  setIsOpenMenu: choosePhoto.setIsChoosePhoto,
+                  isOpenMenu: choosePhoto.isChoosePhoto,
+                  setIsHelp: choosePhoto.setIsHelp,
+                  content: (
+                    <ChoosePhotoForm avatar={avatar} setAvatar={setAvatar} />
+                  ),
+                }}
+              />
+            )}
+          </AnimatePresence>
+        </OpenMenuAdminsPanelProvider>
+
         <div className="w-full mx-auto flex items-center justify-center flex-col gap-2.5 bg-white dark:bg-[#212121] p-2.5 rounded-md border border-neutral-300 dark:border-neutral-700">
           <ColorNicknameUser
             user={{ role: props.role, login: props.login }}
@@ -132,7 +131,7 @@ export default function Profile({
           countWarns={props._count.warns}
         />
       </div>
-      <BlockActivityUser countMessage={props._count.MessagesPosts} />
+      <BlockActivityUser props={props} />
     </div>
   );
 }

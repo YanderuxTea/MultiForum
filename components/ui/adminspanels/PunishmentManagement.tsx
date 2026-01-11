@@ -60,6 +60,9 @@ export default function ManagementPunishmentPanel() {
     return Math.ceil(countUsers / 5);
   }, [countUsers]);
   useEffect(() => {
+    setPageNumber(0);
+  }, [debounceQuery]);
+  useEffect(() => {
     getUsers(
       debounceQuery,
       setLoading,

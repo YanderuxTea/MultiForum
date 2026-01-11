@@ -1,17 +1,22 @@
 export interface IAdditionalInformation {
   title: string;
+  type: string;
 }
 export const additionalInformation: IAdditionalInformation[] = [
   {
-    title: 'Статистика форума'
+    title: "Последние статусы",
+    type: "statuses",
   },
   {
-    title: 'Последние статусы'
+    title: "Лучшие авторы",
+    type: "top",
   },
   {
-    title: 'Лучшие авторы'
+    title: "Последние темы",
+    type: "themes",
   },
   {
-    title: 'Последние темы'
+    title: "Статистика форума",
+    type: "stats",
   },
-]
+];

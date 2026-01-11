@@ -112,7 +112,7 @@ export default function ContentMenuRoleManagement({
       <p className="mt-2.5 font-bold text-center text-lg">
         Изменение роли пользователя
       </p>
-      <div className="flex flex-col gap-2.5 items-center">
+      <div className="flex flex-col gap-2.5 items-center w-full">
         <ColorNicknameUser
           user={{ role: props.role, login: props.login }}
           fontSize={20}

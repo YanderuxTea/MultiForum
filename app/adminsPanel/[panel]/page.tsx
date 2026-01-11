@@ -22,6 +22,8 @@ export async function generateMetadata({
         ? "Multi Forum | Удаление аватарок"
         : panel === "PunishmentManagement"
         ? "Multi Forum | Управление наказаниями"
+        : panel === "ReputationManagement"
+        ? "Multi Forum | Управление репутацией"
         : "Multi Forum",
     robots: "noindex, nofollow",
     description:

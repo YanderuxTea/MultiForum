@@ -1,4 +1,4 @@
-import { IMessage } from "@/context/CategoriesContext";
+import { IMessage, ReactionType } from "@/context/CategoriesContext";
 import AvatarUser from "@/components/shared/users/AvatarUser";
 import ColorNicknameUser from "@/components/shared/users/ColorNicknameUser";
 import CheckNameplateUser from "@/components/shared/users/CheckNameplateUser";
@@ -12,6 +12,11 @@ import useCheckingStaff from "@/hooks/useCheckingStaff";
 import useDeleteMessages from "@/hooks/useDeleteMessages";
 import ContentNotChange from "@/components/shared/themes/ContentNotChange";
 import ContentChangeMessage from "@/components/shared/themes/ContentChangeMessage";
+import { AnimatePresence } from "framer-motion";
+import OpenMenuAdminsPanelProvider from "@/components/providers/OpenMenuAdminsPanelProvider";
+import MenuWindow from "@/components/ui/menus/MenuWindow";
+import ContentMenuReaction from "./ContentMenuReaction";
+import RankTitleChecker from "@/components/ui/profiles/RankTitleChecker";
 
 export default React.memo(function CardMessageTheme({
   props,
@@ -28,7 +33,57 @@ export default React.memo(function CardMessageTheme({
   setChangeParent: React.Dispatch<React.SetStateAction<boolean>>;
   setPending: React.TransitionStartFunction;
 }) {
+  const [isOpenReactionMenu, setIsOpenReactionMenu] =
+    React.useState<boolean>(false);
   const currentWidth = useCurrentWidth();
+  const usersByReaction = React.useMemo(() => {
+    const grouped = props.reactions.reduce<
+      Record<
+        ReactionType,
+        {
+          login: string;
+          avatar: string | null;
+          id: string;
+          role: string;
+          createdAt: Date;
+          reactionType: ReactionType;
+        }[]
+      >
+    >(
+      (acc, curr) => {
+        acc[curr.reactionType].push({
+          login: curr.fromUser.login,
+          avatar: curr.fromUser.avatar,
+          id: curr.fromUser.id,
+          role: curr.fromUser.role,
+          createdAt: curr.createdAt,
+          reactionType: curr.reactionType,
+        });
+        return acc;
+      },
+      {
+        up: [],
+        down: [],
+        like: [],
+      }
+    );
+    (Object.keys(grouped) as ReactionType[]).forEach((type) => {
+      grouped[type].sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    });
+    return grouped;
+  }, [props]);
+  const countReactions = React.useMemo(() => {
+    return props.reactions.reduce(
+      (acc, curr) => {
+        acc[curr.reactionType] = acc[curr.reactionType] + 1;
+        return acc;
+      },
+      { up: 0, like: 0, down: 0 }
+    );
+  }, [props]);
   const convertedDate = Intl.DateTimeFormat("ru-RU", { dateStyle: "long" })
     .format(new Date(props.createdAt))
     .replace("г.", "");
@@ -41,8 +96,21 @@ export default React.memo(function CardMessageTheme({
   const [change, setChange] = React.useState<boolean>(false);
   return (
     <div className="flex flex-col lg:flex-row bg-white dark:bg-[#212121] border border-neutral-300 dark:border-neutral-700 rounded-md">
+      <AnimatePresence>
+        {isOpenReactionMenu && (
+          <OpenMenuAdminsPanelProvider>
+            <MenuWindow
+              props={{
+                content: <ContentMenuReaction props={usersByReaction} />,
+                isOpenMenu: isOpenReactionMenu,
+                setIsOpenMenu: setIsOpenReactionMenu,
+              }}
+            />
+          </OpenMenuAdminsPanelProvider>
+        )}
+      </AnimatePresence>
       {!change && (
-        <div className="flex flex-row lg:flex-col items-center gap-2.5 p-2.5 break-all w-full lg:w-70">
+        <div className="flex flex-row lg:flex-col items-center gap-2.5 p-2.5 break w-full lg:w-70">
           <AvatarUser
             props={{
               avatar: props.Users.avatar ?? undefined,
@@ -50,6 +118,7 @@ export default React.memo(function CardMessageTheme({
               width: currentWidth < 1024 ? 40 : 100,
               height: currentWidth < 1024 ? 40 : 100,
             }}
+            countMessage={props.Users._count.MessagesPosts}
           />
           <div className="flex flex-col relative w-full lg:text-center">
             {isAdmin && (
@@ -67,6 +136,12 @@ export default React.memo(function CardMessageTheme({
                 fontWeight={600}
               />
             </Link>
+            <span className="hidden lg:block">
+              <RankTitleChecker
+                countMessage={props.Users._count.MessagesPosts}
+                level={false}
+              />
+            </span>
             <p className="text-sm text-neutral-500 dark:text-neutral-400 font-medium lg:hidden">
               Опубликовано: {convertedDate}
             </p>
@@ -90,6 +165,9 @@ export default React.memo(function CardMessageTheme({
         />
       ) : (
         <ContentNotChange
+          isOpenReactionMenu={isOpenReactionMenu}
+          setIsOpenReactionMenu={setIsOpenReactionMenu}
+          countReactions={countReactions}
           props={props}
           pending={pending}
           convertedDate={convertedDate}

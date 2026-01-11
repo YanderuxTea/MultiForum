@@ -9,6 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Users.ts'
+export type * from './models/ActivityUser.ts'
+export type * from './models/Reaction.ts'
+export type * from './models/Statuses.ts'
 export type * from './models/Categories.ts'
 export type * from './models/SubCategories.ts'
 export type * from './models/Posts.ts'

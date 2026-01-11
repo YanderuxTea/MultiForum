@@ -21,7 +21,6 @@ import StubRoleManagementCards from "@/components/shared/stubs/StubRoleManagemen
 import ContentMenuRoleManagement from "@/components/shared/adminspanels/ContentMenuRoleManagement";
 import useNotify from "@/hooks/useNotify";
 import useDebounce from "@/hooks/useDebounce";
-import { de } from "zod/v4/locales";
 
 export interface IUserRoleManagement {
   id: string;
@@ -57,6 +56,9 @@ export default function ManagementRolesPanel() {
   const totalPages = useMemo(() => {
     return Math.ceil(countUsersRole / 5);
   }, [countUsersRole]);
+  useEffect(() => {
+    setPageNumber(0);
+  }, [queryDebounced]);
   const getUsers = useCallback(async () => {
     setLoading(async () => {
       const search = queryDebounced.trim();

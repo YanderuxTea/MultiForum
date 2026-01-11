@@ -20,8 +20,9 @@ export default function CardTheme({
   subId: string;
   setThemesAction: React.Dispatch<React.SetStateAction<IPosts | undefined>>;
 }) {
+  const countAnswer = props._count.MessagesPosts - 1;
   const userData = useDataUser();
-  const answerText = useDeclinationWord(props._count.MessagesPosts, [
+  const answerText = useDeclinationWord(countAnswer, [
     "ответ",
     "ответа",
     "ответов",
@@ -92,7 +93,7 @@ export default function CardTheme({
             </div>
           )}
           <Link
-            className="transition-colors duration-300 ease-out truncate font-bold text-neutral-900 dark:text-neutral-100 hover:text-blue-500 dark:hover:text-blue-600 max-w-max"
+            className="transition-colors duration-300 ease-out break break-all font-bold text-neutral-900 dark:text-neutral-100 hover:text-blue-500 dark:hover:text-blue-600 max-w-max"
             href={`/theme/${props.title}?themeId=${props.id}&subCategoryId=${subId}`}
           >
             {props.title}
@@ -120,14 +121,14 @@ export default function CardTheme({
           </div>
           <div>
             <p className="lg:hidden">
-              {props._count.MessagesPosts} {answerText}
+              {countAnswer} {answerText}
             </p>
           </div>
         </span>
       </div>
       <div className="w-[25%] justify-center flex items-center gap-2.5 lg:w-[30%]">
         <p className="hidden lg:block text-neutral-600 dark:text-neutral-400 font-medium w-[30%]">
-          {props._count.MessagesPosts} {answerText}
+          {countAnswer} {answerText}
         </p>
         <Link
           href={`/profile/${props.MessagesPosts[0].Users.login}`}

@@ -181,6 +181,8 @@ export type MessagesPostsWhereInput = {
   Users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Posts?: Prisma.XOR<Prisma.PostsScalarRelationFilter, Prisma.PostsWhereInput>
   HistoryMessage?: Prisma.HistoryMessageListRelationFilter
+  activityUsers?: Prisma.ActivityUserListRelationFilter
+  reactions?: Prisma.ReactionListRelationFilter
 }
 
 export type MessagesPostsOrderByWithRelationInput = {
@@ -192,6 +194,8 @@ export type MessagesPostsOrderByWithRelationInput = {
   Users?: Prisma.UsersOrderByWithRelationInput
   Posts?: Prisma.PostsOrderByWithRelationInput
   HistoryMessage?: Prisma.HistoryMessageOrderByRelationAggregateInput
+  activityUsers?: Prisma.ActivityUserOrderByRelationAggregateInput
+  reactions?: Prisma.ReactionOrderByRelationAggregateInput
 }
 
 export type MessagesPostsWhereUniqueInput = Prisma.AtLeast<{
@@ -206,6 +210,8 @@ export type MessagesPostsWhereUniqueInput = Prisma.AtLeast<{
   Users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   Posts?: Prisma.XOR<Prisma.PostsScalarRelationFilter, Prisma.PostsWhereInput>
   HistoryMessage?: Prisma.HistoryMessageListRelationFilter
+  activityUsers?: Prisma.ActivityUserListRelationFilter
+  reactions?: Prisma.ReactionListRelationFilter
 }, "id">
 
 export type MessagesPostsOrderByWithAggregationInput = {
@@ -237,6 +243,8 @@ export type MessagesPostsCreateInput = {
   Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
   Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
   HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateInput = {
@@ -246,6 +254,8 @@ export type MessagesPostsUncheckedCreateInput = {
   idUser: string
   idPosts: string
   HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserUncheckedCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUpdateInput = {
@@ -255,6 +265,8 @@ export type MessagesPostsUpdateInput = {
   Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
   Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
   HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateInput = {
@@ -264,6 +276,8 @@ export type MessagesPostsUncheckedUpdateInput = {
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
   HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUncheckedUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsCreateManyInput = {
@@ -298,6 +312,16 @@ export type MessagesPostsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type MessagesPostsNullableScalarRelationFilter = {
+  is?: Prisma.MessagesPostsWhereInput | null
+  isNot?: Prisma.MessagesPostsWhereInput | null
+}
+
+export type MessagesPostsScalarRelationFilter = {
+  is?: Prisma.MessagesPostsWhereInput
+  isNot?: Prisma.MessagesPostsWhereInput
+}
+
 export type MessagesPostsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   text?: Prisma.SortOrder
@@ -318,11 +342,6 @@ export type MessagesPostsMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   idUser?: Prisma.SortOrder
   idPosts?: Prisma.SortOrder
-}
-
-export type MessagesPostsScalarRelationFilter = {
-  is?: Prisma.MessagesPostsWhereInput
-  isNot?: Prisma.MessagesPostsWhereInput
 }
 
 export type MessagesPostsCreateNestedManyWithoutUsersInput = {
@@ -365,6 +384,36 @@ export type MessagesPostsUncheckedUpdateManyWithoutUsersNestedInput = {
   update?: Prisma.MessagesPostsUpdateWithWhereUniqueWithoutUsersInput | Prisma.MessagesPostsUpdateWithWhereUniqueWithoutUsersInput[]
   updateMany?: Prisma.MessagesPostsUpdateManyWithWhereWithoutUsersInput | Prisma.MessagesPostsUpdateManyWithWhereWithoutUsersInput[]
   deleteMany?: Prisma.MessagesPostsScalarWhereInput | Prisma.MessagesPostsScalarWhereInput[]
+}
+
+export type MessagesPostsCreateNestedOneWithoutActivityUsersInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedCreateWithoutActivityUsersInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutActivityUsersInput
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+}
+
+export type MessagesPostsUpdateOneWithoutActivityUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedCreateWithoutActivityUsersInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutActivityUsersInput
+  upsert?: Prisma.MessagesPostsUpsertWithoutActivityUsersInput
+  disconnect?: Prisma.MessagesPostsWhereInput | boolean
+  delete?: Prisma.MessagesPostsWhereInput | boolean
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessagesPostsUpdateToOneWithWhereWithoutActivityUsersInput, Prisma.MessagesPostsUpdateWithoutActivityUsersInput>, Prisma.MessagesPostsUncheckedUpdateWithoutActivityUsersInput>
+}
+
+export type MessagesPostsCreateNestedOneWithoutReactionsInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutReactionsInput, Prisma.MessagesPostsUncheckedCreateWithoutReactionsInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutReactionsInput
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+}
+
+export type MessagesPostsUpdateOneRequiredWithoutReactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.MessagesPostsCreateWithoutReactionsInput, Prisma.MessagesPostsUncheckedCreateWithoutReactionsInput>
+  connectOrCreate?: Prisma.MessagesPostsCreateOrConnectWithoutReactionsInput
+  upsert?: Prisma.MessagesPostsUpsertWithoutReactionsInput
+  connect?: Prisma.MessagesPostsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MessagesPostsUpdateToOneWithWhereWithoutReactionsInput, Prisma.MessagesPostsUpdateWithoutReactionsInput>, Prisma.MessagesPostsUncheckedUpdateWithoutReactionsInput>
 }
 
 export type MessagesPostsCreateNestedManyWithoutPostsInput = {
@@ -429,6 +478,8 @@ export type MessagesPostsCreateWithoutUsersInput = {
   createdAt?: Date | string
   Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
   HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateWithoutUsersInput = {
@@ -437,6 +488,8 @@ export type MessagesPostsUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   idPosts: string
   HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserUncheckedCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsCreateOrConnectWithoutUsersInput = {
@@ -476,12 +529,126 @@ export type MessagesPostsScalarWhereInput = {
   idPosts?: Prisma.StringFilter<"MessagesPosts"> | string
 }
 
+export type MessagesPostsCreateWithoutActivityUsersInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
+  Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutMessagesPostsInput
+}
+
+export type MessagesPostsUncheckedCreateWithoutActivityUsersInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  idUser: string
+  idPosts: string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutMessagesPostsInput
+}
+
+export type MessagesPostsCreateOrConnectWithoutActivityUsersInput = {
+  where: Prisma.MessagesPostsWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedCreateWithoutActivityUsersInput>
+}
+
+export type MessagesPostsUpsertWithoutActivityUsersInput = {
+  update: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedUpdateWithoutActivityUsersInput>
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedCreateWithoutActivityUsersInput>
+  where?: Prisma.MessagesPostsWhereInput
+}
+
+export type MessagesPostsUpdateToOneWithWhereWithoutActivityUsersInput = {
+  where?: Prisma.MessagesPostsWhereInput
+  data: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutActivityUsersInput, Prisma.MessagesPostsUncheckedUpdateWithoutActivityUsersInput>
+}
+
+export type MessagesPostsUpdateWithoutActivityUsersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
+  Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutMessagesPostsNestedInput
+}
+
+export type MessagesPostsUncheckedUpdateWithoutActivityUsersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idUser?: Prisma.StringFieldUpdateOperationsInput | string
+  idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutMessagesPostsNestedInput
+}
+
+export type MessagesPostsCreateWithoutReactionsInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
+  Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+  HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserCreateNestedManyWithoutMessInput
+}
+
+export type MessagesPostsUncheckedCreateWithoutReactionsInput = {
+  id?: string
+  text: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  idUser: string
+  idPosts: string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserUncheckedCreateNestedManyWithoutMessInput
+}
+
+export type MessagesPostsCreateOrConnectWithoutReactionsInput = {
+  where: Prisma.MessagesPostsWhereUniqueInput
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutReactionsInput, Prisma.MessagesPostsUncheckedCreateWithoutReactionsInput>
+}
+
+export type MessagesPostsUpsertWithoutReactionsInput = {
+  update: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutReactionsInput, Prisma.MessagesPostsUncheckedUpdateWithoutReactionsInput>
+  create: Prisma.XOR<Prisma.MessagesPostsCreateWithoutReactionsInput, Prisma.MessagesPostsUncheckedCreateWithoutReactionsInput>
+  where?: Prisma.MessagesPostsWhereInput
+}
+
+export type MessagesPostsUpdateToOneWithWhereWithoutReactionsInput = {
+  where?: Prisma.MessagesPostsWhereInput
+  data: Prisma.XOR<Prisma.MessagesPostsUpdateWithoutReactionsInput, Prisma.MessagesPostsUncheckedUpdateWithoutReactionsInput>
+}
+
+export type MessagesPostsUpdateWithoutReactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
+  Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+  HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUpdateManyWithoutMessNestedInput
+}
+
+export type MessagesPostsUncheckedUpdateWithoutReactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idUser?: Prisma.StringFieldUpdateOperationsInput | string
+  idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+  HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUncheckedUpdateManyWithoutMessNestedInput
+}
+
 export type MessagesPostsCreateWithoutPostsInput = {
   id?: string
   text: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
   HistoryMessage?: Prisma.HistoryMessageCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateWithoutPostsInput = {
@@ -490,6 +657,8 @@ export type MessagesPostsUncheckedCreateWithoutPostsInput = {
   createdAt?: Date | string
   idUser: string
   HistoryMessage?: Prisma.HistoryMessageUncheckedCreateNestedManyWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserUncheckedCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsCreateOrConnectWithoutPostsInput = {
@@ -524,6 +693,8 @@ export type MessagesPostsCreateWithoutHistoryMessageInput = {
   createdAt?: Date | string
   Users: Prisma.UsersCreateNestedOneWithoutMessagesPostsInput
   Posts: Prisma.PostsCreateNestedOneWithoutMessagesPostsInput
+  activityUsers?: Prisma.ActivityUserCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsUncheckedCreateWithoutHistoryMessageInput = {
@@ -532,6 +703,8 @@ export type MessagesPostsUncheckedCreateWithoutHistoryMessageInput = {
   createdAt?: Date | string
   idUser: string
   idPosts: string
+  activityUsers?: Prisma.ActivityUserUncheckedCreateNestedManyWithoutMessInput
+  reactions?: Prisma.ReactionUncheckedCreateNestedManyWithoutMessagesPostsInput
 }
 
 export type MessagesPostsCreateOrConnectWithoutHistoryMessageInput = {
@@ -556,6 +729,8 @@ export type MessagesPostsUpdateWithoutHistoryMessageInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
   Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateWithoutHistoryMessageInput = {
@@ -564,6 +739,8 @@ export type MessagesPostsUncheckedUpdateWithoutHistoryMessageInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
+  activityUsers?: Prisma.ActivityUserUncheckedUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsCreateManyUsersInput = {
@@ -579,6 +756,8 @@ export type MessagesPostsUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Posts?: Prisma.PostsUpdateOneRequiredWithoutMessagesPostsNestedInput
   HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateWithoutUsersInput = {
@@ -587,6 +766,8 @@ export type MessagesPostsUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idPosts?: Prisma.StringFieldUpdateOperationsInput | string
   HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUncheckedUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateManyWithoutUsersInput = {
@@ -609,6 +790,8 @@ export type MessagesPostsUpdateWithoutPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Users?: Prisma.UsersUpdateOneRequiredWithoutMessagesPostsNestedInput
   HistoryMessage?: Prisma.HistoryMessageUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateWithoutPostsInput = {
@@ -617,6 +800,8 @@ export type MessagesPostsUncheckedUpdateWithoutPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   idUser?: Prisma.StringFieldUpdateOperationsInput | string
   HistoryMessage?: Prisma.HistoryMessageUncheckedUpdateManyWithoutMessagesPostsNestedInput
+  activityUsers?: Prisma.ActivityUserUncheckedUpdateManyWithoutMessNestedInput
+  reactions?: Prisma.ReactionUncheckedUpdateManyWithoutMessagesPostsNestedInput
 }
 
 export type MessagesPostsUncheckedUpdateManyWithoutPostsInput = {
@@ -633,10 +818,14 @@ export type MessagesPostsUncheckedUpdateManyWithoutPostsInput = {
 
 export type MessagesPostsCountOutputType = {
   HistoryMessage: number
+  activityUsers: number
+  reactions: number
 }
 
 export type MessagesPostsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   HistoryMessage?: boolean | MessagesPostsCountOutputTypeCountHistoryMessageArgs
+  activityUsers?: boolean | MessagesPostsCountOutputTypeCountActivityUsersArgs
+  reactions?: boolean | MessagesPostsCountOutputTypeCountReactionsArgs
 }
 
 /**
@@ -656,6 +845,20 @@ export type MessagesPostsCountOutputTypeCountHistoryMessageArgs<ExtArgs extends 
   where?: Prisma.HistoryMessageWhereInput
 }
 
+/**
+ * MessagesPostsCountOutputType without action
+ */
+export type MessagesPostsCountOutputTypeCountActivityUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActivityUserWhereInput
+}
+
+/**
+ * MessagesPostsCountOutputType without action
+ */
+export type MessagesPostsCountOutputTypeCountReactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReactionWhereInput
+}
+
 
 export type MessagesPostsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -666,6 +869,8 @@ export type MessagesPostsSelect<ExtArgs extends runtime.Types.Extensions.Interna
   Users?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Posts?: boolean | Prisma.PostsDefaultArgs<ExtArgs>
   HistoryMessage?: boolean | Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>
+  activityUsers?: boolean | Prisma.MessagesPosts$activityUsersArgs<ExtArgs>
+  reactions?: boolean | Prisma.MessagesPosts$reactionsArgs<ExtArgs>
   _count?: boolean | Prisma.MessagesPostsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["messagesPosts"]>
 
@@ -702,6 +907,8 @@ export type MessagesPostsInclude<ExtArgs extends runtime.Types.Extensions.Intern
   Users?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   Posts?: boolean | Prisma.PostsDefaultArgs<ExtArgs>
   HistoryMessage?: boolean | Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>
+  activityUsers?: boolean | Prisma.MessagesPosts$activityUsersArgs<ExtArgs>
+  reactions?: boolean | Prisma.MessagesPosts$reactionsArgs<ExtArgs>
   _count?: boolean | Prisma.MessagesPostsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MessagesPostsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -719,6 +926,8 @@ export type $MessagesPostsPayload<ExtArgs extends runtime.Types.Extensions.Inter
     Users: Prisma.$UsersPayload<ExtArgs>
     Posts: Prisma.$PostsPayload<ExtArgs>
     HistoryMessage: Prisma.$HistoryMessagePayload<ExtArgs>[]
+    activityUsers: Prisma.$ActivityUserPayload<ExtArgs>[]
+    reactions: Prisma.$ReactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1123,6 +1332,8 @@ export interface Prisma__MessagesPostsClient<T, Null = never, ExtArgs extends ru
   Users<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Posts<T extends Prisma.PostsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PostsDefaultArgs<ExtArgs>>): Prisma.Prisma__PostsClient<runtime.Types.Result.GetResult<Prisma.$PostsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   HistoryMessage<T extends Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MessagesPosts$HistoryMessageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HistoryMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  activityUsers<T extends Prisma.MessagesPosts$activityUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MessagesPosts$activityUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reactions<T extends Prisma.MessagesPosts$reactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MessagesPosts$reactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1574,6 +1785,54 @@ export type MessagesPosts$HistoryMessageArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.HistoryMessageScalarFieldEnum | Prisma.HistoryMessageScalarFieldEnum[]
+}
+
+/**
+ * MessagesPosts.activityUsers
+ */
+export type MessagesPosts$activityUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActivityUser
+   */
+  select?: Prisma.ActivityUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActivityUser
+   */
+  omit?: Prisma.ActivityUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActivityUserInclude<ExtArgs> | null
+  where?: Prisma.ActivityUserWhereInput
+  orderBy?: Prisma.ActivityUserOrderByWithRelationInput | Prisma.ActivityUserOrderByWithRelationInput[]
+  cursor?: Prisma.ActivityUserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActivityUserScalarFieldEnum | Prisma.ActivityUserScalarFieldEnum[]
+}
+
+/**
+ * MessagesPosts.reactions
+ */
+export type MessagesPosts$reactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reaction
+   */
+  select?: Prisma.ReactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reaction
+   */
+  omit?: Prisma.ReactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReactionInclude<ExtArgs> | null
+  where?: Prisma.ReactionWhereInput
+  orderBy?: Prisma.ReactionOrderByWithRelationInput | Prisma.ReactionOrderByWithRelationInput[]
+  cursor?: Prisma.ReactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReactionScalarFieldEnum | Prisma.ReactionScalarFieldEnum[]
 }
 
 /**

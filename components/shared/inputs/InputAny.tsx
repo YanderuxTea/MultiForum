@@ -10,6 +10,7 @@ interface IProps {
   readonly?: boolean;
   defaultValue?: string;
   name?: string;
+  pattern?: string;
 }
 export default function InputAny({
   value,
@@ -21,6 +22,7 @@ export default function InputAny({
   readonly,
   defaultValue,
   name,
+  pattern,
 }: IProps) {
   return (
     <input
@@ -30,6 +32,7 @@ export default function InputAny({
       autoComplete={autoComplete ? autoComplete : undefined}
       defaultValue={defaultValue ? defaultValue : undefined}
       id={id}
+      pattern={pattern}
       value={value !== null ? value : undefined}
       onChange={onChange ? (e) => onChange(e.target.value) : undefined}
       type={`${type ? type : undefined}`}
