@@ -1,4 +1,3 @@
-import { users } from "./../../generated/prisma/index.d";
 import { validateJWT } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
