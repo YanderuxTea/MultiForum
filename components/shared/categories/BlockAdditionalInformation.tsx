@@ -5,8 +5,6 @@ import InformationStats from "./InformationStats";
 import InformationStatuses from "./InformationStatuses";
 import InformationTop from "./InformationTop";
 import InformationThemes from "./InformationThemes";
-export const fetchCache = "default-no-store";
-export const revalidate = 60;
 export interface ILastThemes {
   id: string;
   title: string;

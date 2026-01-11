@@ -9,8 +9,7 @@ export const metadata: Metadata = {
   description:
     "Команда Multi Forum - администраторы и модераторы, которые следят за порядком, безопасностью и развитием форума.",
 };
-export const revalidate = 600;
-export const fetchCache = "default-no-store";
+
 export default async function Page() {
   const team = await prisma.users.findMany({
     where: { OR: [{ role: "Admin" }, { role: "Moderator" }] },
