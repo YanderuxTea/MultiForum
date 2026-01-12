@@ -5,6 +5,7 @@ import InformationStats from "./InformationStats";
 import InformationStatuses from "./InformationStatuses";
 import InformationTop from "./InformationTop";
 import InformationThemes from "./InformationThemes";
+import { getAdditionalInfoData } from "@/lib/getAdditionalInfoData";
 export interface ILastThemes {
   id: string;
   title: string;
@@ -40,60 +41,8 @@ export interface IAdditionalDataCard {
   lastStatuses: ILastStatuses[];
 }
 export default async function BlockAdditionalInformation() {
-  const [themesCount, messageCount, lastThemes, lastStatuses, topUsers] =
-    await prisma.$transaction([
-      prisma.posts.count(),
-      prisma.messagesPosts.count(),
-      prisma.posts.findMany({
-        where: {
-          AND: [
-            { SubCategories: { visible: true } },
-            { SubCategories: { Categories: { visible: "All" } } },
-          ],
-        },
-        take: 5,
-        orderBy: { createdAt: "desc" },
-        select: {
-          id: true,
-          title: true,
-          SubCategories: { select: { id: true } },
-          _count: {
-            select: {
-              MessagesPosts: true,
-            },
-          },
-          MessagesPosts: {
-            select: {
-              Users: { select: { login: true, avatar: true, role: true } },
-            },
-            take: 1,
-            orderBy: { createdAt: "asc" },
-          },
-          createdAt: true,
-        },
-      }),
-      prisma.statuses.findMany({
-        take: 5,
-        orderBy: { createdAt: "desc" },
-        select: {
-          createdAt: true,
-          id: true,
-          user: { select: { role: true, avatar: true, login: true } },
-          text: true,
-        },
-      }),
-      prisma.users.findMany({
-        take: 5,
-        orderBy: { reputation: "desc" },
-        select: {
-          login: true,
-          id: true,
-          avatar: true,
-          reputation: true,
-          role: true,
-        },
-      }),
-    ]);
+  const res = await getAdditionalInfoData();
+  const { themesCount, messageCount, lastThemes, lastStatuses, topUsers } = res;
   const data = {
     themesCount: themesCount,
     messageCount: messageCount,
