@@ -213,7 +213,7 @@ export default function ChoiceReaction({
             whileTap={{ scale: 1.1 }}
             onClick={
               complete
-                ? pending
+                ? !pending
                   ? () => setReaction(button.id)
                   : undefined
                 : undefined
