@@ -1,6 +1,5 @@
 import { additionalInformation } from "@/data/additionallyInformation";
 import AdditionallyInformationCard from "@/components/shared/categories/AdditionallyInformationCard";
-import { prisma } from "@/lib/prisma";
 import InformationStats from "./InformationStats";
 import InformationStatuses from "./InformationStatuses";
 import InformationTop from "./InformationTop";

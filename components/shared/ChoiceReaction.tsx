@@ -21,6 +21,7 @@ export default function ChoiceReaction({
 }) {
   const [visual, setVisual] = useState<"initial" | "hover" | "open">("initial");
   const { setIsNotify, setMessage } = useNotify();
+  const [pending, setPending] = React.useTransition();
   const variants = {
     initial: {
       width: 44,
@@ -72,94 +73,106 @@ export default function ChoiceReaction({
   }, [complete]);
   async function setReaction(reaction: ReactionType) {
     if (choice?.reactionType === reaction) {
-      const req = await fetch("/api/setReaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reactionType: "delete", reactionId: choice.id }),
-      });
-      const res: { ok: boolean; error?: string } = await req.json();
-      if (res.ok) {
-        setMessages((prev) =>
-          (prev || []).map((mess) => {
-            if (mess.id !== messageId) {
-              return mess;
-            } else {
-              return {
-                ...mess,
-                reactions: mess.reactions.filter(
-                  (reaction) => reaction.id !== choice.id
-                ),
-              };
-            }
-          })
-        );
-        if (visual === "open") {
-          setVisual("initial");
+      setPending(async () => {
+        const req = await fetch("/api/setReaction", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            reactionType: "delete",
+            reactionId: choice.id,
+          }),
+        });
+        const res: { ok: boolean; error?: string } = await req.json();
+        if (res.ok) {
+          setMessages((prev) =>
+            (prev || []).map((mess) => {
+              if (mess.id !== messageId) {
+                return mess;
+              } else {
+                return {
+                  ...mess,
+                  reactions: mess.reactions.filter(
+                    (reaction) => reaction.id !== choice.id,
+                  ),
+                };
+              }
+            }),
+          );
+          if (visual === "open") {
+            setVisual("initial");
+          }
+        } else {
+          setMessage(`Ошибка: ${res.error}`);
+          setIsNotify(true);
         }
-      } else {
-        setMessage(`Ошибка: ${res.error}`);
-        setIsNotify(true);
-      }
+      });
     } else if (!choice) {
-      const req = await fetch("/api/setReaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messageId: messageId,
-          reactionType: reaction,
-          toUserId: toUserId,
-        }),
-      });
-      const res: { ok: boolean; reaction: IReaction; error?: string } =
-        await req.json();
-      if (res.ok) {
-        setMessages((prev) =>
-          (prev || []).map((mess) => {
-            if (mess.id === messageId) {
-              return { ...mess, reactions: [...mess.reactions, res.reaction] };
-            }
-            return mess;
-          })
-        );
-        if (visual === "open") {
-          setVisual("initial");
+      setPending(async () => {
+        const req = await fetch("/api/setReaction", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messageId: messageId,
+            reactionType: reaction,
+            toUserId: toUserId,
+          }),
+        });
+        const res: { ok: boolean; reaction: IReaction; error?: string } =
+          await req.json();
+        if (res.ok) {
+          setMessages((prev) =>
+            (prev || []).map((mess) => {
+              if (mess.id === messageId) {
+                return {
+                  ...mess,
+                  reactions: [...mess.reactions, res.reaction],
+                };
+              }
+              return mess;
+            }),
+          );
+          if (visual === "open") {
+            setVisual("initial");
+          }
+        } else {
+          setMessage(`Ошибка: ${res.error}`);
+          setIsNotify(true);
         }
-      } else {
-        setMessage(`Ошибка: ${res.error}`);
-        setIsNotify(true);
-      }
+      });
     } else {
-      const req = await fetch("/api/setReaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messageId: messageId,
-          reactionType: reaction,
-          toUserId: toUserId,
-          reactionId: choice.id,
-        }),
-      });
-      const res: { ok: boolean; reaction: IReaction; error?: string } =
-        await req.json();
-      if (res.ok) {
-        setMessages((prev) =>
-          (prev || []).map((mess) => {
-            if (mess.id === messageId) {
-              const newReaction = mess.reactions.filter(
-                (react) => react.id !== choice.id
-              );
-              return { ...mess, reactions: [...newReaction, res.reaction] };
-            }
-            return mess;
-          })
-        );
-        if (visual === "open") {
-          setVisual("initial");
+      setPending(async () => {
+        const req = await fetch("/api/setReaction", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messageId: messageId,
+            reactionType: reaction,
+            toUserId: toUserId,
+            reactionId: choice.id,
+          }),
+        });
+        const res: { ok: boolean; reaction: IReaction; error?: string } =
+          await req.json();
+        if (res.ok) {
+          setMessages((prev) =>
+            (prev || []).map((mess) => {
+              if (mess.id === messageId) {
+                const newReaction = mess.reactions.filter(
+                  (react) => react.id !== choice.id,
+                );
+                return { ...mess, reactions: [...newReaction, res.reaction] };
+              }
+              return mess;
+            }),
+          );
+          if (visual === "open") {
+            setVisual("initial");
+          }
+        } else {
+          setMessage(`Ошибка: ${res.error}`);
+          setIsNotify(true);
         }
-      } else {
-        setMessage(`Ошибка: ${res.error}`);
-        setIsNotify(true);
-      }
+      });
     }
   }
   return (
@@ -198,7 +211,13 @@ export default function ChoiceReaction({
             transition={{ type: "spring" }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1.1 }}
-            onClick={complete ? () => setReaction(button.id) : undefined}
+            onClick={
+              complete
+                ? pending
+                  ? () => setReaction(button.id)
+                  : undefined
+                : undefined
+            }
             style={{
               order: orderMap[choice?.reactionType ?? "null"][button.id],
             }}

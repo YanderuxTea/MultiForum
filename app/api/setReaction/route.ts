@@ -26,6 +26,7 @@ export async function POST(req: Request) {
   if (!validToken || typeof validToken === "string") {
     return NextResponse.json({ ok: false, error: "неизвестная ошибка" });
   }
+
   if (reactionType !== "delete" && reactionId) {
     const reaction = await prisma.$transaction(async (trx) => {
       const laterReaction = await trx.reaction.delete({
@@ -78,8 +79,8 @@ export async function POST(req: Request) {
         laterReaction.reactionType === "down"
           ? -1
           : laterReaction.reactionType === "like"
-          ? 2
-          : 1;
+            ? 2
+            : 1;
       const reputationChange = reputationNew - reputationLater;
       await trx.users.update({
         where: { id: reaction.toUser.id },
@@ -99,8 +100,8 @@ export async function POST(req: Request) {
         reaction.reactionType === "down"
           ? 1
           : reaction.reactionType === "like"
-          ? -2
-          : -1;
+            ? -2
+            : -1;
       await trx.users.update({
         where: { id: reaction.toUserId },
         data: { reputation: { increment: reputation } },
