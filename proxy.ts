@@ -102,7 +102,7 @@ export async function proxy(req: NextRequest) {
   return responseWithCsp;
 }
 export async function rateLimiterCreateStatus(req: Request) {
-  const ip = req.headers.get("x-forwarder-for") ?? "anonymous";
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
   const { success, reset } = await rateLimitCreateStatus.limit(ip);
   if (!success) {
     const now = Date.now();

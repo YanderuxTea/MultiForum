@@ -3,7 +3,6 @@
 import { io, Socket } from "socket.io-client";
 import React, { ReactNode, useEffect } from "react";
 import { SocketContext } from "@/context/SocketContext";
-import useDataUser from "@/hooks/useDataUser";
 export interface IOnlineList {
   sId: string;
   id: string;
