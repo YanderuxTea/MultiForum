@@ -17,6 +17,8 @@ import CategoriesProvider from "@/components/providers/CategoriesProvider";
 import TwoFactorProvider from "@/components/providers/TwoFactorProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import NotifyConfirmTwoFactor from "@/components/shared/notifys/NotifyConfirmTwoFactor";
+import SocketProvider from "@/components/providers/SocketProvider";
+import OnlineList from "@/components/ui/OnlineList";
 
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
@@ -64,26 +66,29 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LoaderProvider>
-            <TwoFactorProvider>
-              <DataUserProvider>
-                <CategoriesProvider>
-                  <NotifyProvider>
-                    <Preloader />
-                    <Notify />
-                    <NotifyVerifyEmail />
-                    <NotifyConfirmTwoFactor />
-                    <HeaderProviders>
-                      <HeaderWrapper />
-                    </HeaderProviders>
-                    <UnderHeader />
-                    {children}
-                    <Footer />
-                  </NotifyProvider>
-                </CategoriesProvider>
-              </DataUserProvider>
-            </TwoFactorProvider>
-          </LoaderProvider>
+          <SocketProvider>
+            <LoaderProvider>
+              <TwoFactorProvider>
+                <DataUserProvider>
+                  <CategoriesProvider>
+                    <NotifyProvider>
+                      <Preloader />
+                      <Notify />
+                      <NotifyVerifyEmail />
+                      <NotifyConfirmTwoFactor />
+                      <HeaderProviders>
+                        <HeaderWrapper />
+                      </HeaderProviders>
+                      <UnderHeader />
+                      {children}
+                      <OnlineList />
+                      <Footer />
+                    </NotifyProvider>
+                  </CategoriesProvider>
+                </DataUserProvider>
+              </TwoFactorProvider>
+            </LoaderProvider>
+          </SocketProvider>
         </ThemeProvider>
         <SpeedInsights />
       </body>

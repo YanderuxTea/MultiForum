@@ -51,6 +51,8 @@ export type UsersMinAggregateOutputType = {
   authTag: string | null
   isTwoFactorEnabled: boolean | null
   reputation: number | null
+  isOnline: boolean | null
+  lastSeen: Date | null
 }
 
 export type UsersMaxAggregateOutputType = {
@@ -70,6 +72,8 @@ export type UsersMaxAggregateOutputType = {
   authTag: string | null
   isTwoFactorEnabled: boolean | null
   reputation: number | null
+  isOnline: boolean | null
+  lastSeen: Date | null
 }
 
 export type UsersCountAggregateOutputType = {
@@ -89,6 +93,8 @@ export type UsersCountAggregateOutputType = {
   authTag: number
   isTwoFactorEnabled: number
   reputation: number
+  isOnline: number
+  lastSeen: number
   _all: number
 }
 
@@ -118,6 +124,8 @@ export type UsersMinAggregateInputType = {
   authTag?: true
   isTwoFactorEnabled?: true
   reputation?: true
+  isOnline?: true
+  lastSeen?: true
 }
 
 export type UsersMaxAggregateInputType = {
@@ -137,6 +145,8 @@ export type UsersMaxAggregateInputType = {
   authTag?: true
   isTwoFactorEnabled?: true
   reputation?: true
+  isOnline?: true
+  lastSeen?: true
 }
 
 export type UsersCountAggregateInputType = {
@@ -156,6 +166,8 @@ export type UsersCountAggregateInputType = {
   authTag?: true
   isTwoFactorEnabled?: true
   reputation?: true
+  isOnline?: true
+  lastSeen?: true
   _all?: true
 }
 
@@ -262,6 +274,8 @@ export type UsersGroupByOutputType = {
   authTag: string | null
   isTwoFactorEnabled: boolean
   reputation: number
+  isOnline: boolean
+  lastSeen: Date | null
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
   _sum: UsersSumAggregateOutputType | null
@@ -304,6 +318,8 @@ export type UsersWhereInput = {
   authTag?: Prisma.StringNullableFilter<"Users"> | string | null
   isTwoFactorEnabled?: Prisma.BoolFilter<"Users"> | boolean
   reputation?: Prisma.IntFilter<"Users"> | number
+  isOnline?: Prisma.BoolFilter<"Users"> | boolean
+  lastSeen?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
   devices?: Prisma.DevicesListRelationFilter
   warns?: Prisma.WarnsListRelationFilter
   bans?: Prisma.BansListRelationFilter
@@ -335,6 +351,8 @@ export type UsersOrderByWithRelationInput = {
   authTag?: Prisma.SortOrderInput | Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeen?: Prisma.SortOrderInput | Prisma.SortOrder
   devices?: Prisma.DevicesOrderByRelationAggregateInput
   warns?: Prisma.WarnsOrderByRelationAggregateInput
   bans?: Prisma.BansOrderByRelationAggregateInput
@@ -369,6 +387,8 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   authTag?: Prisma.StringNullableFilter<"Users"> | string | null
   isTwoFactorEnabled?: Prisma.BoolFilter<"Users"> | boolean
   reputation?: Prisma.IntFilter<"Users"> | number
+  isOnline?: Prisma.BoolFilter<"Users"> | boolean
+  lastSeen?: Prisma.DateTimeNullableFilter<"Users"> | Date | string | null
   devices?: Prisma.DevicesListRelationFilter
   warns?: Prisma.WarnsListRelationFilter
   bans?: Prisma.BansListRelationFilter
@@ -400,6 +420,8 @@ export type UsersOrderByWithAggregationInput = {
   authTag?: Prisma.SortOrderInput | Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeen?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UsersCountOrderByAggregateInput
   _avg?: Prisma.UsersAvgOrderByAggregateInput
   _max?: Prisma.UsersMaxOrderByAggregateInput
@@ -427,6 +449,8 @@ export type UsersScalarWhereWithAggregatesInput = {
   authTag?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
   isTwoFactorEnabled?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
   reputation?: Prisma.IntWithAggregatesFilter<"Users"> | number
+  isOnline?: Prisma.BoolWithAggregatesFilter<"Users"> | boolean
+  lastSeen?: Prisma.DateTimeNullableWithAggregatesFilter<"Users"> | Date | string | null
 }
 
 export type UsersCreateInput = {
@@ -446,6 +470,8 @@ export type UsersCreateInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -477,6 +503,8 @@ export type UsersUncheckedCreateInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -508,6 +536,8 @@ export type UsersUpdateInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -539,6 +569,8 @@ export type UsersUncheckedUpdateInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -570,6 +602,8 @@ export type UsersCreateManyInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
 }
 
 export type UsersUpdateManyMutationInput = {
@@ -589,6 +623,8 @@ export type UsersUpdateManyMutationInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UsersUncheckedUpdateManyInput = {
@@ -608,6 +644,8 @@ export type UsersUncheckedUpdateManyInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UsersCountOrderByAggregateInput = {
@@ -627,6 +665,8 @@ export type UsersCountOrderByAggregateInput = {
   authTag?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeen?: Prisma.SortOrder
 }
 
 export type UsersAvgOrderByAggregateInput = {
@@ -650,6 +690,8 @@ export type UsersMaxOrderByAggregateInput = {
   authTag?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeen?: Prisma.SortOrder
 }
 
 export type UsersMinOrderByAggregateInput = {
@@ -669,6 +711,8 @@ export type UsersMinOrderByAggregateInput = {
   authTag?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeen?: Prisma.SortOrder
 }
 
 export type UsersSumOrderByAggregateInput = {
@@ -897,6 +941,8 @@ export type UsersCreateWithoutActivityUserInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -927,6 +973,8 @@ export type UsersUncheckedCreateWithoutActivityUserInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -973,6 +1021,8 @@ export type UsersUpdateWithoutActivityUserInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1003,6 +1053,8 @@ export type UsersUncheckedUpdateWithoutActivityUserInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1033,6 +1085,8 @@ export type UsersCreateWithoutSentReactionsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1063,6 +1117,8 @@ export type UsersUncheckedCreateWithoutSentReactionsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1098,6 +1154,8 @@ export type UsersCreateWithoutReceivedReactionsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1128,6 +1186,8 @@ export type UsersUncheckedCreateWithoutReceivedReactionsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1174,6 +1234,8 @@ export type UsersUpdateWithoutSentReactionsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1204,6 +1266,8 @@ export type UsersUncheckedUpdateWithoutSentReactionsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1245,6 +1309,8 @@ export type UsersUpdateWithoutReceivedReactionsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1275,6 +1341,8 @@ export type UsersUncheckedUpdateWithoutReceivedReactionsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1305,6 +1373,8 @@ export type UsersCreateWithoutStatusesInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1335,6 +1405,8 @@ export type UsersUncheckedCreateWithoutStatusesInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1381,6 +1453,8 @@ export type UsersUpdateWithoutStatusesInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1411,6 +1485,8 @@ export type UsersUncheckedUpdateWithoutStatusesInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1441,6 +1517,8 @@ export type UsersCreateWithoutPostsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1471,6 +1549,8 @@ export type UsersUncheckedCreateWithoutPostsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1517,6 +1597,8 @@ export type UsersUpdateWithoutPostsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1547,6 +1629,8 @@ export type UsersUncheckedUpdateWithoutPostsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1577,6 +1661,8 @@ export type UsersCreateWithoutMessagesPostsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1607,6 +1693,8 @@ export type UsersUncheckedCreateWithoutMessagesPostsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1653,6 +1741,8 @@ export type UsersUpdateWithoutMessagesPostsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1683,6 +1773,8 @@ export type UsersUncheckedUpdateWithoutMessagesPostsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1713,6 +1805,8 @@ export type UsersCreateWithoutHistoryMessageInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -1743,6 +1837,8 @@ export type UsersUncheckedCreateWithoutHistoryMessageInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -1789,6 +1885,8 @@ export type UsersUpdateWithoutHistoryMessageInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -1819,6 +1917,8 @@ export type UsersUncheckedUpdateWithoutHistoryMessageInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -1849,6 +1949,8 @@ export type UsersCreateWithoutDevicesInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
@@ -1879,6 +1981,8 @@ export type UsersUncheckedCreateWithoutDevicesInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
@@ -1925,6 +2029,8 @@ export type UsersUpdateWithoutDevicesInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
@@ -1955,6 +2061,8 @@ export type UsersUncheckedUpdateWithoutDevicesInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
@@ -1985,6 +2093,8 @@ export type UsersCreateWithoutWarnsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
@@ -2015,6 +2125,8 @@ export type UsersUncheckedCreateWithoutWarnsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
@@ -2061,6 +2173,8 @@ export type UsersUpdateWithoutWarnsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
@@ -2091,6 +2205,8 @@ export type UsersUncheckedUpdateWithoutWarnsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
@@ -2121,6 +2237,8 @@ export type UsersCreateWithoutBansInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsCreateNestedManyWithoutUserInput
@@ -2151,6 +2269,8 @@ export type UsersUncheckedCreateWithoutBansInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   Unwarns?: Prisma.UnwarnsUncheckedCreateNestedManyWithoutUserInput
@@ -2197,6 +2317,8 @@ export type UsersUpdateWithoutBansInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUpdateManyWithoutUserNestedInput
@@ -2227,6 +2349,8 @@ export type UsersUncheckedUpdateWithoutBansInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   Unwarns?: Prisma.UnwarnsUncheckedUpdateManyWithoutUserNestedInput
@@ -2257,6 +2381,8 @@ export type UsersCreateWithoutUnwarnsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -2287,6 +2413,8 @@ export type UsersUncheckedCreateWithoutUnwarnsInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -2333,6 +2461,8 @@ export type UsersUpdateWithoutUnwarnsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -2363,6 +2493,8 @@ export type UsersUncheckedUpdateWithoutUnwarnsInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -2393,6 +2525,8 @@ export type UsersCreateWithoutUnbansInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsCreateNestedManyWithoutUserInput
   bans?: Prisma.BansCreateNestedManyWithoutUserInput
@@ -2423,6 +2557,8 @@ export type UsersUncheckedCreateWithoutUnbansInput = {
   authTag?: string | null
   isTwoFactorEnabled?: boolean
   reputation?: number
+  isOnline?: boolean
+  lastSeen?: Date | string | null
   devices?: Prisma.DevicesUncheckedCreateNestedManyWithoutUserInput
   warns?: Prisma.WarnsUncheckedCreateNestedManyWithoutUserInput
   bans?: Prisma.BansUncheckedCreateNestedManyWithoutUserInput
@@ -2469,6 +2605,8 @@ export type UsersUpdateWithoutUnbansInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUpdateManyWithoutUserNestedInput
@@ -2499,6 +2637,8 @@ export type UsersUncheckedUpdateWithoutUnbansInput = {
   authTag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DevicesUncheckedUpdateManyWithoutUserNestedInput
   warns?: Prisma.WarnsUncheckedUpdateManyWithoutUserNestedInput
   bans?: Prisma.BansUncheckedUpdateManyWithoutUserNestedInput
@@ -2659,6 +2799,8 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   authTag?: boolean
   isTwoFactorEnabled?: boolean
   reputation?: boolean
+  isOnline?: boolean
+  lastSeen?: boolean
   devices?: boolean | Prisma.Users$devicesArgs<ExtArgs>
   warns?: boolean | Prisma.Users$warnsArgs<ExtArgs>
   bans?: boolean | Prisma.Users$bansArgs<ExtArgs>
@@ -2691,6 +2833,8 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   authTag?: boolean
   isTwoFactorEnabled?: boolean
   reputation?: boolean
+  isOnline?: boolean
+  lastSeen?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2710,6 +2854,8 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   authTag?: boolean
   isTwoFactorEnabled?: boolean
   reputation?: boolean
+  isOnline?: boolean
+  lastSeen?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type UsersSelectScalar = {
@@ -2729,9 +2875,11 @@ export type UsersSelectScalar = {
   authTag?: boolean
   isTwoFactorEnabled?: boolean
   reputation?: boolean
+  isOnline?: boolean
+  lastSeen?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "login" | "password" | "email" | "role" | "avatar" | "verification" | "verificationAdm" | "createdAt" | "recoveryCode" | "dateRecoveryCode" | "encryptedData" | "iv" | "authTag" | "isTwoFactorEnabled" | "reputation", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "login" | "password" | "email" | "role" | "avatar" | "verification" | "verificationAdm" | "createdAt" | "recoveryCode" | "dateRecoveryCode" | "encryptedData" | "iv" | "authTag" | "isTwoFactorEnabled" | "reputation" | "isOnline" | "lastSeen", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.Users$devicesArgs<ExtArgs>
   warns?: boolean | Prisma.Users$warnsArgs<ExtArgs>
@@ -2783,6 +2931,8 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     authTag: string | null
     isTwoFactorEnabled: boolean
     reputation: number
+    isOnline: boolean
+    lastSeen: Date | null
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -3234,6 +3384,8 @@ export interface UsersFieldRefs {
   readonly authTag: Prisma.FieldRef<"Users", 'String'>
   readonly isTwoFactorEnabled: Prisma.FieldRef<"Users", 'Boolean'>
   readonly reputation: Prisma.FieldRef<"Users", 'Int'>
+  readonly isOnline: Prisma.FieldRef<"Users", 'Boolean'>
+  readonly lastSeen: Prisma.FieldRef<"Users", 'DateTime'>
 }
     
 

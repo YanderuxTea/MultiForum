@@ -65,12 +65,12 @@ export default React.memo(function CardMessageTheme({
         up: [],
         down: [],
         like: [],
-      }
+      },
     );
     (Object.keys(grouped) as ReactionType[]).forEach((type) => {
       grouped[type].sort(
         (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
     });
     return grouped;
@@ -81,7 +81,7 @@ export default React.memo(function CardMessageTheme({
         acc[curr.reactionType] = acc[curr.reactionType] + 1;
         return acc;
       },
-      { up: 0, like: 0, down: 0 }
+      { up: 0, like: 0, down: 0 },
     );
   }, [props]);
   const convertedDate = Intl.DateTimeFormat("ru-RU", { dateStyle: "long" })
@@ -118,6 +118,8 @@ export default React.memo(function CardMessageTheme({
               width: currentWidth < 1024 ? 40 : 100,
               height: currentWidth < 1024 ? 40 : 100,
             }}
+            onlineCheck={true}
+            login={props.Users.login}
             countMessage={props.Users._count.MessagesPosts}
           />
           <div className="flex flex-col relative w-full lg:text-center">

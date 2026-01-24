@@ -40,6 +40,7 @@ const rateLimitCreateAnswer = new Ratelimit({
   prefix: "ratelimit:createAnswer",
 });
 export async function proxy(req: NextRequest) {
+  const allowedConnectSource = `${process.env.NEXT_PUBLIC_NODE_SERVER_URL} ${process.env.NEXT_PUBLIC_WS_SERVER_URL}`;
   const cspHeader = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.vercel-insights.com https://va.vercel-scripts.com;
@@ -50,6 +51,7 @@ export async function proxy(req: NextRequest) {
   base-uri 'self';
   form-action 'self';
   frame-ancestors 'none';
+  connect-src 'self' ${allowedConnectSource};
   frame-src 'self' https://www.youtube.com/;
  `;
   const cspValue = cspHeader.replace(/\n/g, " ").trim();
@@ -107,7 +109,7 @@ export async function rateLimiterCreateStatus(req: Request) {
     const timeLeft = Math.floor((reset - now) / 1000);
     return NextResponse.json(
       { ok: false, error: timeLeft, status: 429 },
-      { status: 429 }
+      { status: 429 },
     );
   }
 }
@@ -128,7 +130,7 @@ export async function rateLimiterSearch(req: Request) {
     const timeLeft = Math.floor((reset - now) / 1000);
     return NextResponse.json(
       { ok: false, error: timeLeft, status: 429 },
-      { status: 429 }
+      { status: 429 },
     );
   }
 }
@@ -138,7 +140,7 @@ async function rateLimiterRecovery(req: Request) {
   if (!success) {
     return NextResponse.json(
       { ok: false, error: "Слишком много запросов" },
-      { status: 429 }
+      { status: 429 },
     );
   }
 }
@@ -148,13 +150,13 @@ async function rateLimiterMiddleware(req: Request) {
   if (!success) {
     return NextResponse.json(
       { ok: false, error: "Слишком много запросов" },
-      { status: 429 }
+      { status: 429 },
     );
   }
 }
 async function tokenMiddleware(
   req: NextRequest,
-  responseWithCsp: NextResponse
+  responseWithCsp: NextResponse,
 ) {
   const publicRoute = ["/auth/login", "/auth/register", "/recovery"];
   const secureRoute = ["/settings"];
@@ -247,7 +249,7 @@ async function tokenMiddleware(
           admin: bans[0].admin,
           time: String(bans[0].time),
           banEnd: String(
-            new Date(bans[0].date).getTime() + bans[0].time * 60 * 1000
+            new Date(bans[0].date).getTime() + bans[0].time * 60 * 1000,
           ),
         });
         const url = `/banned?${params.toString()}`;

@@ -58,6 +58,8 @@ model Users {
   sentReactions      Reaction[]         @relation("sentReactions")
   receivedReactions  Reaction[]         @relation("receivedReactions")
   reputation         Int                @default(0)
+  isOnline           Boolean            @default(false)
+  lastSeen           DateTime?
 
   @@index([login])
   @@index([createdAt])

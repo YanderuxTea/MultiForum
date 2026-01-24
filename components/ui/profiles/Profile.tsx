@@ -15,6 +15,7 @@ import OpenMenuAdminsPanelProvider from "@/components/providers/OpenMenuAdminsPa
 import { IProfileProps } from "@/app/api/getDataProfile/route";
 import BlockInformationUser from "@/components/ui/profiles/BlockInformationUser";
 import BlockActivityUser from "./BlockActivityUser";
+import CheckProfileOnline from "./CheckProfileOnline";
 export default function Profile({
   props,
 }: {
@@ -27,11 +28,11 @@ export default function Profile({
   });
   const formattedDate = formatter.format(new Date(props.createdAt));
   const [avatar, setAvatar] = useState<string>(
-    props.avatar ? props.avatar : nullAvatar
+    props.avatar ? props.avatar : nullAvatar,
   );
   const isGif = useRef<boolean>(
     typeof props.avatar === "string" &&
-      props.avatar.toLowerCase().endsWith(".gif")
+      props.avatar.toLowerCase().endsWith(".gif"),
   );
   const dataUser = useDataUser();
   const choosePhoto = useChoosePhoto();
@@ -78,8 +79,8 @@ export default function Profile({
                 props.role === "Admin"
                   ? "outline-red-600"
                   : props.role === "Moderator"
-                  ? "outline-blue-700"
-                  : "outline-gray-500"
+                    ? "outline-blue-700"
+                    : "outline-gray-500"
               }`}
             >
               <Image
@@ -112,8 +113,8 @@ export default function Profile({
                 props.role === "Admin"
                   ? "outline-red-600"
                   : props.role === "Moderator"
-                  ? "outline-blue-700"
-                  : "outline-gray-500"
+                    ? "outline-blue-700"
+                    : "outline-gray-500"
               }`}
               priority
               unoptimized={isGif.current}
@@ -124,6 +125,7 @@ export default function Profile({
           </p>
           {activeBan && <CheckBanned />}
           <CheckNameplateUser role={props.role} />
+          <CheckProfileOnline login={props.login} />
         </div>
         <BlockInformationUser
           countBans={props._count.bans}

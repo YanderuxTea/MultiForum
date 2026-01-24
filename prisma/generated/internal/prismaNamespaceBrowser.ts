@@ -99,7 +99,9 @@ export const UsersScalarFieldEnum = {
   iv: 'iv',
   authTag: 'authTag',
   isTwoFactorEnabled: 'isTwoFactorEnabled',
-  reputation: 'reputation'
+  reputation: 'reputation',
+  isOnline: 'isOnline',
+  lastSeen: 'lastSeen'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
