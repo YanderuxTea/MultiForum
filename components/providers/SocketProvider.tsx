@@ -3,6 +3,7 @@
 import { io, Socket } from "socket.io-client";
 import React, { ReactNode, useEffect } from "react";
 import { SocketContext } from "@/context/SocketContext";
+import useDataUser from "@/hooks/useDataUser";
 export interface IOnlineList {
   sId: string;
   id: string;
@@ -13,14 +14,24 @@ export interface ISocketProvider {
   socket: Socket;
   onlineList: IOnlineList[];
 }
+
 const socket = io(process.env.NEXT_PUBLIC_NODE_SERVER_URL, {
-  withCredentials: true,
   autoConnect: false,
 });
 export default function SocketProvider({ children }: { children: ReactNode }) {
   const [onlineList, setOnlineList] = React.useState<IOnlineList[]>([]);
   useEffect(() => {
-    socket.connect();
+    async function initSocket() {
+      const req = await fetch("/api/getToken", {
+        method: "GET",
+      });
+      const res = await req.json();
+      if (res.token) {
+        socket.auth = { token: res.token };
+      }
+      socket.connect();
+    }
+    initSocket();
     socket.on("init_user_list", (res) => {
       setOnlineList(res);
     });
