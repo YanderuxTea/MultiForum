@@ -6,6 +6,7 @@ import useCurrentWidth from "@/hooks/useCurrentWidth.tsx";
 import { useEffect, useRef, useState } from "react";
 import TrashIcon from "@/components/shared/icons/TrashIcon.tsx";
 import useContextMenu from "@/hooks/useContextMenu.ts";
+import useSocket from "@/hooks/useSocket.ts";
 
 export default function CardChat({
   props,
@@ -28,6 +29,8 @@ export default function CardChat({
     deleteChatFunction,
     setIsDrag,
   } = useContextMenu();
+  const { writingUsers } = useSocket();
+  const isTyping = writingUsers.includes(props.Users[0].login);
   const router = useRouter();
   const searchParams = useSearchParams();
   const chatId = searchParams.get("chatId");
@@ -175,9 +178,15 @@ export default function CardChat({
             </p>
           </div>
           <p
-            className={`text-sm truncate ${chatId === props.id && userData.login === loginChat ? "text-neutral-900 dark:text-neutral-100" : "text-neutral-700 dark:text-neutral-300"}`}
+            className={`text-sm truncate  ${
+              isTyping
+                ? "animate-pulse" + " text-emerald-400 dark:text-emerald-500"
+                : chatId === props.id && userData.login === loginChat
+                  ? "text-neutral-900" + " dark:text-neutral-100"
+                  : "text-neutral-700 dark:text-neutral-300"
+            }`}
           >
-            {props.MessagesChats[0].text}
+            {isTyping ? "Печатает..." : props.MessagesChats[0].text}
           </p>
         </div>
       </motion.div>

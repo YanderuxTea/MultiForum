@@ -1,7 +1,13 @@
 "use client";
 
 import { io, Socket } from "socket.io-client";
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, {
+  ReactNode,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -14,6 +20,9 @@ export interface IOnlineList {
 export interface ISocketProvider {
   socket: Socket;
   onlineList: IOnlineList[];
+  writingUsers: string[];
+  setWritingUsers: (users: string[]) => void;
+  timerWritingRef: RefObject<NodeJS.Timeout | null>;
 }
 
 const socket = io(process.env.NEXT_PUBLIC_NODE_SERVER_URL, {
@@ -22,6 +31,7 @@ const socket = io(process.env.NEXT_PUBLIC_NODE_SERVER_URL, {
 export default function SocketProvider({ children }: { children: ReactNode }) {
   const [onlineList, setOnlineList] = React.useState<IOnlineList[]>([]);
   const searchParams = useSearchParams();
+  const timerWritingRef = useRef<NodeJS.Timeout | null>(null);
   const chatId = searchParams.get("chatId");
   const loginChat = searchParams.get("login");
   const chatIdConst = useRef<string>("");
@@ -29,8 +39,29 @@ export default function SocketProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname().replace("/", "");
   const router = useRouter();
   const isConnect = useRef<boolean>(false);
-
+  const [writingUsers, setWritingUsers] = useState<string[]>([]);
   useEffect(() => {
+    socket.on(
+      "reconnect",
+      (data: {
+        listChatsTyping: { chatId: string; typingUser: string }[];
+        userLogin: string;
+      }) => {
+        isConnect.current = false;
+        const check = data.listChatsTyping
+          .filter((val) => val.chatId.includes(data.userLogin))
+          .map((val) => {
+            return val.chatId
+              .replace(
+                `${data.userLogin !== val.typingUser ? data.userLogin : ""}`,
+                "",
+              )
+              .replace("_", "");
+          });
+
+        setWritingUsers(check);
+      },
+    );
     function connectToChat() {
       if (!loginChat || !chatId || isConnect.current) return;
       socket.emit("connectToChat", { chatId, loginChat });
@@ -56,7 +87,6 @@ export default function SocketProvider({ children }: { children: ReactNode }) {
           disconnectFromChat();
         }
         socket.on("reconnect", () => {
-          isConnect.current = false;
           connectToChat();
         });
 
@@ -114,7 +144,16 @@ export default function SocketProvider({ children }: { children: ReactNode }) {
       params.set("chatId", res.id);
       router.replace(`?${params.toString()}&login=${loginChatConst.current}`);
     });
-
+    socket.on("userWriting", (data: { login: string }) => {
+      setWritingUsers((prevState) =>
+        Array.from(new Set([...prevState, data.login])),
+      );
+    });
+    socket.on("userStopWriting", (data: { login: string }) => {
+      setWritingUsers((prevState) =>
+        prevState.filter((val) => val !== data.login),
+      );
+    });
     return () => {
       socket.disconnect();
       socket.off("init_user_list");
@@ -122,11 +161,16 @@ export default function SocketProvider({ children }: { children: ReactNode }) {
       socket.off("user_disconnect");
       socket.off("newChat");
       socket.off("newMessage");
+      socket.off("userWriting");
+      socket.off("userStopWriting");
     };
   }, [router, searchParams]);
   const value = {
     socket: socket,
     onlineList: onlineList,
+    writingUsers: writingUsers,
+    setWritingUsers: setWritingUsers,
+    timerWritingRef,
   };
   return (
     <SocketContext.Provider value={value}>{children}</SocketContext.Provider>

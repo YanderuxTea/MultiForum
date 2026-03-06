@@ -2,9 +2,12 @@ import { useRouter } from "next/navigation";
 import Arrow from "../icons/Arrow";
 import { IUserData } from "./MainChat";
 import AvatarUser from "../users/AvatarUser";
+import useSocket from "@/hooks/useSocket.ts";
 
 export default function HeaderChat({ props }: { props: IUserData }) {
   const router = useRouter();
+  const { writingUsers } = useSocket();
+  const checkIsWritingUser = writingUsers.includes(props.login);
   return (
     <div className="select-none bg-white dark:bg-[#212121] border-b border-neutral-300 dark:border-neutral-700 p-2.5 flex flex-row lg:rounded-t-lg items-center justify-between z-50">
       <button
@@ -18,9 +21,17 @@ export default function HeaderChat({ props }: { props: IUserData }) {
           {props.login}
         </p>
         <p
-          className={`${props.isOnline ? "text-emerald-400 dark:text-emerald-500" : "text-neutral-600 dark:text-neutral-400"} font-medium text-sm`}
+          className={`${
+            props.isOnline || checkIsWritingUser
+              ? "text-emerald-400 dark:text-emerald-500"
+              : "text-neutral-600" + " dark:text-neutral-400"
+          } font-medium text-sm`}
         >
-          {props.isOnline ? "В сети" : "Оффлайн"}
+          {checkIsWritingUser
+            ? "Печатает..."
+            : props.isOnline
+              ? "В сети"
+              : "Оффлайн"}
         </p>
       </div>
       <AvatarUser

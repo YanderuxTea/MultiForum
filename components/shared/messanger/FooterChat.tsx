@@ -1,5 +1,11 @@
 import useCurrentWidth from "@/hooks/useCurrentWidth";
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, {
+  KeyboardEvent,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Arrow from "../icons/Arrow";
 import { AnimatePresence, motion } from "framer-motion";
 import useSocket from "@/hooks/useSocket.ts";
@@ -35,10 +41,13 @@ export default function FooterChat({
     const calculateHeight = scrollHeight > maxHeight ? maxHeight : scrollHeight;
     el.style.setProperty("height", `${calculateHeight}px`);
   }
-  const { socket } = useSocket();
+  const { socket, timerWritingRef } = useSocket();
   const { setMessage: setMessageNotify, setIsNotify } = useNotify();
   const [block, setBlock] = useState<boolean>(false);
-  async function sendMessage() {
+  const blockEmit = useRef<boolean>(false);
+  const loginChat = searchParams.get("login");
+  const chatId = searchParams.get("chatId");
+  function sendMessage() {
     const text = message.trim();
     if (text.length > 0 && !block) {
       if (text.length > 2000) {
@@ -49,8 +58,6 @@ export default function FooterChat({
         return;
       }
       setBlock(true);
-      const loginChat = searchParams.get("login");
-      const chatId = searchParams.get("chatId");
       if (!chatId || !loginChat) return;
       if (socket.connected) {
         socket.emit("sendMessage", { text, chatId, loginChat });
@@ -74,12 +81,63 @@ export default function FooterChat({
     socket.on("successful", () => {
       setBlock(false);
       changeText("");
+      if (timerWritingRef.current) {
+        clearTimeout(timerWritingRef.current);
+        blockEmit.current = false;
+      }
     });
     return () => {
       socket.off("successful");
       socket.off("errorSendMessage");
     };
   }, [socket]);
+  function keyDownFunction(event: KeyboardEvent) {
+    if (width >= 1024) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        if (message.trim().length > 0) {
+          sendMessage();
+        } else {
+          return;
+        }
+      }
+    }
+    if (
+      event.key === "Backspace" ||
+      message.trim().length === 0 ||
+      event.key.length !== 1 ||
+      event.altKey ||
+      event.ctrlKey
+    ) {
+      return;
+    } else {
+      if (timerWritingRef.current) {
+        clearTimeout(timerWritingRef.current);
+      }
+      if (!blockEmit.current) {
+        socket.emit("writing", { loginChat, chatId });
+        blockEmit.current = true;
+      }
+      timerWritingRef.current = setTimeout(() => {
+        socket.emit("stopWriting", { loginChat, chatId });
+        blockEmit.current = false;
+      }, 5000);
+    }
+  }
+  useEffect(() => {
+    socket.on("newMessage", () => {
+      if (timerWritingRef.current) {
+        clearTimeout(timerWritingRef.current);
+        socket.emit("stopWriting", { chatId, loginChat });
+      }
+    });
+    return () => {
+      socket.emit("stopWriting", { chatId, loginChat });
+    };
+  }, [socket]);
+  useEffect(() => {
+    setMessage("");
+  }, [chatId]);
   return (
     <div
       ref={footerRef}
@@ -94,20 +152,7 @@ export default function FooterChat({
         id="messageInput"
         placeholder="Сообщение..."
         maxLength={2000}
-        onKeyDown={
-          width < 1024
-            ? undefined
-            : (e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  if (message.trim().length > 0) {
-                    sendMessage();
-                  } else {
-                    return;
-                  }
-                }
-              }
-        }
+        onKeyDown={(e) => keyDownFunction(e)}
         className=" resize-none w-full outline-none touch-pan-y"
       />
       <AnimatePresence>
