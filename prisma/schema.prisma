@@ -60,9 +60,31 @@ model Users {
   reputation         Int                @default(0)
   isOnline           Boolean            @default(false)
   lastSeen           DateTime?
+  Chats              Chats[]            @relation("UserChats")
+  messagesChats      MessagesChats[]
 
   @@index([login])
   @@index([createdAt])
+
+}
+
+model Chats {
+  id              String          @id @default(uuid())
+  MessagesChats   MessagesChats[]
+  Users           Users[]         @relation("UserChats")
+  lastMessageTime DateTime        @default(now())
+  idV7 String @default(uuid(7))
+  @@index([lastMessageTime])
+}
+
+model MessagesChats {
+  id        String   @id @default(uuid(7))
+  createdAt DateTime @default(now())
+  Chats     Chats    @relation(fields: [chatsId], references: [id], onDelete: Cascade)
+  chatsId   String
+  text      String
+  author    Users    @relation(fields: [authorId], references: [id])
+  authorId  String
 }
 
 model ActivityUser {

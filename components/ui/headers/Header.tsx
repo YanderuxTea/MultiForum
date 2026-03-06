@@ -14,6 +14,7 @@ import Link from "next/link";
 import ButtonSettings from "@/components/shared/buttons/ButtonSettings";
 import ButtonAdmins from "@/components/shared/buttons/ButtonAdmins";
 import useCheckingStaff from "@/hooks/useCheckingStaff";
+import MessangerButton from "@/components/shared/buttons/MessangerButton";
 
 export default function Header() {
   const width = useCurrentWidth();
@@ -41,21 +42,21 @@ export default function Header() {
         isOpenMenu
           ? "bg-white dark:bg-[#212121]"
           : "bg-white/50 dark:bg-[#212121]/80"
-      } w-full flex items-center px-2.5 fixed z-20 justify-center border-b border-neutral-300 dark:border-neutral-700 backdrop-blur-sm transition-colors duration-300 ease-out`}
+      } w-full flex items-center px-2.5 fixed z-30 justify-center border-b border-neutral-300 dark:border-neutral-700 backdrop-blur-sm transition-colors duration-300 ease-out`}
     >
       <div className="max-w-300 w-full flex flex-row justify-between">
         <Logo />
-        {width <= 1024 && (
+        {width < 1024 && (
           <button onClick={() => setIsOpenMenu((prevState) => !prevState)}>
             <Menu />
           </button>
         )}
-        {width > 1024 && userData === null ? (
+        {width >= 1024 && userData === null ? (
           <div className="flex items-center">
             <ButtonLogin />
           </div>
         ) : (
-          width > 1024 && (
+          width >= 1024 && (
             <div
               ref={menuRef}
               onMouseMove={() => setOpenMenuAuth(true)}
@@ -87,6 +88,7 @@ export default function Header() {
                     <ProfileButton />
                     <ButtonSettings />
                     {checkStaff && <ButtonAdmins />}
+                    {userData?.verifyAdm === "Yes" && <MessangerButton />}
                     <hr className="text-neutral-300 dark:text-neutral-700" />
                     <ButtonLogout />
                   </motion.div>

@@ -1,7 +1,6 @@
 "use client";
 import { IProfileReaction } from "@/app/api/getActivityProfile/route";
 import ArrowReaction from "@/components/shared/icons/ArrowReaction";
-import ClockIcon from "@/components/shared/icons/ClockIcon";
 import HeartReaction from "@/components/shared/icons/HeartReaction";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -21,8 +20,8 @@ export default function ReactionCardUser({
     props.reactionType === "down"
       ? "bg-[#EB4848] dark:bg-[#E02E2E]"
       : props.reactionType === "like"
-      ? "bg-[#F76700] dark:bg-[#FF6524]"
-      : "rotate-180 bg-[#289E67] dark:bg-[#008849]";
+        ? "bg-[#F76700] dark:bg-[#FF6524]"
+        : "rotate-180 bg-[#289E67] dark:bg-[#008849]";
   const params = useParams();
   const isFromUser = props.fromUser.login === params.login;
   const convertedDate = Intl.DateTimeFormat("ru-RU", {
@@ -36,7 +35,7 @@ export default function ReactionCardUser({
       <div className={`${color} p-1.25 rounded-full max-w-max`}>
         {reactionIcon}
       </div>
-      <span className="block text-neutral-600 dark:text-neutral-400 text-sm font-medium break break-all">
+      <span className="block text-neutral-600 dark:text-neutral-400 text-sm font-medium break break-all grow">
         {isFromUser ? (
           <span className="text-neutral-700 dark:text-neutral-300">
             {props.fromUser.login}
@@ -70,7 +69,7 @@ export default function ReactionCardUser({
           {props.messagesPosts.Posts.title}
         </Link>
       </span>
-      <div className="w-[20%] justify-end items-end flex text-neutral-600 dark:text-neutral-400 text-sm font-medium text-center lg:text-end">
+      <div className="w-1/5 justify-end items-end flex text-neutral-600 dark:text-neutral-400 text-sm font-medium text-center lg:text-end">
         <p>{convertedDate}</p>
       </div>
     </div>

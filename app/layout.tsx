@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import React from "react";
+import React, { Suspense } from "react";
 import { ThemeProvider } from "next-themes";
 import { montserrat } from "@/styles/font";
 import Preloader from "@/components/ui/Preloader";
@@ -66,29 +66,31 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SocketProvider>
-            <LoaderProvider>
-              <TwoFactorProvider>
-                <DataUserProvider>
-                  <CategoriesProvider>
-                    <NotifyProvider>
-                      <Preloader />
-                      <Notify />
-                      <NotifyVerifyEmail />
-                      <NotifyConfirmTwoFactor />
-                      <HeaderProviders>
-                        <HeaderWrapper />
-                      </HeaderProviders>
-                      <UnderHeader />
-                      {children}
-                      <OnlineList />
-                      <Footer />
-                    </NotifyProvider>
-                  </CategoriesProvider>
-                </DataUserProvider>
-              </TwoFactorProvider>
-            </LoaderProvider>
-          </SocketProvider>
+          <Suspense>
+            <SocketProvider>
+              <LoaderProvider>
+                <TwoFactorProvider>
+                  <DataUserProvider>
+                    <CategoriesProvider>
+                      <NotifyProvider>
+                        <Preloader />
+                        <Notify />
+                        <NotifyVerifyEmail />
+                        <NotifyConfirmTwoFactor />
+                        <HeaderProviders>
+                          <HeaderWrapper />
+                        </HeaderProviders>
+                        <UnderHeader />
+                        {children}
+                        <OnlineList />
+                        <Footer />
+                      </NotifyProvider>
+                    </CategoriesProvider>
+                  </DataUserProvider>
+                </TwoFactorProvider>
+              </LoaderProvider>
+            </SocketProvider>
+          </Suspense>
         </ThemeProvider>
         <SpeedInsights />
       </body>

@@ -159,7 +159,7 @@ async function tokenMiddleware(
   responseWithCsp: NextResponse,
 ) {
   const publicRoute = ["/auth/login", "/auth/register", "/recovery"];
-  const secureRoute = ["/settings"];
+  const secureRoute = ["/settings", "/messenger"];
   const adminsRoute = ["/adminsPanel"];
   const ModeratorsRoutes = [
     "/main",
@@ -311,6 +311,14 @@ async function tokenMiddleware(
       !ModeratorsRoutes.some((route) => req.nextUrl.pathname.endsWith(route))
     ) {
       return NextResponse.redirect(new URL("/adminsPanel/main", req.url));
+    }
+  }
+  if (typeof validateToken !== "string") {
+    if (
+      req.nextUrl.pathname.startsWith("/messenger") &&
+      validateToken.verifyAdm !== "Yes"
+    ) {
+      return NextResponse.redirect(new URL("/", req.url));
     }
   }
   return responseWithCsp;
