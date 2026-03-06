@@ -63,22 +63,18 @@ export async function getChats(cursor: string): Promise<GetChatsResults> {
       chats.Chats.pop();
     }
     const newCursor = chats.Chats.at(-1)?.idV7 ?? "";
-    const messagesDecrypted = await decrypt(
-      chats.Chats[0].MessagesChats[0].text,
-    );
+
     const decryptedChats = {
       ...chats,
-      Chats: [
-        {
-          ...chats.Chats[0],
-          MessagesChats: [
-            {
-              ...chats.Chats[0].MessagesChats,
-              text: messagesDecrypted,
-            },
-          ],
-        },
-      ],
+      Chats: await Promise.all(
+        chats.Chats.map(async (chat) => {
+          const decryptedMessage = await decrypt(chat.MessagesChats[0].text);
+          return {
+            ...chat,
+            MessagesChats: [{ text: decryptedMessage }],
+          };
+        }),
+      ),
     };
     return {
       ok: true,
