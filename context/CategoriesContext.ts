@@ -35,6 +35,10 @@ export interface IReaction {
     login: string;
     avatar: string | null;
   };
+  toUser: {
+    id: string;
+    login: string;
+  };
 }
 export interface IMessage {
   reactions: IReaction[];

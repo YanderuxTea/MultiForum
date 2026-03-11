@@ -6,6 +6,8 @@ import useNotify from "@/hooks/useNotify";
 import { useSearchParams } from "next/navigation";
 import { IMessage } from "@/context/CategoriesContext";
 import useEditorHook from "@/hooks/useEditorHook";
+import useSocket from "@/hooks/useSocket.ts";
+import { ranks } from "@/data/ranksData.ts";
 
 export default function InputAnswer({
   editorRef,
@@ -33,7 +35,13 @@ export default function InputAnswer({
       editorRef.current = null;
     };
   }, [editor, editorRef]);
+  const { socket } = useSocket();
   async function handleSubmit() {
+    if (!socket.connected) {
+      setMessage("Ошибка: сервер недоступен");
+      setIsNotify(true);
+      return;
+    }
     setPending(async () => {
       if (editor && editor.getText().trim().length === 0) {
         setMessage("Ошибка: введите текст для отправки сообщения");
@@ -52,12 +60,33 @@ export default function InputAnswer({
       const res = await req.json();
       if (res.status === 429) {
         setMessage(
-          `Ошибка: отправить сообщение можно только через ${res.error} секунд`
+          `Ошибка: отправить сообщение можно только через ${res.error} секунд`,
         );
         setIsNotify(true);
         return;
       }
       if (res.ok) {
+        socket.emit("answerTheme", {
+          login: res.data.Users.login,
+          role: res.data.Users.role,
+          themeId: res.data.idPosts,
+          themeTitle: res.data.Posts.title,
+          loginAuthor: res.data.Posts.user.login,
+          idSubCat: subCategoryId,
+        });
+        if (
+          ranks.some(
+            (rank) => rank.countMess === res.data.Users._count.MessagesPosts,
+          )
+        ) {
+          const rank = ranks.find(
+            (rank) => rank.countMess === res.data.Users._count.MessagesPosts,
+          );
+          socket.emit("rank", {
+            login: res.data.Users.login,
+            rankLvl: rank?.lvl,
+          });
+        }
         setPageNumber(Math.ceil(res.data.Posts._count.MessagesPosts / 20) - 1);
         setMessages((prevState) =>
           (prevState || []).map((mess) => {
@@ -88,7 +117,7 @@ export default function InputAnswer({
                 },
               },
             };
-          })
+          }),
         );
         setMessages((prevState) => [...(prevState || []), res.data]);
         if (editor) {

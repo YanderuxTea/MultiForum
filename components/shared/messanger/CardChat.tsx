@@ -3,21 +3,27 @@ import { IChats } from "@/components/ui/messanger/actions.ts";
 import AvatarUser from "@/components/shared/users/AvatarUser.tsx";
 import { useRouter, useSearchParams } from "next/navigation";
 import useCurrentWidth from "@/hooks/useCurrentWidth.tsx";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import TrashIcon from "@/components/shared/icons/TrashIcon.tsx";
 import useContextMenu from "@/hooks/useContextMenu.ts";
 import useSocket from "@/hooks/useSocket.ts";
+import UnreadCheckMark from "@/components/shared/icons/UnreadCheckMark.tsx";
+import useDataUser from "@/hooks/useDataUser.ts";
+import ReadCheckMark from "@/components/shared/icons/ReadCheckMark.tsx";
 
 export default function CardChat({
   props,
   targetRefScrollLastElem,
   timeFormatterDate,
+  setChats,
 }: {
+  setChats: Dispatch<SetStateAction<IChats[]>>;
   timeFormatterDate: (date: Date) => string;
   props: IChats;
   targetRefScrollLastElem?: (node: HTMLDivElement | null) => void;
 }) {
   const userData = props.Users[0];
+  const dataUser = useDataUser();
   const convertedDate = timeFormatterDate(props.lastMessageTime);
   const {
     setLoginChatState,
@@ -65,6 +71,47 @@ export default function CardChat({
   }, [chatIdState, props.id]);
   const startX = useRef<number>(0);
   const startY = useRef<number>(0);
+  const { socket } = useSocket();
+  useEffect(() => {
+    function emit() {
+      if (
+        props.id === chatId &&
+        props._count.MessagesChats > 0 &&
+        props.MessagesChats[0].authorId !== dataUser?.id
+      ) {
+        socket.emit("readChat", { chatId, loginChat });
+      }
+    }
+    if (socket.connected) {
+      emit();
+    } else {
+      socket.once("reconnect", emit);
+    }
+  }, [chatId, loginChat, props._count.MessagesChats, props.id, socket]);
+  useEffect(() => {
+    socket.on("chatIsRead", (data) => {
+      setChats((prevState) =>
+        prevState.map((ch) => {
+          if (ch.id === data.chatId) {
+            return {
+              ...ch,
+              _count: {
+                MessagesChats: 0,
+              },
+              MessagesChats: [
+                {
+                  text: ch.MessagesChats[0].text,
+                  authorId: ch.MessagesChats[0].authorId,
+                  isRead: true,
+                },
+              ],
+            };
+          }
+          return ch;
+        }),
+      );
+    });
+  }, [socket]);
   return (
     <motion.div
       onMouseUp={(e) => {
@@ -171,23 +218,47 @@ export default function CardChat({
             >
               {userData.login}
             </p>
-            <p
-              className={`shrink-0 whitespace-nowrap text-sm font-light ${chatId === props.id && userData.login === loginChat ? "text-neutral-800 dark:text-neutral-200" : "text-neutral-700 dark:text-neutral-300"} `}
-            >
-              {convertedDate}
-            </p>
+            <div className={"flex flex-row shrink-0 items-center"}>
+              {props.MessagesChats[0].authorId === dataUser?.id &&
+                (props.MessagesChats[0].isRead ? (
+                  <ReadCheckMark />
+                ) : (
+                  <UnreadCheckMark />
+                ))}
+              <p
+                className={`shrink-0 whitespace-nowrap text-sm font-light ml-1.25 ${chatId === props.id && userData.login === loginChat ? "text-neutral-800 dark:text-neutral-200" : "text-neutral-700 dark:text-neutral-300 "} `}
+              >
+                {convertedDate}
+              </p>
+            </div>
           </div>
-          <p
-            className={`text-sm truncate  ${
-              isTyping
-                ? "animate-pulse" + " text-emerald-400 dark:text-emerald-500"
-                : chatId === props.id && userData.login === loginChat
-                  ? "text-neutral-900" + " dark:text-neutral-100"
-                  : "text-neutral-700 dark:text-neutral-300"
-            }`}
+          <div
+            className={
+              "flex flex-row justify-between w-full gap-2.5 items-center"
+            }
           >
-            {isTyping ? "Печатает..." : props.MessagesChats[0].text}
-          </p>
+            <p
+              className={`text-sm truncate  ${
+                isTyping
+                  ? "animate-pulse" + " text-emerald-400 dark:text-emerald-500"
+                  : chatId === props.id && userData.login === loginChat
+                    ? "text-neutral-900" + " dark:text-neutral-100"
+                    : "text-neutral-700 dark:text-neutral-300"
+              }`}
+            >
+              {isTyping ? "Печатает..." : props.MessagesChats[0].text}
+            </p>
+            {props._count.MessagesChats > 0 &&
+              props.MessagesChats[0].authorId !== dataUser?.id && (
+                <p
+                  className={
+                    "bg-orange-500 dark:bg-orange-600 rounded-full shrink-0 px-1.25 min-w-6 text-center text-neutral-100"
+                  }
+                >
+                  {props._count.MessagesChats}
+                </p>
+              )}
+          </div>
         </div>
       </motion.div>
       <motion.button

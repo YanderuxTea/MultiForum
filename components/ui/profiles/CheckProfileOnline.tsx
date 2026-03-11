@@ -1,6 +1,7 @@
 "use client";
 import useSocket from "@/hooks/useSocket";
 import React, { useEffect } from "react";
+
 async function getLastSeen(login: string) {
   const req = await fetch("/api/getOnline", {
     method: "POST",
@@ -26,7 +27,7 @@ export default function CheckProfileOnline({ login }: { login: string }) {
           const res = await getLastSeen(login);
           if (res) {
             const convertedDate = Intl.DateTimeFormat("ru-RU", {
-              day: "2-digit",
+              day: "numeric",
               month: "long",
               hour: "2-digit",
               minute: "2-digit",

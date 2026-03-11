@@ -115,7 +115,7 @@ export default function MainContentMessanger({
       const newChat = {
         ...res,
         Users: newUsers,
-        MessagesChats: [{ ...res.MessagesChats, text: decryptedText }],
+        MessagesChats: [{ ...res.MessagesChats[0], text: decryptedText }],
       };
       setChats((prevState) => [newChat, ...prevState]);
     });
@@ -203,6 +203,29 @@ export default function MainContentMessanger({
     },
     [timeFormatterOldest, timeFormatterThisWeek, timeFormatterToday],
   );
+  useEffect(() => {
+    socket.on("newMessageUnread", (data) => {
+      const chatId = data.chatId;
+      setChats((prevState) =>
+        prevState.map((ch) => {
+          if (ch.id === chatId) {
+            const newChat = ch;
+            return {
+              ...newChat,
+              _count: {
+                MessagesChats: newChat._count.MessagesChats + 1,
+              },
+            };
+          }
+          return ch;
+        }),
+      );
+    });
+    return () => {
+      socket.off("newMessageUnread");
+    };
+  }, []);
+
   return (
     <motion.div
       layout
@@ -214,6 +237,7 @@ export default function MainContentMessanger({
           const isLast = index === chats.length - 1;
           return (
             <CardChat
+              setChats={setChats}
               timeFormatterDate={timeFormatterForChatCard}
               targetRefScrollLastElem={isLast ? combinedRef : undefined}
               key={val.id}

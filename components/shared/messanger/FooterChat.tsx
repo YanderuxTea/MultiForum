@@ -125,7 +125,7 @@ export default function FooterChat({
     }
   }
   useEffect(() => {
-    socket.on("newMessage", () => {
+    socket.on("newMessage", async () => {
       if (timerWritingRef.current) {
         clearTimeout(timerWritingRef.current);
         socket.emit("stopWriting", { chatId, loginChat });
@@ -134,7 +134,7 @@ export default function FooterChat({
     return () => {
       socket.emit("stopWriting", { chatId, loginChat });
     };
-  }, [socket]);
+  }, [chatId, loginChat, socket, timerWritingRef]);
   useEffect(() => {
     setMessage("");
   }, [chatId]);

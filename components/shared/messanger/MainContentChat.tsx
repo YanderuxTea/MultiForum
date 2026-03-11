@@ -336,6 +336,7 @@ export function MainContentChat({
     },
     [],
   );
+
   return (
     <>
       <motion.div

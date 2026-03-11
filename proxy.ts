@@ -194,6 +194,7 @@ async function tokenMiddleware(
   const dId = cookieStorage.get("dId")!.value;
   const token = cookieStorage.get("token")?.value;
   if (!token && req.nextUrl.pathname === "/banned") {
+    console.log(1);
     return NextResponse.redirect(new URL("/", req.url));
   }
   if (!token) {
@@ -218,10 +219,16 @@ async function tokenMiddleware(
       orderBy: { date: "desc" },
       take: 1,
     });
+    if (bans.length === 0 && req.nextUrl.pathname === "/banned") {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
     if (bans.length > 0) {
       const isBanned =
         new Date(bans[0].date).getTime() + bans[0].time * 60 * 1000 >
           Date.now() || bans[0].time === 0;
+      if (!isBanned) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
       const reason = req.nextUrl.searchParams.get("reason");
       const time = req.nextUrl.searchParams.get("time");
       const banEnd = req.nextUrl.searchParams.get("banEnd");

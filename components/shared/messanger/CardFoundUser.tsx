@@ -17,6 +17,7 @@ export default function CardFoundUser({
   props: ISearchChats;
   targetRef?: (node: HTMLDivElement | null) => void;
 }) {
+  const isActiveChat = props.Chats.length > 0;
   return (
     <div
       ref={targetRef}
@@ -29,21 +30,33 @@ export default function CardFoundUser({
           refSearch.current?.blur();
         }}
         href={`/messenger?chatId=${props.Chats.length > 0 ? props.Chats[0].id : `recent`}&login=${props.login}`}
-        className="p-2.5 grow flex flex-row items-center gap-2.5"
+        className="p-2.5 grow flex flex-row items-center gap-2.5 justify-between"
       >
-        <AvatarUser
-          props={{
-            role: props.role,
-            avatar: props.avatar || undefined,
-            width: 40,
-            height: 40,
-          }}
-        />
-        <ColorNicknameUser
-          user={{ role: props.role, login: props.login }}
-          fontSize={16}
-          fontWeight={600}
-        />
+        <div className={"flex flex-row gap-2.5 items-center"}>
+          <AvatarUser
+            props={{
+              role: props.role,
+              avatar: props.avatar || undefined,
+              width: 40,
+              height: 40,
+            }}
+          />
+          <ColorNicknameUser
+            user={{ role: props.role, login: props.login }}
+            fontSize={16}
+            fontWeight={600}
+          />
+        </div>
+
+        {isActiveChat && props.Chats[0]._count.MessagesChats > 0 && (
+          <p
+            className={
+              "text-neutral-100 min-w-6 bg-orange-500 dark:bg-orange-600 text-center rounded-full px-1.25 shrink-0"
+            }
+          >
+            {props.Chats[0]._count.MessagesChats}
+          </p>
+        )}
       </Link>
     </div>
   );

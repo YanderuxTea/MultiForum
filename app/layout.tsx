@@ -19,6 +19,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NotifyConfirmTwoFactor from "@/components/shared/notifys/NotifyConfirmTwoFactor";
 import SocketProvider from "@/components/providers/SocketProvider";
 import OnlineList from "@/components/ui/OnlineList";
+import { getNotificationsCount } from "@/components/ui/headers/actions.ts";
+import { cookies } from "next/headers";
+import { validateJWT } from "@/lib/jwt.ts";
 
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
@@ -52,9 +55,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const cookieStorage = await cookies();
+  const token = cookieStorage.get("token");
+  const validToken = validateJWT(token?.value || "");
+  let countNotify = 0;
+  if (typeof validToken !== "string" && validToken) {
+    countNotify = await getNotificationsCount(validToken?.login ?? "");
+  }
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
@@ -78,7 +88,7 @@ export default function RootLayout({
                         <NotifyVerifyEmail />
                         <NotifyConfirmTwoFactor />
                         <HeaderProviders>
-                          <HeaderWrapper />
+                          <HeaderWrapper countNotify={countNotify} />
                         </HeaderProviders>
                         <UnderHeader />
                         {children}

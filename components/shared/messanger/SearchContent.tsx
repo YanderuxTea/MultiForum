@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import CardFoundUser from "./CardFoundUser";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useCurrentWidth from "@/hooks/useCurrentWidth";
 import useObserver from "@/hooks/useObserver";
 import useDebounce from "@/hooks/useDebounce";
@@ -13,6 +13,9 @@ export interface ISearchChats {
   avatar: string | null;
   Chats: {
     id: string;
+    _count: {
+      MessagesChats: number;
+    };
   }[];
 }
 export default function SearchContent({
@@ -92,6 +95,14 @@ export default function SearchContent({
       window.removeEventListener("scroll", scrollToTop);
     };
   }, [width]);
+  const [activeChats, setActiveChats] = useState<ISearchChats[]>([]);
+  const [newChats, setNewChats] = useState<ISearchChats[]>([]);
+  useEffect(() => {
+    const activeChats = chats.filter((chat) => chat.Chats.length !== 0);
+    const newChats = chats.filter((chat) => chat.Chats.length === 0);
+    setActiveChats(activeChats);
+    setNewChats(newChats);
+  }, [chats]);
   return (
     <motion.div
       ref={containerChats}
@@ -111,26 +122,71 @@ export default function SearchContent({
           refSearch.current?.blur();
         }
       }}
-      className="absolute bg-neutral-100 dark:bg-[#1a1a1a] inset-0 mt-27.5 lg:mt-14.25 overflow-y-auto divide-y divide-neutral-300 dark:divide-neutral-700 z-2"
+      className="absolute bg-neutral-100 dark:bg-[#1a1a1a] inset-0 mt-27.5 lg:mt-14.25 overflow-y-auto flex flex-col z-2"
     >
       {debounceQuery.length === 0 ? (
         <p className="text-center font-medium text-neutral-800 dark:text-neutral-200 my-2.5 select-none">
           Начните вводить в поиск
         </p>
       ) : chats.length > 0 ? (
-        chats.map((val, index) => {
-          const isLast = index === chats.length - 1;
-          return (
-            <CardFoundUser
-              refSearch={refSearch}
-              setIsActiveSearch={setIsActiveSearch}
-              setQuery={setQuery}
-              targetRef={isLast ? targetRef : undefined}
-              key={val.id}
-              props={val}
-            />
-          );
-        })
+        <>
+          {activeChats.length > 0 && (
+            <div
+              className={
+                "flex flex-col divide-y divide-neutral-300 dark:divide-neutral-700"
+              }
+            >
+              <p
+                className={
+                  "px-2.5 py-1.25 text-neutral-800 dark:text-neutral-200 font-medium"
+                }
+              >
+                Активные чаты
+              </p>
+              {activeChats.map((val, index) => {
+                const isLast = index === chats.length - 1;
+                return (
+                  <CardFoundUser
+                    refSearch={refSearch}
+                    setIsActiveSearch={setIsActiveSearch}
+                    setQuery={setQuery}
+                    targetRef={isLast ? targetRef : undefined}
+                    key={val.id}
+                    props={val}
+                  />
+                );
+              })}
+            </div>
+          )}
+          {newChats.length > 0 && (
+            <div
+              className={
+                "flex flex-col divide-y divide-neutral-300 dark:divide-neutral-700"
+              }
+            >
+              <p
+                className={
+                  "px-2.5 py-1.25 text-neutral-800 dark:text-neutral-200 font-medium"
+                }
+              >
+                Новые пользователи
+              </p>
+              {newChats.map((val, index) => {
+                const isLast = index === chats.length - 1;
+                return (
+                  <CardFoundUser
+                    refSearch={refSearch}
+                    setIsActiveSearch={setIsActiveSearch}
+                    setQuery={setQuery}
+                    targetRef={isLast ? targetRef : undefined}
+                    key={val.id}
+                    props={val}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </>
       ) : (
         <p className="text-center font-medium text-neutral-800 dark:text-neutral-200 my-2.5 select-none">
           Пользователи не найдены

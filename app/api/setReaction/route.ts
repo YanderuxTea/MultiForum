@@ -52,6 +52,7 @@ export async function POST(req: Request) {
           toUser: {
             select: {
               id: true,
+              login: true,
             },
           },
           id: true,
@@ -139,7 +140,7 @@ export async function POST(req: Request) {
             },
           },
           toUser: {
-            select: { id: true },
+            select: { id: true, login: true },
           },
           id: true,
           messagesPostsId: true,

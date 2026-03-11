@@ -21,6 +21,7 @@ export interface IMessages {
   createdAt: Date;
   text: string;
   authorId: string;
+  isRead: boolean;
 }
 
 export default function MainChat({ yControls }: { yControls: DragControls }) {
@@ -116,6 +117,7 @@ export default function MainChat({ yControls }: { yControls: DragControls }) {
   if (width === 0) {
     return null;
   }
+
   return (
     <div
       ref={containerRef}

@@ -10,8 +10,13 @@ export interface IChats {
   id: string;
   idV7: string;
   lastMessageTime: Date;
+  _count: {
+    MessagesChats: number;
+  };
   MessagesChats: {
     text: string;
+    authorId: string;
+    isRead: boolean;
   }[];
   Users: {
     login: string;
@@ -41,9 +46,16 @@ export async function getChats(cursor: string): Promise<GetChatsResults> {
         select: {
           id: true,
           MessagesChats: {
-            select: { text: true, authorId: true },
+            select: { text: true, authorId: true, isRead: true },
             take: 1,
             orderBy: { createdAt: "desc" },
+          },
+          _count: {
+            select: {
+              MessagesChats: {
+                where: { isRead: false, authorId: { not: validToken.id } },
+              },
+            },
           },
           lastMessageTime: true,
           Users: {
@@ -71,7 +83,13 @@ export async function getChats(cursor: string): Promise<GetChatsResults> {
           const decryptedMessage = await decrypt(chat.MessagesChats[0].text);
           return {
             ...chat,
-            MessagesChats: [{ text: decryptedMessage }],
+            MessagesChats: [
+              {
+                text: decryptedMessage,
+                authorId: chat.MessagesChats[0].authorId,
+                isRead: chat.MessagesChats[0].isRead,
+              },
+            ],
           };
         }),
       ),
@@ -113,7 +131,16 @@ export async function foundUsers(cursor: string, query: string) {
       avatar: true,
       Chats: {
         where: { Users: { some: { id: validToken.id } } },
-        select: { id: true },
+        select: {
+          id: true,
+          _count: {
+            select: {
+              MessagesChats: {
+                where: { isRead: false, authorId: { not: validToken.id } },
+              },
+            },
+          },
+        },
         take: 1,
       },
     },
@@ -163,7 +190,13 @@ export async function getChat(chatId: string | null, login: string | null) {
         },
         select: {
           MessagesChats: {
-            select: { id: true, text: true, createdAt: true, authorId: true },
+            select: {
+              id: true,
+              text: true,
+              createdAt: true,
+              authorId: true,
+              isRead: true,
+            },
             take: 51,
             orderBy: { id: "desc" },
           },
@@ -253,7 +286,13 @@ export async function getHistoryMessages(
     select: {
       MessagesChats: {
         where: { id: { lt: cursor } },
-        select: { id: true, text: true, authorId: true, createdAt: true },
+        select: {
+          id: true,
+          text: true,
+          authorId: true,
+          createdAt: true,
+          isRead: true,
+        },
         take: pageSize + 1,
         orderBy: { id: "desc" },
       },

@@ -6,6 +6,8 @@ import HeartReaction from "./icons/HeartReaction";
 import { motion } from "framer-motion";
 import { IMessage, IReaction, ReactionType } from "@/context/CategoriesContext";
 import useNotify from "@/hooks/useNotify";
+import useSocket from "@/hooks/useSocket.ts";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function ChoiceReaction({
   choice,
@@ -22,6 +24,12 @@ export default function ChoiceReaction({
   const [visual, setVisual] = useState<"initial" | "hover" | "open">("initial");
   const { setIsNotify, setMessage } = useNotify();
   const [pending, setPending] = React.useTransition();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const themeId = searchParams.get("themeId");
+  const decodeThemeId = decodeURIComponent(pathname).split("/");
+  const titleTheme = decodeThemeId.at(-1);
+  const idSubCat = searchParams.get("subCategoryId");
   const variants = {
     initial: {
       width: 44,
@@ -71,7 +79,13 @@ export default function ChoiceReaction({
       window.removeEventListener("scroll", handleClose);
     };
   }, [complete]);
+  const { socket } = useSocket();
   async function setReaction(reaction: ReactionType) {
+    if (!socket.connected) {
+      setMessage(`Ошибка: сервер недоступен`);
+      setIsNotify(true);
+      return;
+    }
     if (choice?.reactionType === reaction) {
       setPending(async () => {
         const req = await fetch("/api/setReaction", {
@@ -120,6 +134,15 @@ export default function ChoiceReaction({
         const res: { ok: boolean; reaction: IReaction; error?: string } =
           await req.json();
         if (res.ok) {
+          socket.emit("reaction", {
+            loginAuthor: res.reaction.fromUser.login,
+            roleAuthor: res.reaction.fromUser.role,
+            reactionType: res.reaction.reactionType,
+            loginRecipient: res.reaction.toUser.login,
+            themeId,
+            titleTheme,
+            idSubCat,
+          });
           setMessages((prev) =>
             (prev || []).map((mess) => {
               if (mess.id === messageId) {

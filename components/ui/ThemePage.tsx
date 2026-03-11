@@ -117,7 +117,7 @@ export default function ThemePage() {
       {subCat && (
         <Link
           href={`/subCategories/${decodeURIComponent(
-            subCat.title
+            subCat.title,
           )}?subCategory=${subCat.id}`}
           className="font-medium text-neutral-700 dark:text-neutral-300 max-w-max"
         >
@@ -184,6 +184,8 @@ export default function ThemePage() {
         <LockedUnlockedButton
           locked={messages.length > 0 && messages[0].Posts.locked}
           setMessages={setMessages}
+          authorLogin={messages[0].Posts.user.login}
+          themeTitle={messages[0].Posts.title}
         />
       )}
     </div>
