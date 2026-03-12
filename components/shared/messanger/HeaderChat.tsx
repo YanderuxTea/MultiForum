@@ -3,6 +3,7 @@ import Arrow from "../icons/Arrow";
 import { IUserData } from "./MainChat";
 import AvatarUser from "../users/AvatarUser";
 import useSocket from "@/hooks/useSocket.ts";
+import Link from "next/link";
 
 export default function HeaderChat({ props }: { props: IUserData }) {
   const router = useRouter();
@@ -17,9 +18,12 @@ export default function HeaderChat({ props }: { props: IUserData }) {
         <Arrow />
       </button>
       <div className="flex flex-col text-center">
-        <p className="text-neutral-800 dark:text-neutral-200 font-semibold">
+        <Link
+          href={`/profile/${props.login}`}
+          className="text-neutral-800 dark:text-neutral-200 font-semibold"
+        >
           {props.login}
-        </p>
+        </Link>
         <p
           className={`${
             props.isOnline || checkIsWritingUser
