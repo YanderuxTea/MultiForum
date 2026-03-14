@@ -18,7 +18,7 @@ export default function PreviewContent({ editor }: { editor: Editor | null }) {
     extensions: [
       TextAlign.configure({
         types: ["heading", "paragraph"],
-        alignments: ["left", "center"],
+        alignments: ["left", "center", "justify"],
         defaultAlignment: "left",
       }),
       StarterKit.configure({

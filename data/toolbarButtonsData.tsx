@@ -18,6 +18,7 @@ import VideoContent from "@/components/shared/MenuContentToolBar/VideoContent";
 import PreviewContent from "@/components/shared/MenuContentToolBar/PreviewContent";
 import AlignLeft from "@/components/shared/icons/AlignLeft.tsx";
 import AlignCenter from "@/components/shared/icons/AlignCenter.tsx";
+import AlignJustify from "@/components/shared/icons/AlignJustify.tsx";
 
 export interface IToolbarButtonsData {
   type: string;
@@ -97,6 +98,12 @@ export const toolbarButtonsData: IToolbarButtonsData[] = [
     icon: <AlignCenter />,
     mark: "center",
     command: (editor) => editor?.chain().toggleTextAlign("center").run(),
+  },
+  {
+    type: "alignJustifyButton",
+    icon: <AlignJustify />,
+    mark: "justify",
+    command: (editor) => editor?.chain().toggleTextAlign("justify").run(),
   },
   {
     type: "adminsDeclineButton",
