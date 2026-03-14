@@ -26,12 +26,16 @@ export default function useEditorHook({
         alignments: ["left", "center"],
         defaultAlignment: "left",
       }),
+
       StarterKit.configure({
         codeBlock: false,
         link: {
           autolink: true,
           linkOnPaste: true,
           openOnClick: true,
+        },
+        heading: {
+          levels: [1, 2, 3, 4],
         },
       }),
       Color,

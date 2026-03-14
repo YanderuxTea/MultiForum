@@ -28,6 +28,9 @@ export default function useViewer({ text }: { text: JSONContent }) {
           linkOnPaste: true,
           openOnClick: true,
         },
+        heading: {
+          levels: [1, 2, 3, 4],
+        },
       }),
       Color,
       FontSize,

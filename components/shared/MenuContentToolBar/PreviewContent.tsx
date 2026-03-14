@@ -28,6 +28,9 @@ export default function PreviewContent({ editor }: { editor: Editor | null }) {
           linkOnPaste: true,
           openOnClick: true,
         },
+        heading: {
+          levels: [1, 2, 3, 4],
+        },
       }),
       Color,
       FontSize,

@@ -76,3 +76,15 @@ html.dark .ProseMirror blockquote > p:first-of-type {
 html.dark .ProseMirror blockquote > p:first-of-type a {
   color: #b2b2b2;
 }
+.ProseMirror h1{
+  font-size: 24px;
+}
+.ProseMirror h2{
+  font-size: 22px;
+}
+.ProseMirror h3{
+  font-size: 20px;
+}
+.ProseMirror h4{
+  font-size: 18px;
+}
