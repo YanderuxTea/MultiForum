@@ -1,49 +1,55 @@
-import {all, createLowlight} from 'lowlight'
-import {ReactNodeViewRenderer, useEditor} from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import {Color, FontSize, TextStyle} from '@tiptap/extension-text-style'
-import {CharacterCount} from '@tiptap/extensions'
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import CodeBlockWrapper from '@/components/shared/CodeBlockWrapper'
-import Youtube from '@tiptap/extension-youtube'
-import {JSONContent} from '@tiptap/core'
-import Image from '@tiptap/extension-image'
+import { all, createLowlight } from "lowlight";
+import { ReactNodeViewRenderer, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { Color, FontSize, TextStyle } from "@tiptap/extension-text-style";
+import { CharacterCount } from "@tiptap/extensions";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import CodeBlockWrapper from "@/components/shared/CodeBlockWrapper";
+import Youtube from "@tiptap/extension-youtube";
+import { JSONContent } from "@tiptap/core";
+import Image from "@tiptap/extension-image";
+import TextAlign from "@tiptap/extension-text-align";
 
-export default function useViewer({text}:{text:JSONContent}) {
-  const lowlight = createLowlight(all)
+export default function useViewer({ text }: { text: JSONContent }) {
+  const lowlight = createLowlight(all);
   return useEditor({
-    editable:false,
-    content:text,
-    extensions:[
+    editable: false,
+    content: text,
+    extensions: [
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+        alignments: ["left", "center"],
+        defaultAlignment: "left",
+      }),
       StarterKit.configure({
-        codeBlock:false,
-        link:{
-          autolink:true,
-          linkOnPaste:true,
-          openOnClick:true
-        }
+        codeBlock: false,
+        link: {
+          autolink: true,
+          linkOnPaste: true,
+          openOnClick: true,
+        },
       }),
       Color,
       FontSize,
       CharacterCount.configure({
-        limit:6000
+        limit: 6000,
       }),
       CodeBlockLowlight.extend({
-        addNodeView(){
-          return ReactNodeViewRenderer(CodeBlockWrapper)
-        }
-      }).configure({lowlight}),
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlockWrapper);
+        },
+      }).configure({ lowlight }),
       Image,
       Youtube.configure({
-        controls:true,
-        nocookie:false,
-        modestBranding:true,
-        HTMLAttributes:{
-          class:'rounded-xl w-full aspect-video'
-        }
+        controls: true,
+        nocookie: false,
+        modestBranding: true,
+        HTMLAttributes: {
+          class: "rounded-xl w-full aspect-video",
+        },
       }),
-      TextStyle
+      TextStyle,
     ],
-    immediatelyRender:false
-  })
+    immediatelyRender: false,
+  });
 }
