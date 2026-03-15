@@ -15,6 +15,11 @@ export default function useViewer({ text }: { text: JSONContent }) {
   return useEditor({
     editable: false,
     content: text,
+    editorProps: {
+      attributes: {
+        class: "text-[14px]",
+      },
+    },
     extensions: [
       TextAlign.configure({
         types: ["heading", "paragraph"],
@@ -29,7 +34,7 @@ export default function useViewer({ text }: { text: JSONContent }) {
           openOnClick: true,
         },
         heading: {
-          levels: [1, 2, 3, 4],
+          levels: [1, 2, 3, 4, 5],
         },
       }),
       Color,

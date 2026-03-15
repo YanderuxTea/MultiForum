@@ -35,7 +35,7 @@ export default function useEditorHook({
           openOnClick: true,
         },
         heading: {
-          levels: [1, 2, 3, 4],
+          levels: [1, 2, 3, 4, 5],
         },
       }),
       Color,
@@ -67,7 +67,8 @@ export default function useEditorHook({
     editorProps: {
       attributes: {
         class:
-          "border outline-none p-2.5 grow rounded-md border-neutral-300 dark:border-neutral-700 transition-colors duration-300 ease-out focus:border-neutral-400 dark:focus:border-neutral-600",
+          "border outline-none p-2.5 grow rounded-md border-neutral-300 dark:border-neutral-700 transition-colors" +
+          " duration-300 ease-out focus:border-neutral-400 dark:focus:border-neutral-600 text-[14px]",
       },
     },
     onUpdate: ({ editor }) => {
