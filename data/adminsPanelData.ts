@@ -5,6 +5,7 @@ import ManagementRolesPanel from "@/components/ui/adminspanels/RoleManagement";
 import DeleteUsersAvatar from "@/components/ui/adminspanels/AvatarManagement";
 import ManagementPunishmentPanel from "@/components/ui/adminspanels/PunishmentManagement";
 import ReputationManagement from "@/components/ui/adminspanels/ReputationManagement";
+import DeletingThemes from "@/components/ui/adminspanels/DeletingThemes.tsx";
 
 export interface IAdminsPanelData {
   title: string;
@@ -41,5 +42,10 @@ export const adminsPanelData: IAdminsPanelData[] = [
     title: "Управление репутацией",
     url: "ReputationManagement",
     JSX: ReputationManagement,
+  },
+  {
+    title: "Удаление тем",
+    url: "DeletingThemes",
+    JSX: DeletingThemes,
   },
 ];
