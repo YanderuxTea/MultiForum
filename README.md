@@ -15,7 +15,7 @@
 
 <h1 align="center">Технологический стек</h1>
 
-- 💻 **Языки и фреймворки**: JSX, TypeScript, React, Next.js, Tailwind CSS, Framer Motion
+- 💻 **Языки и фреймворки**: TypeScript (TSX), React, Next.js, Tailwind CSS, Framer Motion
 - 🗄️ **База данных**: PostgreSQL, Prisma ORM
 - ⚙️ **Backend**: Node.js, Socket.io, Nodemailer, bcrypt, jsonwebtoken, dotenv
 - 🛠️ **Инструменты**: Tiptap, Zod, Qrcode, UA-Parser-JS
